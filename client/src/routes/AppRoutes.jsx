@@ -1,5 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 
+// LAYOUTS
+import Layout from '../layouts/Layout';
+import DashboardLayout from '../layouts/DashboardLayout';
+
 // USER PAGES
 import Home from '../pages/Home';
 
@@ -17,17 +21,17 @@ const AppRoutes = () => {
 	return (
 		<Routes>
       {/* USER PAGES */}
-			<Route>
+			<Route element={<Layout />}>
         <Route path="/" element={<Home />} />
       </Route>
 
 			{/* DASHBOARD PAGES */}
-			<Route path="/dashboard">
+			<Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<DashboardHome />} />
       </Route>
 
 			{/* AUTH PAGES */}
-      <Route>
+      <Route element={<Layout />}>
         <Route path="/login" element={<Login/>} />
         <Route path="/register" element={<Register/>} />
       </Route>
