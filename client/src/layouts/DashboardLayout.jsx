@@ -24,14 +24,18 @@ const DashboardLayout = () => {
 
   return (
     <div className="flex h-screen overflow-hidden">
+      {/* SIDEBAR */}
       <Sidebar className={`${sidebarOpen ? "" : "hidden"}`} />
 
       <div className={`flex flex-col flex-1 w-full overflow-hidden`}>
         {/* NAVBAR */}
         <Navbar openDrawer={openDrawer} />
+
+        {/* CONTENT */}
         <div className="flex-1 p-4 overflow-x-hidden overflow-y-auto">
           <Outlet />
         </div>
+
         {/* FOOTER */}
       </div>
 
