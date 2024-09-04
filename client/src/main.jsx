@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
-createRoot(document.querySelector('.warpper')).render(
+createRoot(document.querySelector('.root')).render(
   <StrictMode>
     <App />
   </StrictMode>

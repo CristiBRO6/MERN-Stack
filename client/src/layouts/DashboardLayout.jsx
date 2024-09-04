@@ -1,15 +1,54 @@
 import { Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+import Sidebar from '../components/DashboardSidebar';
 import Navbar from '../components/DashboardNavbar';
+import useResponsive from '../hooks/useResponsive';
+
+import Drawer from '../components/ui/Drawer';
+import SidebarItem from '../components/ui/SidebarItem';
+
+import { SIDEBAR_ITEMS } from '../constants';
 
 const DashboardLayout = () => {
+  const screenSizeIndex = useResponsive([768, 1024, 1280]);
+  const [sidebarOpen, setSidebarOpen] = useState(screenSizeIndex > 0);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const closeDrawer = () => setDrawerOpen(false);
+  const openDrawer = () => setDrawerOpen(true);
+
+  useEffect(() => {
+    setSidebarOpen(screenSizeIndex > 0);
+  }, [screenSizeIndex]);
+
   return (
-    <>
-      <Navbar />
-      <main className="main-container">
-        <Outlet />
-      </main>
-    </>
-);
-}
+    <div className="flex h-screen overflow-hidden">
+      <Sidebar className={`${sidebarOpen ? "" : "hidden"}`} />
+
+      <div className={`flex flex-col flex-1 w-full overflow-hidden`}>
+        {/* NAVBAR */}
+        <Navbar openDrawer={openDrawer} />
+        <div className="flex-1 p-4 overflow-x-hidden overflow-y-auto">
+          <Outlet />
+        </div>
+        {/* FOOTER */}
+      </div>
+
+      {screenSizeIndex == 0 && (
+        <>
+          {/* DRAWER */}
+          <Drawer title="Menu" drawerOpen={drawerOpen} closeDrawer={closeDrawer}>
+            <div className="flex flex-col gap-2">
+              {SIDEBAR_ITEMS.map((item) => (
+                <SidebarItem key={item.id} item={item} onClick={closeDrawer} />
+              ))}
+            </div>
+          </Drawer>
+        </>
+      )}
+    </div>
+  );
+};
 
 export default DashboardLayout;

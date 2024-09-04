@@ -9,6 +9,7 @@ import Home from '../pages/Home';
 
 // ADMIN PAGES
 import DashboardHome from '../pages/dashboard/Home';
+import Users from '../pages/dashboard/Users';
 
 // AUTH PAGES
 import Login from '../pages/auth/Login';
@@ -21,19 +22,20 @@ const AppRoutes = () => {
 	return (
 		<Routes>
       {/* USER PAGES */}
-			<Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
+			<Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
       </Route>
 
 			{/* DASHBOARD PAGES */}
 			<Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<DashboardHome />} />
+        <Route path="users" element={<Users />} />
       </Route>
 
 			{/* AUTH PAGES */}
-      <Route element={<Layout />}>
-        <Route path="/login" element={<Login/>} />
-        <Route path="/register" element={<Register/>} />
+      <Route path="/" element={<Layout />}>
+        <Route path="login" element={<Login/>} />
+        <Route path="register" element={<Register/>} />
       </Route>
 
       {/* 404 PAGE */}
