@@ -1,7 +1,7 @@
 const Home = () => {
   return (
     <>
-      Home
+      <span className="text-base font-medium">Hello guest!</span>
     </>
   )
 }

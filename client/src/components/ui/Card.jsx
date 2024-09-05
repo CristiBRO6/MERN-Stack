@@ -1,40 +1,51 @@
 import PropTypes from 'prop-types';
 
-const Card = ({ children, width = 500, className }) => {
+const Card = ({ children, width = 500, className = '' }) => {
   return (
     <>
       <div 
-        className={`${className}`}
+        className={`flex flex-col bg-white rounded-lg shadow-lg border ${className}`}
         style={{width: width}}
       >
         {children}
-      </div>;
+      </div>
     </>
   )
 };
 
-Card.Header = ({ children, className }) => {
+Card.Header = ({ children, className = '' }) => {
   return (
     <>
-      <div className={`${className}`}>
+      <div className={`p-4 pb-2 ${className}`}>
         {children}
-      </div>;
+      </div>
     </>
   )
 };
 
-Card.Body = ({ children, className }) => {
+Card.Title = ({ children, className = '' }) => {
   return (
     <>
-      <div className={`${className}`}>
+      <span className={`font-semibold text-lg ${className}`}>
         {children}
-      </div>;
+      </span>
+    </>
+  )
+};
+
+Card.Body = ({ children, className = '' }) => {
+  return (
+    <>
+      <div className={`p-4 pt-2 ${className}`}>
+        {children}
+      </div>
     </>
   )
 };
 
 Card.displayName = 'Card';
 Card.Header.displayName = 'Card.Header';
+Card.Title.displayName = 'Card.Title';
 Card.Body.displayName = 'Card.Body';
 
 Card.propTypes = {
@@ -44,6 +55,11 @@ Card.propTypes = {
 };
 
 Card.Header.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+};
+
+Card.Title.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };

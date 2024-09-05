@@ -6,7 +6,7 @@ import Button from './Button';
 
 const SidebarItem = ({ isCollapsed = false, item, onClick = () => {}, className = '' }) => {
   return (
-    <NavLink to={item.path} end className={` ${className}`} onClick={onClick}>
+    <NavLink to={item.path} end={true} className={` ${className}`} onClick={onClick}>
       {({ isActive }) => (
         isCollapsed ? (
           <Tooltip content={item.name} position="right">
