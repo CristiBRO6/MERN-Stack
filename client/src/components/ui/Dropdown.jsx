@@ -174,7 +174,6 @@ Dropdown.Item.propTypes = {
     name: PropTypes.string,
     icon: PropTypes.elementType,
   }).isRequired,
-  closable: PropTypes.bool,
   onClick: PropTypes.func,
   className: PropTypes.string,
 };
