@@ -124,9 +124,9 @@ Dropdown.Body = ({ children, className = '' }) => {
 Dropdown.Group = ({ children, title, className = '' }) => {
   return (
     <>
-      <div className={`flex flex-col py-1 ${className}`}>
+      <div className="flex flex-col py-1 gap-1">
         <span className="font-medium text-base text-gray-700">{title}</span>
-        <div className="flex flex-col">
+        <div className={`flex flex-col ${className}`}>
           {children}
         </div>
       </div>
@@ -138,8 +138,8 @@ Dropdown.Item = ({ item, onClick = () => {}, className = '' }) => {
   return (
     <>
       {item.type == 'item' ? (
-        <Link to={item.path} onClick={onClick()} className={`${className}`}>
-          <div className="flex items-center gap-2 px-4 py-2 text-gray-800 text-sm font-semibold transition-colors duration-300 hover:bg-gray-200">
+        <Link to={item.path} onClick={onClick()}>
+          <div className={`flex items-center gap-2 px-4 py-2 text-gray-800 text-sm font-semibold transition-colors duration-300 hover:bg-gray-200 ${className}`}>
             {item.icon && <item.icon className="size-4" />}
             {item.name}
           </div>

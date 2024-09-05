@@ -1,34 +1,46 @@
 import PropTypes from 'prop-types';
-import { useReactTable, getCoreRowModel, getPaginationRowModel } from '@tanstack/react-table';
+import { useReactTable, getCoreRowModel, getPaginationRowModel, getFilteredRowModel, getSortedRowModel } from '@tanstack/react-table';
 import { useState } from 'react';
 
-import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight, Settings2 } from 'lucide-react';
+import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight, Settings2, MoveVertical, ArrowUp, ArrowDown } from 'lucide-react';
 
-import IconButton from '../../components/ui/IconButton';
-import Dropdown from '../../components/ui/Dropdown';
+import IconButton from './IconButton';
+import Dropdown from './Dropdown';
 
-const Table = ({ columns, data, columnVisibility: colVisibility,  pagination: isPagination = false }) => {
+const DataTable = ({ columns, data, columnVisibility: colVisibility, pagination: isPagination = false, currentPage = 0, pageSize = 10, pageSizeOptions = [] }) => {
+  if(pageSizeOptions.length && !pageSizeOptions.some(item => item === pageSize)){
+    pageSizeOptions.push(pageSize);
+    pageSizeOptions.sort((a, b) => a - b);
+  }
+
   const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10,
+    pageIndex: currentPage,
+    pageSize: pageSize ,
   });
   const [columnVisibility, setColumnVisibility] = useState(colVisibility);
+  const [sorting, setSorting] = useState([])
+
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       pagination,
-      columnVisibility
+      columnVisibility,
+      sorting
     },
+    onPaginationChange: setPagination,
     onColumnVisibilityChange: setColumnVisibility,
+    onSortingChange: setSorting,
   });
 
   return (
     <div className="flex flex-col gap-2 overflow-x-auto">
       <Dropdown 
+        className="w-fit"
         placement="bottom"
         menu={
           <Dropdown.Content>
@@ -65,7 +77,46 @@ const Table = ({ columns, data, columnVisibility: colVisibility,  pagination: is
             <tr key={headerGroup.id} className="bg-gray-100">
               {headerGroup.headers.map(header => (
                 <th key={header.id} className="px-4 py-2 border border-gray-300 text-left text-sm font-medium text-gray-600">
-                  {header.column.columnDef.Header}
+                  <Dropdown 
+                    placement="bottom"
+                    menu={
+                      <Dropdown.Content>
+                        <Dropdown.Body className="px-2">
+                          <Dropdown.Group className="gap-1" title="Sorting">
+                            <div 
+                              className={`flex items-center gap-2 px-2 py-1 rounded-md cursor-pointer transition-colors duration-300 hover:bg-slate-100 ${header.column.getIsSorted() == "desc" ? "bg-slate-100" : ""}`}
+                              onClick={() => {
+                                header.column.getIsSorted() === "desc" ? header.column.clearSorting() : header.column.toggleSorting(true);
+                              }}
+                            >
+                              <ArrowDown className="size-4" />
+                              Desc
+                            </div>
+                            <div 
+                              className={`flex items-center gap-2 px-2 py-1 rounded-md cursor-pointer transition-colors duration-300 hover:bg-slate-100  ${header.column.getIsSorted() == "asc" ? "bg-slate-100" : ""}`}
+                              onClick={() =>{
+                                header.column.getIsSorted() === "asc" ? header.column.clearSorting() : header.column.toggleSorting(false);
+                              }}
+                            >
+                              <ArrowUp className="size-4" />
+                              Asc
+                            </div>
+                          </Dropdown.Group>
+                        </Dropdown.Body>
+                      </Dropdown.Content>
+                    }
+                  >
+                    <div className="flex items-center gap-1 px-2 py-1 cursor-pointer rounded-md hover:bg-slate-200 w-fit">
+                      {header.column.columnDef.Header}
+                      {
+                        header.column.getIsSorted() ? (
+                          {asc: <ArrowUp className="size-4" />, desc: <ArrowDown className="size-4" />}[header.column.getIsSorted() ?? null]
+                        ) : (
+                          <MoveVertical className="size-4" />
+                        )
+                      }
+                    </div>
+                  </Dropdown>
                 </th>
               ))}
             </tr>
@@ -87,19 +138,21 @@ const Table = ({ columns, data, columnVisibility: colVisibility,  pagination: is
       {isPagination && (
         <>
           <div className="flex items-center justify-between">
-            <select
-              className="cursor-pointer bg-gray-200 rounded-md p-1"
-              value={table.getState().pagination.pageSize}
-              onChange={e => {
-                table.setPageSize(Number(e.target.value))
-              }}
-            >
-              {[10, 20, 30, 40, 50].map(pageSize => (
-                <option key={pageSize} value={pageSize}>
-                  {pageSize}
-                </option>
-              ))}
-            </select>
+            {pageSizeOptions.length ? (
+              <select
+                className="cursor-pointer bg-gray-200 rounded-md p-1"
+                value={table.getState().pagination.pageSize}
+                onChange={e => {
+                  table.setPageSize(Number(e.target.value))
+                }}
+              >
+                {pageSizeOptions.map(pageSize => (
+                  <option key={pageSize} value={pageSize}>
+                    {pageSize}
+                  </option>
+                ))}
+              </select>
+            ) : (<div></div>)}
             <div className="flex items-center gap-2">
               <div className="font-normal text-sm">Page {pagination.pageIndex + 1} of {table.getPageCount()} pages</div>
               <button className="bg-gray-200 cursor-pointer px-2 py-1 rounded-md text-sm" onClick={() => table.firstPage()} disabled={!table.getCanPreviousPage()}>
@@ -130,11 +183,14 @@ const Table = ({ columns, data, columnVisibility: colVisibility,  pagination: is
   );
 };
 
-Table.propTypes = {
+DataTable.propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
   columnVisibility: PropTypes.array,
   pagination: PropTypes.bool,
+  currentPage: PropTypes.number,
+  pageSize: PropTypes.number,
+  pageSizeOptions: PropTypes.array,
 };
 
-export default Table;
+export default DataTable;

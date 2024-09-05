@@ -16,7 +16,7 @@ const Items = [
   { id: 4, path: "/login", name: "Login", icon: LogIn },
 ];
 
-const DashboardLayout = () => {
+const Layout = () => {
   const screenSizeIndex = useResponsive([768, 1024, 1280]);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -52,4 +52,4 @@ const DashboardLayout = () => {
   );
 };
 
-export default DashboardLayout;
+export default Layout;

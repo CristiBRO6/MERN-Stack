@@ -1,21 +1,24 @@
-import Table from '../../components/ui/Table';
+import DataTable from '../../components/ui/DataTable';
 
 const columns = [
   {
     Header: 'Name',
     accessorKey: 'name',
     enableHiding: false,
+    filterFn: 'includesString',
     cell: (props) => <span>{props.getValue()?.name}</span>,
   },
   {
     Header: 'Email',
     accessorKey: 'email',
     enableHiding: false,
+    filterFn: 'includesString',
     cell: (props) => <span>{props.getValue()?.email}</span>,
   },
   {
     Header: 'Role',
     accessorKey: 'role',
+    filterFn: 'includesString',
     cell: (props) => <span>{props.getValue()?.role}</span>,
   },
 ];
@@ -59,7 +62,7 @@ const Users = () => {
       <>
         <div className="container mx-auto">
           <h1 className="text-xl font-bold mb-4">Users</h1>
-          <Table 
+          <DataTable 
             columns={columns}
             data={data} 
             columnVisibility={
@@ -70,6 +73,7 @@ const Users = () => {
               }
             }
             pagination={true} 
+            pageSizeOptions={[10, 20, 30, 40, 50]}
           />
         </div>
       </>
