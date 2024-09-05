@@ -27,7 +27,7 @@ const DashboardLayout = () => {
       {/* SIDEBAR */}
       <Sidebar className={`${sidebarOpen ? "" : "hidden"}`} />
 
-      <div className={`flex flex-col flex-1 w-full overflow-hidden`}>
+      <main className={`flex flex-col flex-1 w-full overflow-hidden`}>
         {/* NAVBAR */}
         <Navbar openDrawer={openDrawer} />
 
@@ -37,7 +37,7 @@ const DashboardLayout = () => {
         </div>
 
         {/* FOOTER */}
-      </div>
+      </main>
 
       {screenSizeIndex == 0 && (
         <>

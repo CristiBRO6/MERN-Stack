@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
-import { Menu, User, Settings, LogOut } from 'lucide-react';
+import { Menu, House, User, Settings, LogOut } from 'lucide-react';
 
 import useResponsive from '../hooks/useResponsive';
 import Dropdown from './ui/Dropdown';
 import DropdownItem from './ui/DropdownItem';
 
 const dropdownItems = [
-  { id: 1, type: 'item', path: "/profile", name: "Profile", icon: User },
-  { id: 2, type: 'item', path: "/dashboard/settings", name: "Settigns", icon: Settings },
-  { id: 3, type: 'separator'},
-  { id: 4, type: 'item', path: "/logout", name: "Logout", icon: LogOut },
+  { id: 1, type: 'item', path: "/", name: "Home", icon: House },
+  { id: 2, type: 'item', path: "/profile", name: "Profile", icon: User },
+  { id: 3, type: 'item', path: "/dashboard/settings", name: "Settigns", icon: Settings },
+  { id: 4, type: 'separator'},
+  { id: 5, type: 'item', path: "/logout", name: "Logout", icon: LogOut },
 ];
 
 const dropdownContent = (
@@ -43,7 +44,6 @@ const Navbar = ({ openDrawer }) => {
           <div className="bg-gray-100 p-2 rounded-full overflow-hidden">
             <User className="size-6" />
           </div>
-          <span className="text-sm font-semibold">CristiBRO</span>
         </div>
       </Dropdown>
     </div>

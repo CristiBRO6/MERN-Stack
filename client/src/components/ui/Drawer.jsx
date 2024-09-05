@@ -1,5 +1,5 @@
-import { X } from 'lucide-react';
 import PropTypes from 'prop-types';
+import { X } from 'lucide-react';
 
 import IconButton from './IconButton';
 

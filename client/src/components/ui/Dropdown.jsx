@@ -80,9 +80,7 @@ const Dropdown = ({ children, content, placement = 'bottom', className = '' }) =
 
       <div
         ref={menuRef}
-        className={`absolute z-10 min-w-[160px] w-auto bg-white border border-gray-200 rounded-md shadow-lg transition-all ${
-          isOpen ? 'visible opacity-100 scale-100' : 'invisible opacity-0 scale-95'
-        } ${menuClasses}`}
+        className={`absolute z-10 min-w-[160px] w-auto bg-white border border-gray-200 rounded-md shadow-lg transition-all ${isOpen ? 'visible opacity-100 scale-100' : 'invisible opacity-0 scale-95'} ${menuClasses}`}
       >
         {content}
       </div>
