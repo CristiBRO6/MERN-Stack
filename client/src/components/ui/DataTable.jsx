@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
-import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from '@tanstack/react-table';
+import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel, flexRender } from '@tanstack/react-table';
 import { useState } from 'react';
 
-import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight, Settings2, MoveVertical, ArrowUp, ArrowDown } from 'lucide-react';
+import { ChevronLeft, ChevronsLeft, ChevronRight, ChevronsRight, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 
-import IconButton from './IconButton';
 import Dropdown from './Dropdown';
 
 const DataTable = ({ columns, data, columnVisibility: colVisibility, pagination: isPagination = false, currentPage = 0, pageSize = 10, pageSizeOptions = [] }) => {
@@ -20,70 +19,66 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, pagination:
   const [columnVisibility, setColumnVisibility] = useState(colVisibility);
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState('');
+  const [columnFilters, setColumnFilters] = useState([]);
 
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
     state: {
       pagination,
       columnVisibility,
       sorting,
       globalFilter: filtering,
+      columnFilters: columnFilters,
     },
+    defaultColumn: {
+      minSize: 0,
+      size: 0,
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     onPaginationChange: setPagination,
     onColumnVisibilityChange: setColumnVisibility,
     onSortingChange: setSorting,
     onGlobalFilterChange: setFiltering,
+    onColumnFiltersChange: setColumnFilters,
   });
 
-  return (
-    <div className="flex flex-col gap-2 overflow-x-auto">
-      <div className="flex items-center gap-2">
-        <input type="text" value={filtering} onChange={(e) => setFiltering(e.target.value)} />
-        
-        <Dropdown 
-          className="w-fit"
-          placement="bottom"
-          menu={
-            <Dropdown.Content>
-              <Dropdown.Body className='px-2'>
-                <Dropdown.Group title="Columns">
-                  {table.getAllColumns().map((column) => (
-                    column.getCanHide() && (
-                      <>
-                        <label key={column.id} className="flex items-center gap-2 px-3 py-1.5 rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-200">
-                          <input
-                            checked={column.getIsVisible()}
-                            onChange={column.getToggleVisibilityHandler()}
-                            type="checkbox"
-                            className="form-checkbox h-3 w-3 text-gray-600 transition-colors duration-200"
-                          />
-                          <span className={`text-sm`}>
-                            {column.columnDef.Header}
-                          </span>
-                        </label>
-                      </>
-                    )
-                  ))}
-                </Dropdown.Group>
-              </Dropdown.Body>
-            </Dropdown.Content>
-          }
-        >
-          <IconButton icon={Settings2} />
-        </Dropdown>
-      </div>
+  const columnsCount =
+    table.getAllColumns().filter((column) => column.getIsVisible()).length -
+    table
+      .getAllColumns()
+      .filter(
+        (column) =>
+          (column.getSize() !== 0) &&
+          column.getIsVisible()
+      ).length;
 
-      <table className="min-w-full table-auto border-collapse border border-gray-300">
+  return (
+    <div className="flex flex-col gap-2 overflow-x-hidden">
+      <input type="text" value={filtering} onChange={(e) => setFiltering(e.target.value)} />
+
+      <table className="min-w-full table-auto border-collapse border border-gray-300 rounded-md">
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id} className="bg-gray-100">
               {headerGroup.headers.map(header => (
-                <th key={header.id} className="px-4 py-2 border border-gray-300 text-left text-sm font-medium text-gray-600">
+                <th 
+                  key={header.id} 
+                  className="px-4 py-2 border border-gray-300 text-left text-sm font-medium text-gray-600"
+                  style={{
+                    width: 
+                      header.column.getSize() !== 0
+                        ? header.column.getSize()
+                        : `${100 / columnsCount}%`,
+                    minWidth: 
+                      header.column.getSize() !== 0
+                        ? header.column.getSize()
+                        : `${100 / columnsCount}%`
+                  }}
+                >
                   {header.column.getCanSort() ? (
                     <Dropdown 
                       className="w-fit"
@@ -116,18 +111,28 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, pagination:
                       }
                     >
                       <div className="flex items-center gap-1 px-2 py-1 cursor-pointer rounded-md hover:bg-slate-200 w-fit">
-                        {header.column.columnDef.Header}
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                         {
                           header.column.getIsSorted() ? (
                             {asc: <ArrowUp className="size-4" />, desc: <ArrowDown className="size-4" />}[header.column.getIsSorted() ?? null]
                           ) : (
-                            <MoveVertical className="size-4" />
+                            <ArrowUpDown className="size-4" />
                           )
                         }
                       </div>
                     </Dropdown>
                   ) : (
-                    header.column.columnDef.Header
+                    header.isPlaceholder
+                      ? null
+                      : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )
                   )}
                 </th>
               ))}
@@ -140,7 +145,12 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, pagination:
               <tr key={row.id} className="bg-white hover:bg-gray-50">
                 {row.getVisibleCells().map(cell => (
                   <td key={cell.id} className="px-4 py-2 border border-gray-300 text-sm text-gray-700">
-                    {cell.getValue()}
+                    {cell.isPlaceholder
+                      ? null
+                      : flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
                   </td>
                 ))}
               </tr>

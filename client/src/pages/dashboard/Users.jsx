@@ -1,24 +1,67 @@
 import DataTable from '../../components/ui/DataTable';
+import Dropdown from '../../components/ui/Dropdown';
+import IconButton from '../../components/ui/IconButton';
+
+import { Settings2, Ellipsis } from 'lucide-react';
 
 const columns = [
   {
-    Header: 'Name',
     accessorKey: 'name',
+    header: 'Name',
     enableHiding: false,
-    cell: (props) => <span>{props.getValue()?.name}</span>,
   },
   {
-    Header: 'Email',
     accessorKey: 'email',
+    header: 'Email',
     enableHiding: false,
     enableSorting: false,
-    cell: (props) => <span>{props.getValue()?.email}</span>,
   },
   {
-    Header: 'Role',
     accessorKey: 'role',
-    cell: (props) => <span>{props.getValue()?.role}</span>,
+    header: 'Role',
   },
+  {
+    id: 'actions',
+    header: ({ table }) => (
+      <Dropdown 
+        className="w-fit"
+        placement="bottom"
+        menu={
+          <Dropdown.Content>
+            <Dropdown.Body className='px-2'>
+              <Dropdown.Group title="Columns">
+                {table.getAllColumns().filter((column) => typeof column.accessorFn !== 'undefined' && column.getCanHide()).map((column) => (
+                  column.getCanHide() && (
+                    <>
+                      <label key={column.id} className="flex items-center gap-2 px-3 py-1.5 rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-200">
+                        <input
+                          checked={column.getIsVisible()}
+                          onChange={column.getToggleVisibilityHandler()}
+                          type="checkbox"
+                          className="form-checkbox h-3 w-3 text-gray-600 transition-colors duration-200"
+                        />
+                        <span className={`text-sm`}>
+                          {column.columnDef.header}
+                        </span>
+                      </label>
+                    </>
+                  )
+                ))}
+              </Dropdown.Group>
+            </Dropdown.Body>
+          </Dropdown.Content>
+        }
+      >
+        <IconButton icon={Settings2} />
+      </Dropdown>
+    ),
+    cell: () => (
+      <Ellipsis className="size-4" />
+    ),
+    enableHiding: false,
+    enableSorting: false,
+    size: 64,
+  }
 ];
 
 const data = [
