@@ -5,20 +5,18 @@ const columns = [
     Header: 'Name',
     accessorKey: 'name',
     enableHiding: false,
-    filterFn: 'includesString',
     cell: (props) => <span>{props.getValue()?.name}</span>,
   },
   {
     Header: 'Email',
     accessorKey: 'email',
     enableHiding: false,
-    filterFn: 'includesString',
+    enableSorting: false,
     cell: (props) => <span>{props.getValue()?.email}</span>,
   },
   {
     Header: 'Role',
     accessorKey: 'role',
-    filterFn: 'includesString',
     cell: (props) => <span>{props.getValue()?.role}</span>,
   },
 ];
