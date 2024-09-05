@@ -121,13 +121,26 @@ Dropdown.Body = ({ children, className = '' }) => {
   );
 };
 
+Dropdown.Group = ({ children, title, className = '' }) => {
+  return (
+    <>
+      <div className={`flex flex-col py-1 ${className}`}>
+        <span className="font-medium text-base text-gray-700">{title}</span>
+        <div className="flex flex-col">
+          {children}
+        </div>
+      </div>
+    </>
+  );
+};
+
 Dropdown.Item = ({ item, onClick = () => {}, className = '' }) => {
   return (
     <>
       {item.type == 'item' ? (
         <Link to={item.path} onClick={onClick()} className={`${className}`}>
           <div className="flex items-center gap-2 px-4 py-2 text-gray-800 text-sm font-semibold transition-colors duration-300 hover:bg-gray-200">
-            <item.icon className="size-4" />
+            {item.icon && <item.icon className="size-4" />}
             {item.name}
           </div>
         </Link>
@@ -142,6 +155,7 @@ Dropdown.displayName = 'Dropdown';
 Dropdown.Content.displayName = 'Dropdown.Content';
 Dropdown.Header.displayName = 'Dropdown.Header';
 Dropdown.Body.displayName = 'Dropdown.Body';
+Dropdown.Group.displayName = 'Dropdown.Group';
 Dropdown.Item.displayName = 'Dropdown.Item';
 
 Dropdown.propTypes = {
@@ -163,6 +177,12 @@ Dropdown.Header.propTypes = {
 
 Dropdown.Body.propTypes = {
   children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+};
+
+Dropdown.Group.propTypes = {
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string,
   className: PropTypes.string,
 };
 

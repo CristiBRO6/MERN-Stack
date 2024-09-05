@@ -4,11 +4,13 @@ const columns = [
   {
     Header: 'Name',
     accessorKey: 'name',
+    enableHiding: false,
     cell: (props) => <span>{props.getValue()?.name}</span>,
   },
   {
     Header: 'Email',
     accessorKey: 'email',
+    enableHiding: false,
     cell: (props) => <span>{props.getValue()?.email}</span>,
   },
   {
@@ -60,6 +62,13 @@ const Users = () => {
           <Table 
             columns={columns}
             data={data} 
+            columnVisibility={
+              {
+                name: true,
+                email: true,
+                role: true,
+              }
+            }
             pagination={true} 
           />
         </div>
