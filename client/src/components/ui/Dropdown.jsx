@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-
 const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [animatedClasses, setAnimatedClasses] = useState('invisible opacity-0 scale-95');
@@ -105,7 +104,7 @@ const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
 
 Dropdown.Toggle = ({ children, className = '' }) => {
   return (
-    <div className={`flex flex-col ${className}`}>
+    <div className={`flex flex-row ${className}`}>
       {children}
     </div>
   );
@@ -138,7 +137,7 @@ Dropdown.Body = ({ children, className = '' }) => {
 Dropdown.Group = ({ children, title, className = '' }) => {
   return (
     <div className="flex flex-col gap-1 p-1">
-      {title && <span className="font-medium text-base text-gray-700">{title}</span>}
+      {title && <span className="font-semibold text-sm text-gray-700">{title}</span>}
       <div className={`flex flex-col ${className}`}>
         {children}
       </div>
@@ -150,7 +149,10 @@ Dropdown.Item = ({ item, onClick = () => {}, className = '' }) => {
   const ItemContent = () => (
     <div 
       className={`flex items-center gap-2 px-2 py-1 text-sm font-medium rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-100 [&.active]:bg-gray-100 ${className}`}
-      onClick={onClick}
+      onClick={() => {
+        onClick();
+
+      }}
     >
       {item.icon && <item.icon className="size-4" />}
       {item.name}

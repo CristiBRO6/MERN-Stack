@@ -1,7 +1,9 @@
 import DataTable from '../../components/DataTable';
 import ColumnToggler from '../../components/table/ColumnToggler';
 
-import {  Ellipsis } from 'lucide-react';
+import Badge from '../../components/ui/Badge';
+
+import { Ellipsis } from 'lucide-react';
 
 const columns = [
   {
@@ -18,6 +20,24 @@ const columns = [
   {
     accessorKey: 'role',
     header: 'Role',
+    cell: ({ getValue }) => {
+      const role = getValue();
+      let color = 'default';
+      
+      switch (role) {
+        case 'User':
+          color = 'default';
+          break;
+        case 'Admin':
+          color = 'error';
+          break;
+        default:
+          color = 'default';
+          break;
+      }
+
+      return <Badge color={color}>{role}</Badge>;
+    },
   },
   {
     id: 'actions',

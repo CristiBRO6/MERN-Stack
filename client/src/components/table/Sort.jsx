@@ -7,7 +7,7 @@ import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 const Sort = ({ children, header }) => {
   return (
     <>
-      <Dropdown className="w-fit" placement="bottom">
+      <Dropdown placement="bottom">
         <Dropdown.Toggle>
           <Button>
             {children}

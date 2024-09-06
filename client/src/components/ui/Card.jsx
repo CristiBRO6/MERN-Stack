@@ -4,7 +4,7 @@ const Card = ({ children, width = 500, className = '' }) => {
   return (
     <>
       <div 
-        className={`flex flex-col bg-white rounded-lg shadow-lg border ${className}`}
+        className={`flex flex-col bg-white rounded-lg shadow-md border ${className}`}
         style={{width: width}}
       >
         {children}
