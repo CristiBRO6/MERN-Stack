@@ -23,26 +23,28 @@ const Sort = ({ children, header }) => {
           </Button>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Body className="px-2">
-            <Dropdown.Group className="gap-1" title="Sorting">
-              <div 
-                className={`flex items-center gap-2 px-2 py-1 rounded-md cursor-pointer transition-colors duration-300 hover:bg-slate-100  ${header.column.getIsSorted() == "asc" ? "bg-slate-100" : ""}`}
+          <Dropdown.Body>
+            <Dropdown.Group className="gap-1">
+              <Dropdown.Item 
+                item = {{
+                  name: "Asc",
+                  icon: ArrowUp
+                }}
+                className={`${header.column.getIsSorted() == "asc" ? "active" : ""}`}
                 onClick={() =>{
                   header.column.getIsSorted() === "asc" ? header.column.clearSorting() : header.column.toggleSorting(false);
                 }}
-              >
-                <ArrowUp className="size-4" />
-                Asc
-              </div>
-              <div 
-                className={`flex items-center gap-2 px-2 py-1 rounded-md cursor-pointer transition-colors duration-300 hover:bg-slate-100 ${header.column.getIsSorted() == "desc" ? "bg-slate-100" : ""}`}
+              />
+              <Dropdown.Item 
+                item = {{
+                  name: "Desc",
+                  icon: ArrowDown
+                }}
+                className={`${header.column.getIsSorted() == "desc" ? "active" : ""}`}
                 onClick={() => {
                   header.column.getIsSorted() === "desc" ? header.column.clearSorting() : header.column.toggleSorting(true);
                 }}
-              >
-                <ArrowDown className="size-4" />
-                Desc
-              </div>
+              />
             </Dropdown.Group>
           </Dropdown.Body>
         </Dropdown.Menu>

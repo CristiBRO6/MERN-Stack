@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types';
 import Dropdown from '../ui/Dropdown';
 import IconButton from '../ui/IconButton';
-import { Settings2 } from 'lucide-react';
+import { Settings2, Check } from 'lucide-react';
+
+const PlaceholderIcon = () => (
+  <div className="w-4 h-4 opacity-0"></div>
+);
 
 const ColumnToggler = ({ table }) => {
   return (
@@ -11,26 +15,24 @@ const ColumnToggler = ({ table }) => {
           <IconButton icon={Settings2} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
-            <Dropdown.Body className='px-2'>
-              <Dropdown.Group title="Columns">
-                {table.getAllColumns().filter((column) => typeof column.accessorFn !== 'undefined' && column.getCanHide()).map((column) => (
-                  column.getCanHide() && (
-                    <label key={column.id} className="flex items-center gap-2 px-3 py-1.5 rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-200">
-                      <input
-                        checked={column.getIsVisible()}
-                        onChange={column.getToggleVisibilityHandler()}
-                        type="checkbox"
-                        className="form-checkbox h-3 w-3 text-gray-600 transition-colors duration-200"
-                      />
-                      <span className={`text-sm`}>
-                        {column.columnDef.header}
-                      </span>
-                    </label>
-                  )
-                ))}
-              </Dropdown.Group>
-            </Dropdown.Body>
-          </Dropdown.Menu>
+          <Dropdown.Group title="Columns">
+            {table.getAllColumns().filter((column) => typeof column.accessorFn !== 'undefined' && column.getCanHide()).map((column) => (
+              column.getCanHide() && (
+                <Dropdown.Item
+                  key={column.id}
+                  item={{
+                    name: column.columnDef.header,
+                    icon: column.getIsVisible() ? Check : PlaceholderIcon,
+                  }}
+                  className={`${column.getIsVisible() ? 'active' : ''}`}
+                  onClick={() => {
+                    column.toggleVisibility(!column.getIsVisible()); 
+                  }}
+                />
+              )
+            ))}
+          </Dropdown.Group>
+        </Dropdown.Menu>
       </Dropdown>
     </>
   )

@@ -30,7 +30,7 @@ const Navbar = ({ openDrawer }) => {
         <Dropdown.Toggle>
           <div className="flex items-center gap-2 cursor-pointer">
             <div className="bg-gray-100 p-2 rounded-full overflow-hidden">
-              <User className="size-6" />
+              <User className="size-4" />
             </div>
           </div>
         </Dropdown.Toggle>
@@ -40,14 +40,13 @@ const Navbar = ({ openDrawer }) => {
             <span className="text-gray-800 text-xs leading-none text">cristibro@gmail.com</span>
           </Dropdown.Head>
           <Dropdown.Body>
-            {dropdownItems.map((item) => {
-              if (item.type === 'item') {
-                return <Dropdown.Item key={item.id} item={item} />;
-              } else if (item.type === 'separator') {
-                return <Dropdown.Separator key={item.id} />;
-              }
-              return null;
-            })}
+          {dropdownItems.map((item) => 
+            item.type === 'item' ? (
+              <Dropdown.Item key={item.id} item={item} />
+            ) : item.type === 'separator' ? (
+              <Dropdown.Separator key={item.id} />
+            ) : null
+          )}
           </Dropdown.Body>
         </Dropdown.Menu>
       </Dropdown>

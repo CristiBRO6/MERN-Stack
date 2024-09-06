@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import Separator from './Separator';
 
 const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [animatedClasses, setAnimatedClasses] = useState('invisible opacity-0 scale-95');
   const dropdownRef = useRef(null);
   const menuRef = useRef(null);
 
@@ -75,6 +76,10 @@ const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
     if (isOpen) {
       resetDropdownPosition();
       adjustDropdownPosition();
+
+      setAnimatedClasses("visible opacity-100 scale-100");
+    } else {
+      setAnimatedClasses('invisible opacity-0 scale-95');
     }
   }, [isOpen]);
 
@@ -92,8 +97,8 @@ const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
         {children[0]}
       </div>
 
-      <div ref={menuRef} className={`absolute z-[50] min-w-[160px] w-auto bg-white border border-gray-200 rounded-md shadow-lg transition-all ${isOpen ? 'visible opacity-100 scale-100' : 'invisible opacity-0 scale-95'} ${menuClasses}`}>
-      {children[1]}
+      <div ref={menuRef} className={`absolute z-[50] bg-white border border-gray-200 rounded-md shadow-lg transition-all ${isOpen ? 'block ' : 'hidden'} ${animatedClasses} ${menuClasses}`}>
+        {children[1]}
       </div>
     </div>
   );
@@ -101,67 +106,66 @@ const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
 
 Dropdown.Toggle = ({ children, className = '' }) => {
   return (
-    <>
-      <div className={`flex flex-col ${className}`}>
-        {children}
-      </div>
-    </>
+    <div className={`flex flex-col ${className}`}>
+      {children}
+    </div>
   );
 };
 
 Dropdown.Menu = ({ children, className = '' }) => {
   return (
-    <>
-      <div className={`flex flex-col ${className}`}>
-        {children}
-      </div>
-    </>
+    <div className={`flex flex-col min-w-[160px] w-auto ${className}`}>
+      {children}
+    </div>
   );
 };
 
 Dropdown.Head = ({ children, className = '' }) => {
   return (
-    <>
-      <div className={`flex flex-col gap-1 border-b px-4 py-2 ${className}`}>
-        {children}
-      </div>
-    </>
+    <div className={`flex flex-col border-b ${className}`}>
+      {children}
+    </div>
   );
 };
 
 Dropdown.Body = ({ children, className = '' }) => {
   return (
-    <>
-      <div className={`flex flex-col py-1 ${className}`}>
-        {children}
-      </div>
-    </>
+    <div className={`flex flex-col ${className}`}>
+      {children}
+    </div>
   );
 };
 
 Dropdown.Group = ({ children, title, className = '' }) => {
   return (
-    <>
-      <div className="flex flex-col py-1 gap-1">
-        <span className="font-medium text-base text-gray-700">{title}</span>
-        <div className={`flex flex-col ${className}`}>
-          {children}
-        </div>
+    <div className="flex flex-col gap-1 p-1">
+      {title && <span className="font-medium text-base text-gray-700">{title}</span>}
+      <div className={`flex flex-col ${className}`}>
+        {children}
       </div>
-    </>
+    </div>
   );
 };
 
 Dropdown.Item = ({ item, onClick = () => {}, className = '' }) => {
-  return (
-    <>
-      <Link to={item.path} onClick={onClick()}>
-        <div className={`flex items-center gap-2 px-4 py-2 text-gray-800 text-sm font-semibold transition-colors duration-300 hover:bg-gray-200 ${className}`}>
-          {item.icon && <item.icon className="size-4" />}
-          {item.name}
-        </div>
-      </Link>
-    </>
+  const ItemContent = () => (
+    <div 
+      className={`flex items-center gap-2 px-2 py-1 text-sm font-medium rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-100 [&.active]:bg-gray-100 ${className}`}
+      onClick={onClick}
+    >
+      {item.icon && <item.icon className="size-4" />}
+      {item.name}
+    </div>
+  );
+
+  return item.path ? (
+    <Link to={item.path}>
+      <ItemContent />
+    </Link>
+  ) : (
+    <React.Fragment>
+      <ItemContent />
+    </React.Fragment>
   );
 };
 
@@ -212,8 +216,6 @@ Dropdown.Group.propTypes = {
 
 Dropdown.Item.propTypes = {
   item: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
     path: PropTypes.string,
     name: PropTypes.string,
     icon: PropTypes.elementType,
