@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-
-import Separator from './Separator';
 
 const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -122,7 +120,7 @@ Dropdown.Menu = ({ children, className = '' }) => {
 
 Dropdown.Head = ({ children, className = '' }) => {
   return (
-    <div className={`flex flex-col border-b ${className}`}>
+    <div className={`flex flex-col ${className}`}>
       {children}
     </div>
   );
@@ -163,14 +161,14 @@ Dropdown.Item = ({ item, onClick = () => {}, className = '' }) => {
       <ItemContent />
     </Link>
   ) : (
-    <React.Fragment>
-      <ItemContent />
-    </React.Fragment>
+    <ItemContent />
   );
 };
 
 Dropdown.Separator = () => {
-  return (<Separator />)
+  return (
+    <div className="border-t" />
+  )
 };
 
 Dropdown.displayName = 'Dropdown';

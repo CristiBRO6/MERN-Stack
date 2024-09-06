@@ -34,12 +34,12 @@ const Navbar = ({ openDrawer }) => {
             </div>
           </div>
         </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Head>
+        <Dropdown.Menu className="p-1">
+          <Dropdown.Head className="gap-1 px-2 pb-1 border-b">
             <span className="font-medium text-sm leading-none">CristiBRO</span>
             <span className="text-gray-800 text-xs leading-none text">cristibro@gmail.com</span>
           </Dropdown.Head>
-          <Dropdown.Body>
+          <Dropdown.Body className="gap-1 pt-1">
           {dropdownItems.map((item) => 
             item.type === 'item' ? (
               <Dropdown.Item key={item.id} item={item} />
