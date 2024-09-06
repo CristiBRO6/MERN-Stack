@@ -1,48 +1,50 @@
 import PropTypes from 'prop-types';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
+import IconButton from '../ui/IconButton';
+import Dropdown from '../ui/Dropdown';
+import { useState } from 'react';
+
 const Pagination = ({ table, pagination, pageSizeOptions }) => {
+  const [pageSize, setPageSize] = useState(pagination.pageSize);
+
   return (
     <>
       <div className="flex items-center justify-between">
         {pageSizeOptions.length ? (
-          <select
-            className="cursor-pointer bg-gray-200 rounded-md p-1"
-            value={table.getState().pagination.pageSize}
-            onChange={e => {
-              table.setPageSize(Number(e.target.value))
-            }}
-          >
-            {pageSizeOptions.map(pageSize => (
-              <option key={pageSize} value={pageSize}>
+          <Dropdown placement="bottom">
+            <Dropdown.Toggle>
+              <div className="px-2 py-1 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300 hover:bg-gray-100">
                 {pageSize}
-              </option>
-            ))}
-          </select>
+              </div>
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="min-w-[120px]">
+              <Dropdown.Body className="px-1 gap-1">
+                {pageSizeOptions.map((option, index) => (
+                  <>
+                    <div 
+                      key={index} 
+                      className={`px-2 py-1 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300 ${pageSize === option ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+                      onClick={() => {
+                        setPageSize(option);
+                        table.setPageSize(Number(option));
+                      }}
+                    >
+                      {option}
+                    </div>
+                  </>
+                ))}
+              </Dropdown.Body>
+            </Dropdown.Menu>
+          </Dropdown>
         ) : (<div></div>)}
-        
         <div className="flex items-center gap-2">
-          <div className="font-normal text-sm">Page {pagination.pageIndex + 1} of {table.getPageCount()} pages</div>
-          <button className="bg-gray-200 cursor-pointer px-2 py-1 rounded-md text-sm" onClick={() => table.firstPage()} disabled={!table.getCanPreviousPage()}>
-            <ChevronsLeft className='size-4' />
-          </button>
-          <button 
-            className={`bg-gray-200 cursor-pointer px-2 py-1 rounded-md text-sm ${!table.getCanPreviousPage() ? "disabled:select-none disabled:cursor-not-allowed disabled:opacity-60" : ""}`} 
-            onClick={() => table.previousPage()} 
-            disabled={!table.getCanPreviousPage()}
-          >
-            <ChevronLeft className='size-4' />
-          </button>
-          <button 
-            className={`bg-gray-200 cursor-pointer px-2 py-1 rounded-md text-sm ${!table.getCanNextPage() ? "disabled:select-none disabled:cursor-not-allowed disabled:opacity-60" : ""}`} 
-            onClick={() => table.nextPage()} 
-            disabled={!table.getCanNextPage()}
-          >
-            <ChevronRight  className='size-4' />
-          </button>
-          <button className="bg-gray-200 cursor-pointer px-2 py-1 rounded-md text-sm" onClick={() => table.lastPage()}  disabled={!table.getCanNextPage()}>
-            <ChevronsRight className='size-4' />
-          </button>
+          <div className="font-medium text-sm">Page {pagination.pageIndex + 1} of {table.getPageCount()} pages</div>
+
+          <IconButton icon={ChevronsLeft} onClick={() => table.firstPage()} disabled={!table.getCanPreviousPage()} />
+          <IconButton icon={ChevronLeft} onClick={() => table.previousPage()}  disabled={!table.getCanPreviousPage()} />
+          <IconButton icon={ChevronRight} onClick={() => table.nextPage()} disabled={!table.getCanNextPage()} />
+          <IconButton icon={ChevronsRight} onClick={() => table.lastPage()}  disabled={!table.getCanNextPage()} />
         </div>
       </div>
     </>
