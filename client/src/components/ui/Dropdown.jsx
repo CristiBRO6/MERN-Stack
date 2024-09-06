@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
+
 const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [animatedClasses, setAnimatedClasses] = useState('invisible opacity-0 scale-95');
