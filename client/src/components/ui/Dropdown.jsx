@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Separator from './Separator';
 
-const Dropdown = ({ children, menu, placement = 'bottom', className = '' }) => {
+const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const menuRef = useRef(null);
@@ -13,19 +13,19 @@ const Dropdown = ({ children, menu, placement = 'bottom', className = '' }) => {
 
   switch (placement) {
     case 'top':
-      menuClasses = 'bottom-full mb-2';
+      menuClasses = 'bottom-full left-0 mb-2';
       break;
     case 'bottom':
-      menuClasses = 'top-full mt-2';
+      menuClasses = 'top-full left-0 mt-2';
       break;
     case 'left':
-      menuClasses = 'right-full mr-2';
+      menuClasses = 'right-full top-0 mr-2';
       break;
     case 'right':
-      menuClasses = 'left-full ml-2';
+      menuClasses = 'left-full top-0 ml-2';
       break;
     default:
-      menuClasses = 'top-full mt-2';
+      menuClasses = 'top-full left-0 mt-2';
   }
 
   const toggleDropdown = () => {
@@ -42,6 +42,8 @@ const Dropdown = ({ children, menu, placement = 'bottom', className = '' }) => {
     if (menuRef.current) {
       menuRef.current.style.left = '';
       menuRef.current.style.right = '';
+      menuRef.current.style.top = '';
+      menuRef.current.style.bottom = '';
     }
   };
 
@@ -49,7 +51,8 @@ const Dropdown = ({ children, menu, placement = 'bottom', className = '' }) => {
     if (menuRef.current) {
       const rect = menuRef.current.getBoundingClientRect();
       const viewportWidth = window.innerWidth;
-
+      const viewportHeight = window.innerHeight;
+  
       if (rect.left < 0) {
         menuRef.current.style.left = '0';
         menuRef.current.style.right = 'auto';
@@ -57,9 +60,17 @@ const Dropdown = ({ children, menu, placement = 'bottom', className = '' }) => {
         menuRef.current.style.right = '0';
         menuRef.current.style.left = 'auto';
       }
+  
+      if (rect.top < 0) {
+        menuRef.current.style.top = '0';
+        menuRef.current.style.bottom = 'auto';
+      } else if (rect.bottom > viewportHeight) {
+        menuRef.current.style.bottom = '0';
+        menuRef.current.style.top = 'auto';
+      }
     }
   };
-
+  
   useEffect(() => {
     if (isOpen) {
       resetDropdownPosition();
@@ -77,21 +88,18 @@ const Dropdown = ({ children, menu, placement = 'bottom', className = '' }) => {
 
   return (
     <div ref={dropdownRef} className={`relative ${className}`}>
-      <div onClick={toggleDropdown} className="cursor-pointer">
-        {children}
+      <div onClick={toggleDropdown} className="w-fit">
+        {children[0]}
       </div>
 
-      <div
-        ref={menuRef}
-        className={`absolute z-10 min-w-[160px] w-auto bg-white border border-gray-200 rounded-md shadow-lg transition-all ${isOpen ? 'visible opacity-100 scale-100' : 'invisible opacity-0 scale-95'} ${menuClasses}`}
-      >
-        {menu}
+      <div ref={menuRef} className={`absolute z-[50] min-w-[160px] w-auto bg-white border border-gray-200 rounded-md shadow-lg transition-all ${isOpen ? 'visible opacity-100 scale-100' : 'invisible opacity-0 scale-95'} ${menuClasses}`}>
+      {children[1]}
       </div>
     </div>
   );
 };
 
-Dropdown.Content = ({ children, className = '' }) => {
+Dropdown.Toggle = ({ children, className = '' }) => {
   return (
     <>
       <div className={`flex flex-col ${className}`}>
@@ -101,7 +109,17 @@ Dropdown.Content = ({ children, className = '' }) => {
   );
 };
 
-Dropdown.Header = ({ children, className = '' }) => {
+Dropdown.Menu = ({ children, className = '' }) => {
+  return (
+    <>
+      <div className={`flex flex-col ${className}`}>
+        {children}
+      </div>
+    </>
+  );
+};
+
+Dropdown.Head = ({ children, className = '' }) => {
   return (
     <>
       <div className={`flex flex-col gap-1 border-b px-4 py-2 ${className}`}>
@@ -137,40 +155,46 @@ Dropdown.Group = ({ children, title, className = '' }) => {
 Dropdown.Item = ({ item, onClick = () => {}, className = '' }) => {
   return (
     <>
-      {item.type == 'item' ? (
-        <Link to={item.path} onClick={onClick()}>
-          <div className={`flex items-center gap-2 px-4 py-2 text-gray-800 text-sm font-semibold transition-colors duration-300 hover:bg-gray-200 ${className}`}>
-            {item.icon && <item.icon className="size-4" />}
-            {item.name}
-          </div>
-        </Link>
-      ) : (
-        <Separator />
-      )}
+      <Link to={item.path} onClick={onClick()}>
+        <div className={`flex items-center gap-2 px-4 py-2 text-gray-800 text-sm font-semibold transition-colors duration-300 hover:bg-gray-200 ${className}`}>
+          {item.icon && <item.icon className="size-4" />}
+          {item.name}
+        </div>
+      </Link>
     </>
   );
 };
 
+Dropdown.Separator = () => {
+  return (<Separator />)
+};
+
 Dropdown.displayName = 'Dropdown';
-Dropdown.Content.displayName = 'Dropdown.Content';
-Dropdown.Header.displayName = 'Dropdown.Header';
+Dropdown.Toggle.displayName = 'Dropdown.Toggle';
+Dropdown.Menu.displayName = 'Dropdown.Menu';
+Dropdown.Head.displayName = 'Dropdown.Head';
 Dropdown.Body.displayName = 'Dropdown.Body';
 Dropdown.Group.displayName = 'Dropdown.Group';
 Dropdown.Item.displayName = 'Dropdown.Item';
+Dropdown.Separator.displayName = 'Dropdown.Separator';
 
 Dropdown.propTypes = {
   children: PropTypes.node.isRequired,
-  menu: PropTypes.node.isRequired,
   placement: PropTypes.string,
   className: PropTypes.string,
 };
 
-Dropdown.Content.propTypes = {
+Dropdown.Toggle.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
 
-Dropdown.Header.propTypes = {
+Dropdown.Menu.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+};
+
+Dropdown.Head.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };

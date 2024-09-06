@@ -82,10 +82,10 @@ const Users = () => {
             }
             paginationOptions={
               {
-                pagination: true,  // Optional, Default false
-                currentPage: 0, // Optional, Default 0
-                pageSize: 10, // Optional, Default 10
-                pageSizeOptions: [10, 20, 30, 40, 50] // Optional, Default []
+                pagination: true,
+                currentPage: 0,
+                pageSize: 10,
+                pageSizeOptions: [10, 20, 30, 40, 50]
               }
             }
           />

@@ -22,7 +22,7 @@ const Tooltip = ({ children, content, position = 'right', delay = 300 }) => {
     <div className="relative group">
       {children}
       <div 
-        className={`absolute ${className} rounded-md px-2 py-1 bg-gray-100 text-gray-800 text-sm font-semibold cursor-default shadow-md invisible opacity-20 transition-all group-hover:visible group-hover:opacity-100`}
+        className={`absolute ${className} z-[50] rounded-md px-2 py-1 bg-gray-100 text-gray-800 text-sm font-semibold cursor-default shadow-md invisible opacity-20 transition-all group-hover:visible group-hover:opacity-100`}
         style={{
           transitionDelay: `${delay}ms`,
         }}

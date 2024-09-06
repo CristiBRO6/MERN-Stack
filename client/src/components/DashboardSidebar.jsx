@@ -22,7 +22,7 @@ const Sidebar = ({ className }) => {
 
   return (
     <>
-      <div className={`${className} flex flex-col h-screen ${isCollapsed ? "" : "w-[var(--sidebar-width)]"} bg-white p-2 shadow-md`}>
+      <div className={`flex flex-col h-screen ${isCollapsed ? "" : "w-[var(--sidebar-width)]"} bg-white z-[101] p-2 shadow-md ${className}`}>
         <div className="flex items-center justify-between gap-2 pb-2 border-b">
           {!isCollapsed && <Link to="/" className="text-xl font-bold">React</Link>}
           <div className="p-2 lg:hidden">

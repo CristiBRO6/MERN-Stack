@@ -25,7 +25,7 @@ export const TableHeader = ({ children, className = "", style = {} }) => {
 export const TableHead = ({ children, className = "", style = {} }) => {
   return (
     <>
-      <th className={`p-4 bg-gray-100 text-gray-700 font-semibold text-left ${className}`} style={style}>
+      <th className={`p-3 bg-gray-100 text-gray-700 font-semibold text-left ${className}`} style={style}>
         {children}
       </th>
     </>
@@ -45,7 +45,7 @@ export const TableBody = ({ children, className = "", style = {} }) => {
 export const TableCell = ({ children, className = "", style = {} }) => {
   return (
     <>
-      <td className={`px-4 py-3 whitespace-nowrap text-gray-600 ${className}`} style={style}>
+      <td className={`p-3 whitespace-nowrap text-gray-600 ${className}`} style={style}>
         {children}
       </td>
     </>

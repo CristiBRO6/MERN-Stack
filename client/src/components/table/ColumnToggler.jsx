@@ -6,11 +6,11 @@ import { Settings2 } from 'lucide-react';
 const ColumnToggler = ({ table }) => {
   return (
     <>
-      <Dropdown 
-        className="w-fit"
-        placement="bottom"
-        menu={
-          <Dropdown.Content>
+      <Dropdown placement="bottom">
+        <Dropdown.Toggle>
+          <IconButton icon={Settings2} />
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
             <Dropdown.Body className='px-2'>
               <Dropdown.Group title="Columns">
                 {table.getAllColumns().filter((column) => typeof column.accessorFn !== 'undefined' && column.getCanHide()).map((column) => (
@@ -30,10 +30,7 @@ const ColumnToggler = ({ table }) => {
                 ))}
               </Dropdown.Group>
             </Dropdown.Body>
-          </Dropdown.Content>
-        }
-      >
-        <IconButton icon={Settings2} />
+          </Dropdown.Menu>
       </Dropdown>
     </>
   )

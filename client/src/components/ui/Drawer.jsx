@@ -19,7 +19,7 @@ const Drawer = ({ children, title = "Menu", drawerOpen, closeDrawer }) => {
       </div>
 
       <div 
-        className={`fixed top-0 left-0 w-screen h-screen bg-black/50 z-[500] transition-[opacity, visibility] duration-300 ${drawerOpen ? "opacity-100 visible" : "opacity-0 invisible"}`} 
+        className={`fixed top-0 left-0 w-screen h-screen bg-black/50 z-[999] transition-[opacity, visibility] duration-300 ${drawerOpen ? "opacity-100 visible" : "opacity-0 invisible"}`} 
         onClick={closeDrawer} 
       />
     </div>

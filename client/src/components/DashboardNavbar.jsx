@@ -12,12 +12,11 @@ const dropdownItems = [
   { id: 5, type: 'item', path: "/logout", name: "Logout", icon: LogOut },
 ];
 
-
 const Navbar = ({ openDrawer }) => {
   const screenSizeIndex = useResponsive([768, 1024, 1280]);
 
   return (
-    <div className="flex items-center justify-between w-full min-h-[--navbar-height] h-[var(--navbar-height)] max-h-[--navbar-height] bg-white shadow-md px-4">
+    <div className="flex items-center justify-between [100] w-full min-h-[--navbar-height] h-[var(--navbar-height)] max-h-[--navbar-height] bg-white shadow-md px-4">
       <div className="flex items-center gap-2">
         {screenSizeIndex < 1 && (
           <>
@@ -27,25 +26,30 @@ const Navbar = ({ openDrawer }) => {
           </>
         )}
       </div>
-      <Dropdown 
-        menu={
-          <Dropdown.Content>
-            <Dropdown.Header>
-              <span className="font-medium text-sm leading-none">CristiBRO</span>
-              <span className="text-gray-800 text-xs leading-none text">cristibro@gmail.com</span>
-            </Dropdown.Header>
-            <Dropdown.Body>
-              {dropdownItems.map((item) => <Dropdown.Item key={item.id} item={item} /> )}
-            </Dropdown.Body>
-          </Dropdown.Content>
-        } 
-        placement="bottom"
-      >
-        <div className="flex items-center gap-2">
-          <div className="bg-gray-100 p-2 rounded-full overflow-hidden">
-            <User className="size-6" />
+      <Dropdown placement="bottom">
+        <Dropdown.Toggle>
+          <div className="flex items-center gap-2 cursor-pointer">
+            <div className="bg-gray-100 p-2 rounded-full overflow-hidden">
+              <User className="size-6" />
+            </div>
           </div>
-        </div>
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Head>
+            <span className="font-medium text-sm leading-none">CristiBRO</span>
+            <span className="text-gray-800 text-xs leading-none text">cristibro@gmail.com</span>
+          </Dropdown.Head>
+          <Dropdown.Body>
+            {dropdownItems.map((item) => {
+              if (item.type === 'item') {
+                return <Dropdown.Item key={item.id} item={item} />;
+              } else if (item.type === 'separator') {
+                return <Dropdown.Separator key={item.id} />;
+              }
+              return null;
+            })}
+          </Dropdown.Body>
+        </Dropdown.Menu>
       </Dropdown>
     </div>
   );
