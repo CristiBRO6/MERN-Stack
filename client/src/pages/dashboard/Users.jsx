@@ -1,8 +1,7 @@
-import DataTable from '../../components/ui/DataTable';
-import Dropdown from '../../components/ui/Dropdown';
-import IconButton from '../../components/ui/IconButton';
+import DataTable from '../../components/DataTable';
+import ColumnToggler from '../../components/table/ColumnToggler';
 
-import { Settings2, Ellipsis } from 'lucide-react';
+import {  Ellipsis } from 'lucide-react';
 
 const columns = [
   {
@@ -22,39 +21,7 @@ const columns = [
   },
   {
     id: 'actions',
-    header: ({ table }) => (
-      <Dropdown 
-        className="w-fit"
-        placement="bottom"
-        menu={
-          <Dropdown.Content>
-            <Dropdown.Body className='px-2'>
-              <Dropdown.Group title="Columns">
-                {table.getAllColumns().filter((column) => typeof column.accessorFn !== 'undefined' && column.getCanHide()).map((column) => (
-                  column.getCanHide() && (
-                    <>
-                      <label key={column.id} className="flex items-center gap-2 px-3 py-1.5 rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-200">
-                        <input
-                          checked={column.getIsVisible()}
-                          onChange={column.getToggleVisibilityHandler()}
-                          type="checkbox"
-                          className="form-checkbox h-3 w-3 text-gray-600 transition-colors duration-200"
-                        />
-                        <span className={`text-sm`}>
-                          {column.columnDef.header}
-                        </span>
-                      </label>
-                    </>
-                  )
-                ))}
-              </Dropdown.Group>
-            </Dropdown.Body>
-          </Dropdown.Content>
-        }
-      >
-        <IconButton icon={Settings2} />
-      </Dropdown>
-    ),
+    header: ({ table }) => <ColumnToggler table={table} />,
     cell: () => (
       <Ellipsis className="size-4" />
     ),
@@ -113,8 +80,14 @@ const Users = () => {
                 role: true,
               }
             }
-            pagination={true} 
-            pageSizeOptions={[10, 20, 30, 40, 50]}
+            paginationOptions={
+              {
+                pagination: true,  // Optional, Default false
+                currentPage: 0, // Optional, Default 0
+                pageSize: 10, // Optional, Default 10
+                pageSizeOptions: [10, 20, 30, 40, 50] // Optional, Default []
+              }
+            }
           />
         </div>
       </>
