@@ -3,6 +3,7 @@ import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowMode
 import { useState } from 'react';
 
 import Sort from './table/Sort';
+import Search from './table/Search';
 import Pagination from './table/Pagination';
 
 import { Table, TableHeader, TableBody, TableCell, TableHead, TableRow, } from './table/Table'
@@ -66,7 +67,7 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationO
 
   return (
     <div className="flex flex-col gap-2">
-      <input type="text" value={filtering} onChange={(e) => setFiltering(e.target.value)} />
+      <Search placeholder="Search..." value={filtering} setValue={setFiltering} />
 
       <Table>
         <TableHeader>
@@ -88,7 +89,7 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationO
                 >
                   {!header.isPlaceholder && (
                     header.column.getCanSort() ? (
-                      <Sort header={header}>
+                      <Sort header={header} className="-mx-3">
                         {flexRender(header.column.columnDef.header, header.getContext())}
                       </Sort>
                     ) : (

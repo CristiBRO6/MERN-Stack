@@ -10,10 +10,10 @@ const SidebarItem = ({ isCollapsed = false, item, onClick = () => {}, className 
       {({ isActive }) => (
         isCollapsed ? (
           <Tooltip content={item.name} position="right">
-            <Button icon={item.icon} className={`${isActive ? 'active' : ''}`} />
+            <Button type="icon" color="transparent" icon={item.icon} className={`${isActive ? 'active' : ''}`} />
           </Tooltip>
         ) : (
-          <Button icon={item.icon} className={`text-sm font-semibold ${isActive ? 'active' : ''}`}>
+          <Button color="transparent" icon={item.icon} className={`font-semibold px-2.5 ${isActive ? 'active' : ''}`}>
             {item.name}
           </Button>
         )

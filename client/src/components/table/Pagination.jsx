@@ -21,19 +21,17 @@ const Pagination = ({ table, pagination, pageSizeOptions }) => {
             <Dropdown.Menu className="min-w-[120px]">
               <Dropdown.Body className="gap-1 p-1">
                 {pageSizeOptions.map((option, index) => (
-                  <>
-                    <Dropdown.Item 
-                      key={index}
-                      item={{
-                        name: option
-                      }} 
-                      className={`px-2 py-1 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300 ${pageSize === option ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
-                      onClick={() => {
-                        setPageSize(option);
-                        table.setPageSize(Number(option));
-                      }}
-                    />
-                  </>
+                  <Dropdown.Item 
+                    key={index}
+                    item={{
+                      name: option.toString()
+                    }} 
+                    className={`px-2 py-1 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300 ${pageSize === option ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+                    onClick={() => {
+                      setPageSize(option);
+                      table.setPageSize(Number(option));
+                    }}
+                  />
                 ))}
               </Dropdown.Body>
             </Dropdown.Menu>

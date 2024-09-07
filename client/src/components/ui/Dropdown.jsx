@@ -90,8 +90,8 @@ const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
   }, []);
 
   return (
-    <div ref={dropdownRef} className={`relative ${className}`}>
-      <div onClick={toggleDropdown} className="w-fit">
+    <div ref={dropdownRef} className={`relative w-fit ${className}`}>
+      <div onClick={toggleDropdown}>
         {children[0]}
       </div>
 

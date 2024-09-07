@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import { PanelLeftClose, PanelLeftOpen, ShoppingBag } from 'lucide-react';
 
 import SidebarItem from '../components/ui/SidebarItem';
-import IconButton from '../components/ui/IconButton';
 import useResponsive from '../hooks/useResponsive';
+import Button from './ui/Button';
 
 import { SIDEBAR_ITEMS } from '../constants';
 
@@ -22,13 +22,13 @@ const Sidebar = ({ className }) => {
 
   return (
     <>
-      <div className={`flex flex-col h-screen ${isCollapsed ? "" : "w-[var(--sidebar-width)]"} bg-white z-[101] p-2 shadow-md ${className}`}>
+      <div className={`flex flex-col h-screen ${isCollapsed ? "" : "w-[var(--sidebar-width)]"} bg-white z-[101] p-3 shadow-md ${className}`}>
         <div className="flex items-center justify-between gap-2 pb-2 border-b">
           {!isCollapsed && <Link to="/" className="text-xl font-bold">React</Link>}
           <div className="p-2 lg:hidden">
-            <ShoppingBag className="size-5" />
+            <ShoppingBag className="size-4" />
           </div>
-          <IconButton className="hidden lg:flex" icon={isCollapsed ? PanelLeftOpen : PanelLeftClose} onClick={handleToggleCollapse} />
+          <Button type="icon" color="transparent" icon={isCollapsed ? PanelLeftOpen : PanelLeftClose} onClick={handleToggleCollapse} className="hidden lg:flex" />
         </div>
         <div className="flex flex-col gap-2 pt-2">
           {SIDEBAR_ITEMS.map((item) => (

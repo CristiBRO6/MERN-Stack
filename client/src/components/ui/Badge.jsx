@@ -1,4 +1,9 @@
 import PropTypes from 'prop-types';
+import { twMerge } from 'tailwind-merge';
+
+import { X } from 'lucide-react';
+import { useState } from 'react';
+
 const Badge = ({
   children = "",
   color = "default",
@@ -8,47 +13,47 @@ const Badge = ({
   onClick = () => {},
   className = "",
 }) => {
+  const [isVisible, setIsVisible] = useState(true);
+
+  if(!isVisible) return null;
+
   const badgeColors = {
-    processing: 'bg-[#e6f4ff] text-[#1677ff] border-[#91caff]',
-    success: 'bg-[#f6ffed] text-[#52c41a] border-[#b7eb8f]',          
-    error: 'bg-[#fff2f0] text-[#ff4d4f] border-[#ffccc7]',           
-    warning: 'bg-[#fffbe6] text-[#faad14] border-[#ffe58f]',         
-    magenta: 'bg-[#fff0f6] text-[#c41d7f] border-[#ffadd2]',         
-    red: 'bg-[#fff1f0] text-[#cf1322] border-[#ffa39e]',              
-    volcano: 'bg-[#fff2e8] text-[#d4380d] border-[#ffbb96]',          
-    orange: 'bg-[#fff7e6] text-[#d46b08] border-[#ffd591]',          
-    gold: 'bg-[#fffbe6] text-[#d48806] border-[#ffe58f]',           
-    lime: 'bg-[#fcffe6] text-[#7cb305] border-[#eaff8f]',             
-    green: 'bg-[#f6ffed] text-[#389e0d] border-[#b7eb8f]',           
-    cyan: 'bg-[#e6fffb] text-[#08979c] border-[#87e8de]',             
-    blue: 'bg-[#e6f4ff] text-[#0958d9] border-[#91caff]',             
-    geekblue: 'bg-[#f0f5ff] text-[#1d39c4] border-[#adc6ff]',        
-    purple: 'bg-[#f9f0ff] text-[#531dab] border-[#d3adf7]',           
-    default: 'bg-[#fafafa] text-[#191919] border-[#d9d9d9]',         
+    processing: 'bg-blue-50 text-blue-500 border-blue-00',
+    success: 'bg-success-bg text-success-text border-success-border',          
+    error: 'bg-error-bg text-error-text border-error-border',           
+    warning: 'bg-warning-bg text-warning-text border-warning-border',         
+    magenta: 'bg-magenta-50 text-magenta-600 border-magenta-200',         
+    red: 'bg-red-50 text-red-600 border-red-200',              
+    volcano: 'bg-volcano-50 text-volcano-600 border-volcano-200',          
+    orange: 'bg-orange-50 text-orange-600 border-orange-200',          
+    gold: 'bg-gold-50 text-gold-600 border-gold-200',           
+    lime: 'bg-lime-50 text-lime-600 border-lime-200',             
+    green: 'bg-green-50 text-green-600 border-green-200',           
+    cyan: 'bg-cyan-50 text-cyan-600 border-cyan-200',             
+    blue: 'bg-blue-50 text-blue-600 border-blue-200',             
+    geekblue: 'bg-geekblue-50 text-geekblue-600 border-geekblue-200',        
+    purple: 'bg-purple-50 text-purple-600 border-purple-200',           
+    default: 'bg-[#fafafa] text-[#191919] border',         
   };
 
-  const baseClasses = 'w-fit flex items-center justify-center gap-1 text-xs font-medium rounded-[4px] px-2 py-0.5';
+  const baseClasses = "w-fit flex items-center justify-center gap-1 text-xs font-medium rounded-[4px] px-2 py-0.5";
   const colorClasses = badgeColors[color] || badgeColors.default;
-  const borderClasses = bordered ? 'border' : 'border-transparent';
+  const borderClasses = bordered ? "border" : "border-transparent";
 
   return (
-    <div
-      className={`${baseClasses} ${colorClasses} ${borderClasses} ${className}`}
-      onClick={onClick}
-    >
+    <div className={twMerge(baseClasses, colorClasses, borderClasses, className)}>
       {Icon && <Icon className="size-3" />}
       {children}
       {closable && (
-        <button
-          type="button"
-          className="ml-2 text-xs font-medium leading-none"
-          onClick={(e) => {
-            e.stopPropagation();
+        <div
+          className="cursor-pointer text-xs font-medium"
+          onClick={() => {
             onClick();
+            setIsVisible(false);
           }}
         >
-          &times;
-        </button>
+          <X className="size-3" />
+        </div>
       )}
     </div>
   );

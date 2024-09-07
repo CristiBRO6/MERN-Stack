@@ -4,22 +4,27 @@ import Dropdown from '../ui/Dropdown';
 import Button from '../ui/Button';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 
-const Sort = ({ children, header }) => {
+const Sort = ({ children, header, className = '' }) => {
   return (
     <>
-      <Dropdown placement="bottom">
+      <Dropdown placement="bottom" className={`${className}`}>
         <Dropdown.Toggle>
-          <Button>
-            {children}
-            {header.column.getIsSorted() ? (
-              header.column.getIsSorted() === "asc" ? (
-                <ArrowUp className="size-4" />
+          <Button
+            color="transparent"
+            icon={
+              header.column.getIsSorted() ? (
+                header.column.getIsSorted() === "asc" ? (
+                  ArrowUp
+                ) : (
+                  ArrowDown
+                )
               ) : (
-                <ArrowDown className="size-4" />
+                ArrowUpDown
               )
-            ) : (
-              <ArrowUpDown className="size-4" />
-            )}
+            }
+            iconPosition="end"
+          >
+            {children}
           </Button>
         </Dropdown.Toggle>
         <Dropdown.Menu>
@@ -56,6 +61,7 @@ const Sort = ({ children, header }) => {
 Sort.propTypes = {
   children: PropTypes.node.isRequired,
   header: PropTypes.object.isRequired,
+  className: PropTypes.string,
 };
 
 export default Sort;
