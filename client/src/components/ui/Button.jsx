@@ -9,6 +9,7 @@ const Button = ({
   type = "primary", 
   size = "medium",
   shape = "default", 
+  bordered = false,
   icon: Icon, 
   iconPosition = "start", 
   loading = false, 
@@ -19,13 +20,13 @@ const Button = ({
   disabled = false 
 }) => {
   const buttonColors = {
-    primary: "bg-primary text-white hover:bg-primary-hover active:bg-primary-active",
-    secondary: "bg-gray-200 text-black hover:bg-gray-300 active:bg-gray-300",
-    success: "bg-success text-white hover:bg-success-hover active:bg-success-active",
-    danger: "bg-error text-white hover:bg-error-hover active:bg-error-active",
-    warning: "bg-warning text-black hover:bg-warning-hover active:bg-warning-active",
-    info: "bg-info text-white hover:bg-info-hover active:bg-info-active",
-    transparent: "hover:bg-gray-200 active:bg-gray-200"
+    primary: "bg-primary text-white hover:bg-primary-hover [&.active]:bg-primary-active",
+    secondary: "bg-gray-200 text-black hover:bg-gray-300 [&.active]:bg-gray-300",
+    success: "bg-success text-white hover:bg-success-hover [&.active]:bg-success-active",
+    danger: "bg-error text-white hover:bg-error-hover [&.active]:bg-error-active",
+    warning: "bg-warning text-black hover:bg-warning-hover [&.active]:bg-warning-active",
+    info: "bg-info text-white hover:bg-info-hover [&.active]:bg-info-active",
+    transparent: "hover:bg-gray-200 [&.active]:bg-gray-200"
   };  
 
   const buttonTypes = {
@@ -49,7 +50,8 @@ const Button = ({
     default: "rounded-md",
   };
 
-  const baseClasses = "flex items-center justify-start gap-2 w-full text-sm font-medium transition-colors duration-300"
+  const baseClasses = "flex items-center justify-start gap-2 w-full text-sm font-medium transition-colors duration-300";
+  const borderClasses = bordered ? "border" : "";
   const loadingClasses = loading ? "" : "";
   const disabledClasses = disabled ? "disabled:select-none disabled:cursor-not-allowed disabled:opacity-60" : "";
 
@@ -61,7 +63,7 @@ const Button = ({
         baseClasses, buttonColors[color], 
         buttonTypes[type], buttonSizes[size], 
         buttonShapes[shape], loadingClasses, 
-        disabledClasses, className
+        disabledClasses, borderClasses, className
       )}
       onClick={!disabled && !loading ? onClick : undefined}
       disabled={disabled || loading}
@@ -87,6 +89,7 @@ Button.propTypes = {
   type: PropTypes.oneOf(['primary', 'dashed', 'text', 'link', 'default']),
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   shape: PropTypes.oneOf(['round', 'circle', 'default']),
+  bordered: PropTypes.bool,
   icon: PropTypes.elementType,
   iconPosition: PropTypes.oneOf(['start', 'end']),
   loading: PropTypes.bool,

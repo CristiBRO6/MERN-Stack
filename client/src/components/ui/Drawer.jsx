@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { X } from 'lucide-react';
 
-import IconButton from './IconButton';
+import Button from './Button';
 
 const Drawer = ({ children, title = "Menu", drawerOpen, closeDrawer }) => {
   return (
@@ -10,7 +10,7 @@ const Drawer = ({ children, title = "Menu", drawerOpen, closeDrawer }) => {
         <div className="flex flex-col h-full p-2">
           <div className="flex items-center justify-between gap-2 pb-2 border-b">
             <span className="text-xl font-bold">{title}</span>
-            <IconButton icon={X} onClick={closeDrawer} />
+            <Button type="icon" color="transparent" icon={X} onClick={closeDrawer} />
           </div>
           <div className="h-full overflow-y-auto pt-2">
             {children}

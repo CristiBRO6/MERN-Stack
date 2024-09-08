@@ -20,7 +20,7 @@ const Spinner = ({ color = "default", size = "medium" }) => {
     tiny: "size-3",  
     small: "size-4",
     medium: "size-5",
-    large: "size-8",
+    large: "size-6",
   }
 
   return (

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import Dropdown from '../ui/Dropdown';
-import IconButton from '../ui/IconButton';
+import Button from '../ui/Button';
 import { Settings2, Check } from 'lucide-react';
 
 const PlaceholderIcon = () => (
@@ -12,7 +12,7 @@ const ColumnToggler = ({ table }) => {
     <>
       <Dropdown placement="bottom">
         <Dropdown.Toggle>
-          <IconButton icon={Settings2} />
+          <Button type="icon" color="transparent" icon={Settings2} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Group title="Columns">

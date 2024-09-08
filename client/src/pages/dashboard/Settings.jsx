@@ -88,9 +88,9 @@ const Settigns = () => {
             <Button color="warning" disabled className="w-fit">Disabled</Button>
             <Button color="info" icon={Check} iconPosition="end" className="w-fit">With Icon</Button>
             <Button color="transparent" icon={Check} iconPosition="start" className="w-fit">With Icon</Button>
-            <Button type="icon" color="success" size="small" icon={Check} className="w-fit"></Button>
-            <Button type="icon" color="danger" size="medium" icon={Check} className="w-fit"></Button>
-            <Button type="icon" color="warning" size="large" icon={Check} className="w-fit"></Button>
+            <Button type="icon" color="success" size="small" icon={Check}></Button>
+            <Button type="icon" color="danger" size="medium" icon={Check}></Button>
+            <Button type="icon" color="warning" size="large" icon={Check}></Button>
           </div>
         </div>
       </div>

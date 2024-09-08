@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
-import IconButton from '../ui/IconButton';
 import Dropdown from '../ui/Dropdown';
 import { useState } from 'react';
+import Button from '../ui/Button';
 
 const Pagination = ({ table, pagination, pageSizeOptions }) => {
   const [pageSize, setPageSize] = useState(pagination.pageSize);
@@ -14,9 +14,7 @@ const Pagination = ({ table, pagination, pageSizeOptions }) => {
         {pageSizeOptions.length ? (
           <Dropdown placement="bottom">
             <Dropdown.Toggle>
-              <div className="px-2 py-1 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300 hover:bg-gray-100">
-                {pageSize}
-              </div>
+              <Button type="icon" color="transparent" bordered>{pageSize}</Button>
             </Dropdown.Toggle>
             <Dropdown.Menu className="min-w-[120px]">
               <Dropdown.Body className="gap-1 p-1">
@@ -26,7 +24,7 @@ const Pagination = ({ table, pagination, pageSizeOptions }) => {
                     item={{
                       name: option.toString()
                     }} 
-                    className={`px-2 py-1 rounded-md text-sm font-medium cursor-pointer transition-colors duration-300 ${pageSize === option ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+                    className={`${pageSize === option ? 'active' : ''}`}
                     onClick={() => {
                       setPageSize(option);
                       table.setPageSize(Number(option));
@@ -40,10 +38,10 @@ const Pagination = ({ table, pagination, pageSizeOptions }) => {
         <div className="flex items-center gap-2">
           <div className="font-medium text-sm">Page {pagination.pageIndex + 1} of {table.getPageCount()} pages</div>
 
-          <IconButton icon={ChevronsLeft} onClick={() => table.firstPage()} disabled={!table.getCanPreviousPage()} />
-          <IconButton icon={ChevronLeft} onClick={() => table.previousPage()}  disabled={!table.getCanPreviousPage()} />
-          <IconButton icon={ChevronRight} onClick={() => table.nextPage()} disabled={!table.getCanNextPage()} />
-          <IconButton icon={ChevronsRight} onClick={() => table.lastPage()}  disabled={!table.getCanNextPage()} />
+          <Button type="icon" color="transparent" icon={ChevronsLeft} onClick={() => table.firstPage()} bordered disabled={!table.getCanPreviousPage()} />
+          <Button type="icon" color="transparent" icon={ChevronLeft} onClick={() => table.previousPage()} bordered disabled={!table.getCanPreviousPage()} />
+          <Button type="icon" color="transparent" icon={ChevronRight} onClick={() => table.nextPage()} bordered disabled={!table.getCanNextPage()} />
+          <Button type="icon" color="transparent" icon={ChevronsRight} onClick={() => table.lastPage()} bordered  disabled={!table.getCanNextPage()} />
         </div>
       </div>
     </>
