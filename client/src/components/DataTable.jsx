@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types';
-import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel, flexRender } from '@tanstack/react-table';
 import { useState } from 'react';
+import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from '@tanstack/react-table';
 
-import Sort from './table/Sort';
+import { Table, TableHeader, TableBody} from './table/Table'
+import DataTableHeader from './table/DataTableHeader';
+import DataTableBody from './table/DataTableBody';
+
+
 import Search from './table/Search';
 import Filter from './table/Filter';
 import Pagination from './table/Pagination';
 
 import { ROLES } from '../constants';
-
-import { Table, TableHeader, TableBody, TableCell, TableHead, TableRow, } from './table/Table'
 
 const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationOptions = {} }) => {
   const {
@@ -67,62 +69,15 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationO
 
   return (
     <div className="flex flex-col gap-2">
-      <Search placeholder="Search..." setColumnFilters={setColumnFilters} columns={["name"]} />
+      <Search placeholder="Search by name..." setColumnFilters={setColumnFilters} columns={["name"]} />
       <Filter columnFilters={columnFilters} setColumnFilters={setColumnFilters} columnId={table.getColumn('role').id} statuses={ROLES} />
 
       <Table>
         <TableHeader>
-          {table.getHeaderGroups().map(headerGroup => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
-                <TableHead
-                  key={header.id}
-                  style={{
-                    width:
-                      header.column.getSize() !== 0
-                        ? header.column.getSize()
-                        : `${100 / columnsCount}%`,
-                    minWidth:
-                      header.column.getSize() !== 0
-                        ? header.column.getSize()
-                        : `${100 / columnsCount}%`,
-                  }}
-                >
-                  {!header.isPlaceholder && (
-                    header.column.getCanSort() ? (
-                      <Sort header={header} className="-mx-3">
-                        {flexRender(header.column.columnDef.header, header.getContext())}
-                      </Sort>
-                    ) : (
-                      flexRender(header.column.columnDef.header, header.getContext())
-                    )
-                  )}
-                </TableHead>
-              ))}
-            </TableRow>
-          ))}
+          <DataTableHeader table={table} columnsCount={columnsCount} />
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows.length ? (
-            table.getRowModel().rows.map(row => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map(cell => (
-                  <TableCell key={cell.id}>
-                    {!cell.isPlaceholder && flexRender(
-                      cell.column.columnDef.cell,
-                      cell.getContext()
-                    )}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={table.getAllColumns().length} className="py-10">
-                <span className="flex justify-center text-center font-semibold text-base">No results</span>
-              </TableCell>
-            </TableRow>
-          )}
+          <DataTableBody table={table} />
         </TableBody>
       </Table>
 
