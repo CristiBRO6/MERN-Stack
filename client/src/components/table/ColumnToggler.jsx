@@ -15,7 +15,7 @@ const ColumnToggler = ({ table }) => {
           <Button type="icon" color="transparent" icon={Settings2} />
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Group title="Columns">
+          <Dropdown.Group title="Columns" className="gap-1">
             {table.getAllColumns().filter((column) => typeof column.accessorFn !== 'undefined' && column.getCanHide()).map((column) => (
               column.getCanHide() && (
                 <Dropdown.Item

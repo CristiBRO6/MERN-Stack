@@ -14,12 +14,11 @@ const columns = [
   {
     accessorKey: 'email',
     header: 'Email',
-    enableHiding: false,
-    enableSorting: false,
   },
   {
     accessorKey: 'role',
     header: 'Role',
+    enableSorting: false,
     enableColumnFilter: true,
     filterFn: (row, columnId, filterRoles) => {
       if (filterRoles.length === 0) return true;
