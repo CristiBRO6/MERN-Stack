@@ -1,5 +1,11 @@
 import { SlidersVertical, ShoppingCart, Users, Bookmark, Package, Tag, Percent, Star, Settings } from 'lucide-react';
 
+export const ROLES = [
+  { id: 0, name: "User" },
+  { id: 1, name: "Admin" },
+  { id: 2, name: "Owner" },
+]
+
 export const SIDEBAR_ITEMS = [
   { id: 1, path: "/dashboard/", name: "Dashboard", icon: SlidersVertical },
   { id: 2, path: "/dashboard/orders", name: "Orders", icon: ShoppingCart },

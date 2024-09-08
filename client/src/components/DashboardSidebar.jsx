@@ -22,10 +22,10 @@ const Sidebar = ({ className }) => {
 
   return (
     <>
-      <div className={`flex flex-col h-screen ${isCollapsed ? "" : "w-[var(--sidebar-width)]"} bg-white z-[101] p-3 shadow-md ${className}`}>
+      <div className={`flex flex-col h-screen ${isCollapsed ? "w-auto" : "w-[var(--sidebar-width)]"} bg-white z-[101] p-3 shadow-md ${className}`}>
         <div className="flex items-center justify-between gap-2 pb-2 border-b">
           {!isCollapsed && <Link to="/" className="text-xl font-bold">React</Link>}
-          <div className="p-2 lg:hidden">
+          <div className="flex items-center justify-center size-9 p-2 lg:hidden">
             <ShoppingBag className="size-4" />
           </div>
           <Button type="icon" color="transparent" icon={isCollapsed ? PanelLeftOpen : PanelLeftClose} onClick={handleToggleCollapse} className="hidden lg:flex" />
