@@ -10,10 +10,14 @@ const columns = [
     accessorKey: 'name',
     header: 'Name',
     enableHiding: false,
+    enableColumnFilter: true,
+    filterFn: 'includesString',
   },
   {
     accessorKey: 'email',
     header: 'Email',
+    enableColumnFilter: true,
+    filterFn: 'includesString',
   },
   {
     accessorKey: 'role',

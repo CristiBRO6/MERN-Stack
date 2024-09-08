@@ -16,7 +16,7 @@ const Navbar = ({ openDrawer }) => {
   const screenSizeIndex = useResponsive([768, 1024, 1280]);
 
   return (
-    <div className="flex items-center justify-between [100] w-full min-h-[--navbar-height] h-[var(--navbar-height)] max-h-[--navbar-height] bg-white shadow-md px-4">
+    <div className="flex items-center justify-between z-[100] w-full min-h-[--navbar-height] h-[var(--navbar-height)] max-h-[--navbar-height] bg-white shadow-md px-4">
       <div className="flex items-center gap-2">
         {screenSizeIndex < 1 && (
           <>

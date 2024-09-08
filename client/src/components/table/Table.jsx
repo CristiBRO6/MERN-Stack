@@ -35,17 +35,17 @@ export const TableHead = ({ children, className = "", style = {} }) => {
 export const TableBody = ({ children, className = "", style = {} }) => {
   return (
     <>
-      <tbody className={`divide-y divide-gray-200 ${className}`} style={style}>
+      <tbody className={`[&_tr:last-child]:border-0 ${className}`} style={style}>
         {children}
       </tbody>
     </>
   )
 }
 
-export const TableCell = ({ children, className = "", style = {} }) => {
+export const TableCell = ({ children, colSpan = 0, className = "", style = {} }) => {
   return (
     <>
-      <td className={`p-3 whitespace-nowrap text-gray-600 ${className}`} style={style}>
+      <td colSpan={colSpan} className={`p-3 whitespace-nowrap text-gray-600 ${className}`} style={style}>
         {children}
       </td>
     </>
@@ -82,6 +82,7 @@ TableBody.propTypes = {
 
 TableCell.propTypes = {
   children: PropTypes.node.isRequired,
+  colSpan: PropTypes.number,
   className: PropTypes.string,
   style: PropTypes.object,
 };

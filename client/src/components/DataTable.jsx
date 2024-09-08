@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel, flexRender } from '@tanstack/react-table';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Sort from './table/Sort';
 import Search from './table/Search';
@@ -30,12 +30,7 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationO
   });
   const [columnVisibility, setColumnVisibility] = useState(colVisibility);
   const [sorting, setSorting] = useState([]);
-  const [filtering, setFiltering] = useState('');
   const [columnFilters, setColumnFilters] = useState([]);
-
-  useEffect(() => {
-    console.log(columnFilters);
-  }, [columnFilters])
 
   const table = useReactTable({
     data,
@@ -44,7 +39,6 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationO
       pagination: paginationState,
       columnVisibility,
       sorting,
-      globalFilter: filtering,
       columnFilters: columnFilters,
     },
     defaultColumn: {
@@ -58,7 +52,6 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationO
     onPaginationChange: setPaginationState,
     onColumnVisibilityChange: setColumnVisibility,
     onSortingChange: setSorting,
-    onGlobalFilterChange: setFiltering,
     onColumnFiltersChange: setColumnFilters,
   });
 
@@ -68,13 +61,13 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationO
       .getAllColumns()
       .filter(
         (column) =>
-          column.getSize() !== 0 &&
+          ("actions" === column.id) &&
           column.getIsVisible()
       ).length;
 
   return (
     <div className="flex flex-col gap-2">
-      {/* <Search placeholder="Search..." value={filtering} setValue={setFiltering} /> */}
+      <Search placeholder="Search..." setColumnFilters={setColumnFilters} columns={["name"]} />
       <Filter columnFilters={columnFilters} setColumnFilters={setColumnFilters} columnId={table.getColumn('role').id} statuses={ROLES} />
 
       <Table>
@@ -125,8 +118,8 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationO
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={table.getAllColumns().length}>
-                <span className="font-semibold text-base">No results</span>
+              <TableCell colSpan={table.getAllColumns().length} className="py-10">
+                <span className="flex justify-center text-center font-semibold text-base">No results</span>
               </TableCell>
             </TableRow>
           )}

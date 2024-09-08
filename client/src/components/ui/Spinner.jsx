@@ -36,6 +36,8 @@ Spinner.propTypes = {
     "danger", 
     "warning", 
     "info", 
+    "white",
+    "black",
     "default"
   ]),
   size: PropTypes.oneOf(["tiny", "small", "medium", "large"]),
