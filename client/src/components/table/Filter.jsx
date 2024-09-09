@@ -12,9 +12,7 @@ const Filter = ({ title, column, statuses, columnFilters, setColumnFilters }) =>
   const handleToggle = (id) => {
     setColumnFilters(prev => {
       const filter = prev.find(filter => filter.id === column);
-      if(!filter){
-        return [...prev, { id: column, value: [id] }];
-      }
+      if(!filter) return [...prev, { id: column, value: [id] }];
 
       const updatedValue = isActive(id) 
         ? filter.value.filter(s => s !== id)
@@ -30,7 +28,7 @@ const Filter = ({ title, column, statuses, columnFilters, setColumnFilters }) =>
     <>
       <Dropdown>
         <DropdownToggle>
-          <Button icon={CirclePlus} color="transparent" className="w-fit" bordered={true}>
+          <Button icon={CirclePlus} color="transparent" className="w-fit" bordered>
             {title}
           </Button>
         </DropdownToggle>

@@ -85,6 +85,7 @@ const Settigns = () => {
             <Button color="secondary" size="small" className="w-fit">Secondary</Button>
             <Button color="success" size="large" icon={Check} className="w-fit">Success</Button>
             <Button color="danger" loading loadingColor="white" className="w-fit">Loading...</Button>
+            <Button color="success" loading loadingColor="white" className="w-fit"></Button>
             <Button color="warning" disabled className="w-fit">Disabled</Button>
             <Button color="info" icon={Check} iconPosition="end" className="w-fit">With Icon</Button>
             <Button color="transparent" icon={Check} iconPosition="start" className="w-fit">With Icon</Button>

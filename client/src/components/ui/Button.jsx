@@ -30,7 +30,7 @@ const Button = ({
   };  
 
   const buttonTypes = {
-    primary: "border-none",
+    primary: "",
     dashed: "border border-dashed",
     text: "bg-transparent text-blue-500 hover:bg-gray-100",
     link: "bg-transparent text-blue-500 underline hover:text-blue-600 hober:bg-none",
@@ -51,7 +51,7 @@ const Button = ({
   };
 
   const baseClasses = "flex items-center justify-start gap-2 w-full text-sm font-medium transition-colors duration-300";
-  const borderClasses = bordered ? "border border-color" : "";
+  const borderClasses = bordered ? "border" : "";
   const loadingClasses = loading ? "" : "";
   const disabledClasses = disabled ? "disabled:select-none disabled:cursor-not-allowed disabled:opacity-60" : "";
 
