@@ -51,7 +51,7 @@ const Button = ({
   };
 
   const baseClasses = "flex items-center justify-start gap-2 w-full text-sm font-medium transition-colors duration-300";
-  const borderClasses = bordered ? "border" : "";
+  const borderClasses = bordered ? "border border-color" : "";
   const loadingClasses = loading ? "" : "";
   const disabledClasses = disabled ? "disabled:select-none disabled:cursor-not-allowed disabled:opacity-60" : "";
 

@@ -11,9 +11,7 @@ import Search from './table/Search';
 import Filter from './table/Filter';
 import Pagination from './table/Pagination';
 
-import { ROLES } from '../constants';
-
-const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationOptions = {} }) => {
+const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationOptions = {}, searchOptions = {}, filterOptions = {} }) => {
   const {
     pagination = false,
     currentPage = 0,
@@ -69,8 +67,27 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationO
 
   return (
     <div className="flex flex-col gap-2">
-      <Search placeholder="Search by name..." setColumnFilters={setColumnFilters} columns={["name"]} />
-      <Filter columnFilters={columnFilters} setColumnFilters={setColumnFilters} columnId={table.getColumn('role').id} statuses={ROLES} />
+      <div className="flex items-center gap-2">
+        {searchOptions.search ? (
+          <Search 
+            placeholder={searchOptions.placeholder} 
+            setColumnFilters={setColumnFilters} 
+            columns={searchOptions.columns} 
+          />
+        ) : null}
+        {filterOptions.filter ? (
+          filterOptions.filters.map((filter, index) => (
+            <Filter 
+              key={index}
+              title={filter.title} 
+              column={filter.column} 
+              statuses={filter.statuses} 
+              columnFilters={columnFilters} 
+              setColumnFilters={setColumnFilters}
+            />
+          ))
+        ) : null}
+      </div>
 
       <Table>
         <TableHeader>
@@ -81,7 +98,9 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationO
         </TableBody>
       </Table>
 
-      {pagination && <Pagination table={table} pagination={paginationState} pageSizeOptions={pageSizeOptions} />}
+      {pagination ? (
+        <Pagination table={table} pagination={paginationState} pageSizeOptions={pageSizeOptions} />
+      ) : null}
     </div>
   );
 };
@@ -95,6 +114,21 @@ DataTable.propTypes = {
     currentPage: PropTypes.number,
     pageSize: PropTypes.number,
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
+  }),
+  searchOptions: PropTypes.shape({
+    search: PropTypes.bool.isRequired,
+    placeholder: PropTypes.string,
+    columns: PropTypes.arrayOf(PropTypes.string),
+  }),
+  filterOptions: PropTypes.shape({
+    filter: PropTypes.bool.isRequired,
+    filters: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        column: PropTypes.string.isRequired,
+        statuses: PropTypes.array.isRequired,
+      })
+    ),
   }),
 };
 

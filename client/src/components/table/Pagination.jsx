@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
-import Dropdown from '../ui/Dropdown';
+import { Dropdown, DropdownBody, DropdownItem, DropdownMenu, DropdownToggle } from '../ui/Dropdown';
 import { useState } from 'react';
 import Button from '../ui/Button';
 
@@ -13,17 +13,18 @@ const Pagination = ({ table, pagination, pageSizeOptions }) => {
       <div className="flex items-center justify-between">
         {pageSizeOptions.length ? (
           <Dropdown placement="bottom">
-            <Dropdown.Toggle>
+            <DropdownToggle>
               <Button type="icon" color="transparent" bordered>{pageSize}</Button>
-            </Dropdown.Toggle>
-            <Dropdown.Menu className="min-w-[120px]">
-              <Dropdown.Body className="gap-1 p-1">
+            </DropdownToggle>
+            <DropdownMenu className="min-w-[120px]">
+              <DropdownBody className="gap-1 p-1">
                 {pageSizeOptions.map((option, index) => (
-                  <Dropdown.Item 
+                  <DropdownItem 
                     key={index}
                     item={{
                       name: option.toString()
                     }} 
+                    closeable
                     className={`${pageSize === option ? 'active' : ''}`}
                     onClick={() => {
                       setPageSize(option);
@@ -31,8 +32,8 @@ const Pagination = ({ table, pagination, pageSizeOptions }) => {
                     }}
                   />
                 ))}
-              </Dropdown.Body>
-            </Dropdown.Menu>
+              </DropdownBody>
+            </DropdownMenu>
           </Dropdown>
         ) : (<div></div>)}
         <div className="flex items-center gap-2">

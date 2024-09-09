@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Menu, House, User, Settings, LogOut } from 'lucide-react';
 
 import useResponsive from '../hooks/useResponsive';
-import Dropdown from './ui/Dropdown';
+import { Dropdown, DropdownBody, DropdownHead, DropdownItem, DropdownMenu, DropdownSeparator, DropdownToggle } from './ui/Dropdown';
 
 const dropdownItems = [
   { id: 1, type: 'item', path: "/", name: "Home", icon: House },
@@ -27,28 +27,28 @@ const Navbar = ({ openDrawer }) => {
         )}
       </div>
       <Dropdown placement="bottom">
-        <Dropdown.Toggle>
+        <DropdownToggle>
           <div className="flex items-center gap-2 cursor-pointer">
             <div className="bg-gray-100 p-2 rounded-full overflow-hidden">
               <User className="size-4" />
             </div>
           </div>
-        </Dropdown.Toggle>
-        <Dropdown.Menu className="p-1">
-          <Dropdown.Head className="gap-1 px-2 pb-1 border-b">
+        </DropdownToggle>
+        <DropdownMenu className="p-1">
+          <DropdownHead className="gap-1 px-2 pb-1 border-b">
             <span className="font-medium text-sm leading-none">CristiBRO</span>
             <span className="text-gray-800 text-xs leading-none text">cristibro@gmail.com</span>
-          </Dropdown.Head>
-          <Dropdown.Body className="gap-1 pt-1">
+          </DropdownHead>
+          <DropdownBody className="gap-1 pt-1">
           {dropdownItems.map((item) => 
             item.type === 'item' ? (
-              <Dropdown.Item key={item.id} item={item} />
+              <DropdownItem key={item.id} item={item} closeable />
             ) : item.type === 'separator' ? (
-              <Dropdown.Separator key={item.id} />
+              <DropdownSeparator key={item.id} />
             ) : null
           )}
-          </Dropdown.Body>
-        </Dropdown.Menu>
+          </DropdownBody>
+        </DropdownMenu>
       </Dropdown>
     </div>
   );

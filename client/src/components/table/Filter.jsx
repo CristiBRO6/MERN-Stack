@@ -1,60 +1,83 @@
 import PropTypes from 'prop-types';
-import { CirclePlus } from 'lucide-react';
+import { Check, CirclePlus } from 'lucide-react';
 import Button from '../ui/Button';
-import Dropdown from '../ui/Dropdown';
+import { Dropdown, DropdownGroup, DropdownItem, DropdownMenu, DropdownToggle } from '../ui/Dropdown';
 
-const Filter = ({ columnFilters, setColumnFilters, columnId, statuses }) => {
-  const filterStatuses = columnFilters.find(f => f.id == columnId)?.value || []
+const PlaceholderIcon = () => (
+  <div className="w-4 h-4 opacity-0"></div>
+);
+
+const Filter = ({ title, column, statuses, columnFilters, setColumnFilters }) => {
+  const filterStatuses = columnFilters.find(f => f.id == column)?.value || [];
+  const isActive = (id) => {
+    return !!filterStatuses.includes(id);
+  }
+
+  const handleToggle = (id) => {
+    setColumnFilters(prev => {
+      const filters = prev.find(filter => filter.id === column)?.value;
+      if(!filters){
+        return prev.concat({
+          id: column,
+          value: [id]
+        })
+      }
+
+      return prev.map(
+        f => f.id === column ? {
+          ...f,
+          value: isActive(id) 
+            ? filters.filter(s => s !== id)
+            : filters.concat(id)
+        } : f
+      )
+    })
+  }
 
   return (
     <>
       <Dropdown>
-        <Dropdown.Toggle>
-          <Button icon={CirclePlus} color="transparent" className="w-fit" bordered>
-            Role
+        <DropdownToggle>
+          <Button icon={CirclePlus} color="transparent" className="w-fit" bordered={true}>
+            {title}
           </Button>
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Body className="gap-1 p-1">
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownGroup title={title} className="gap-1">
             {statuses.map(status => (
-              <Dropdown.Item
+              <DropdownItem
                 key={status.id}
-                item={{ name: status.name }}
-                onClick={() => {
-                  setColumnFilters(prev => {
-                    const filters = prev.find(filter => filter.id === columnId)?.value;
-                    if(!filters){
-                      return prev.concat({
-                        id: columnId,
-                        value: [status.id]
-                      })
-                    }
-
-                    return prev.map(
-                      f => f.id === columnId ? {
-                        ...f,
-                        value: filterStatuses.includes(status.id) 
-                          ? filters.filter(s => s !== status.id)
-                          : filters.concat(status.id)
-                      } : f
-                    )
-                  })
+                item={{ 
+                  name: status.name,
+                  icon: isActive(status.id) ? Check : PlaceholderIcon,
                 }}
-                className={filterStatuses.includes(status.id) ? "active" : ""}
+                onClick={() => handleToggle(status.id)}
+                className={isActive(status.id) ? "active" : ""}
               />
             ))}
-          </Dropdown.Body>
-        </Dropdown.Menu>
+          </DropdownGroup>
+        </DropdownMenu>
       </Dropdown>
     </>
   );
 };
 
 Filter.propTypes = {
-  columnFilters: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  column: PropTypes.string.isRequired,
+  statuses: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  columnFilters: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      value: PropTypes.array.isRequired,
+    })
+  ).isRequired,
   setColumnFilters: PropTypes.func.isRequired,
-  columnId: PropTypes.string.isRequired,
-  statuses: PropTypes.array.isRequired,
 };
 
 export default Filter;

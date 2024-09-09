@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import Dropdown from '../ui/Dropdown';
+import { Dropdown, DropdownBody, DropdownGroup, DropdownItem, DropdownMenu, DropdownToggle } from '../ui/Dropdown';
 import Button from '../ui/Button';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 
@@ -8,7 +8,7 @@ const Sort = ({ children, header, className = '' }) => {
   return (
     <>
       <Dropdown placement="bottom" className={`${className}`}>
-        <Dropdown.Toggle>
+        <DropdownToggle>
           <Button
             color="transparent"
             icon={
@@ -26,33 +26,35 @@ const Sort = ({ children, header, className = '' }) => {
           >
             {children}
           </Button>
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Body>
-            <Dropdown.Group className="gap-1">
-              <Dropdown.Item 
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownBody>
+            <DropdownGroup className="gap-1">
+              <DropdownItem 
                 item = {{
                   name: "Asc",
                   icon: ArrowUp
                 }}
+                closeable
                 className={`${header.column.getIsSorted() == "asc" ? "active" : ""}`}
                 onClick={() =>{
                   header.column.getIsSorted() === "asc" ? header.column.clearSorting() : header.column.toggleSorting(false);
                 }}
               />
-              <Dropdown.Item 
+              <DropdownItem 
                 item = {{
                   name: "Desc",
                   icon: ArrowDown
                 }}
+                closeable
                 className={`${header.column.getIsSorted() == "desc" ? "active" : ""}`}
                 onClick={() => {
                   header.column.getIsSorted() === "desc" ? header.column.clearSorting() : header.column.toggleSorting(true);
                 }}
               />
-            </Dropdown.Group>
-          </Dropdown.Body>
-        </Dropdown.Menu>
+            </DropdownGroup>
+          </DropdownBody>
+        </DropdownMenu>
       </Dropdown>
     </>
   )

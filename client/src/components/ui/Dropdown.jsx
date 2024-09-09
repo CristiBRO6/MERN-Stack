@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, createContext, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
+export const DropdownContext = createContext(false);
+
+export const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [animatedClasses, setAnimatedClasses] = useState('invisible opacity-0 scale-95');
   const dropdownRef = useRef(null);
@@ -90,19 +92,21 @@ const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
   }, []);
 
   return (
-    <div ref={dropdownRef} className={`relative w-fit ${className}`}>
-      <div onClick={toggleDropdown}>
-        {children[0]}
-      </div>
+    <DropdownContext.Provider value={{ isOpen, setIsOpen }}>
+      <div ref={dropdownRef} className={`relative w-fit ${className}`}>
+        <div onClick={toggleDropdown}>
+          {children[0]}
+        </div>
 
-      <div ref={menuRef} className={`absolute z-[50] bg-white border border-gray-200 rounded-md shadow-lg transition-all ${isOpen ? 'block ' : 'hidden'} ${animatedClasses} ${menuClasses}`}>
-        {children[1]}
+        <div ref={menuRef} className={`absolute z-[50] bg-white border border-gray-200 rounded-md shadow-lg transition-all ${isOpen ? 'block ' : 'hidden'} ${animatedClasses} ${menuClasses}`}>
+          {children[1]}
+        </div>
       </div>
-    </div>
+    </DropdownContext.Provider>
   );
 };
 
-Dropdown.Toggle = ({ children, className = '' }) => {
+export const DropdownToggle = ({ children, className = '' }) => {
   return (
     <div className={`flex flex-row ${className}`}>
       {children}
@@ -110,7 +114,7 @@ Dropdown.Toggle = ({ children, className = '' }) => {
   );
 };
 
-Dropdown.Menu = ({ children, className = '' }) => {
+export const DropdownMenu = ({ children, className = '' }) => {
   return (
     <div className={`flex flex-col min-w-[160px] w-auto ${className}`}>
       {children}
@@ -118,7 +122,7 @@ Dropdown.Menu = ({ children, className = '' }) => {
   );
 };
 
-Dropdown.Head = ({ children, className = '' }) => {
+export const DropdownHead = ({ children, className = '' }) => {
   return (
     <div className={`flex flex-col ${className}`}>
       {children}
@@ -126,7 +130,7 @@ Dropdown.Head = ({ children, className = '' }) => {
   );
 };
 
-Dropdown.Body = ({ children, className = '' }) => {
+export const DropdownBody = ({ children, className = '' }) => {
   return (
     <div className={`flex flex-col ${className}`}>
       {children}
@@ -134,7 +138,7 @@ Dropdown.Body = ({ children, className = '' }) => {
   );
 };
 
-Dropdown.Group = ({ children, title, className = '' }) => {
+export const DropdownGroup = ({ children, title, className = '' }) => {
   return (
     <div className="flex flex-col gap-1 p-1">
       {title && <span className="font-semibold text-sm text-gray-700">{title}</span>}
@@ -145,14 +149,18 @@ Dropdown.Group = ({ children, title, className = '' }) => {
   );
 };
 
-Dropdown.Item = ({ item, onClick = () => {}, className = '' }) => {
+export const DropdownItem = ({ item, closeable = false, onClick = () => {}, className = '' }) => {
+  const { setIsOpen } = useContext(DropdownContext);
+
+  const handleClick = () => {
+    onClick();
+    if(closeable) setIsOpen(false);
+  }
+
   const ItemContent = () => (
     <div 
       className={`flex items-center gap-2 px-2 py-1 text-sm font-medium rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-100 [&.active]:bg-gray-100 ${className}`}
-      onClick={() => {
-        onClick();
-
-      }}
+      onClick={handleClick}
     >
       {item.icon && <item.icon className="size-4" />}
       {item.name}
@@ -168,20 +176,11 @@ Dropdown.Item = ({ item, onClick = () => {}, className = '' }) => {
   );
 };
 
-Dropdown.Separator = () => {
+export const DropdownSeparator = () => {
   return (
     <div className="border-t" />
   )
 };
-
-Dropdown.displayName = 'Dropdown';
-Dropdown.Toggle.displayName = 'Dropdown.Toggle';
-Dropdown.Menu.displayName = 'Dropdown.Menu';
-Dropdown.Head.displayName = 'Dropdown.Head';
-Dropdown.Body.displayName = 'Dropdown.Body';
-Dropdown.Group.displayName = 'Dropdown.Group';
-Dropdown.Item.displayName = 'Dropdown.Item';
-Dropdown.Separator.displayName = 'Dropdown.Separator';
 
 Dropdown.propTypes = {
   children: PropTypes.node.isRequired,
@@ -189,40 +188,39 @@ Dropdown.propTypes = {
   className: PropTypes.string,
 };
 
-Dropdown.Toggle.propTypes = {
+DropdownToggle.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
 
-Dropdown.Menu.propTypes = {
+DropdownMenu.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
 
-Dropdown.Head.propTypes = {
+DropdownHead.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
 
-Dropdown.Body.propTypes = {
+DropdownBody.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
 
-Dropdown.Group.propTypes = {
+DropdownGroup.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
   className: PropTypes.string,
 };
 
-Dropdown.Item.propTypes = {
+DropdownItem.propTypes = {
   item: PropTypes.shape({
     path: PropTypes.string,
     name: PropTypes.string,
     icon: PropTypes.elementType,
   }).isRequired,
+  closeable: PropTypes.bool,
   onClick: PropTypes.func,
   className: PropTypes.string,
 };
-
-export default Dropdown;

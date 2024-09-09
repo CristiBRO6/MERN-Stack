@@ -121,6 +121,8 @@ const data = [
   { "id": "55", "name": "Lauren Jast", "email": "Kiley.Kessler@yahoo.com", "role": 2 }
 ];
 
+import { ROLES } from '../../constants';
+
 const Users = () => {
     return (
       <>
@@ -141,7 +143,22 @@ const Users = () => {
                 pagination: true,
                 currentPage: 0,
                 pageSize: 10,
-                pageSizeOptions: [10, 20, 30, 40, 50]
+                pageSizeOptions: [10, 20, 30, 40, 50],
+              }
+            }
+            searchOptions={
+              {
+                search: true,
+                placeholder: "Search by name...",
+                columns: ['name'],
+              }
+            }
+            filterOptions={
+              {
+                filter: true,
+                filters: [
+                  { title: "Roles", column: 'role', statuses: ROLES }
+                ]
               }
             }
           />

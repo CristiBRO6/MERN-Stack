@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import Dropdown from '../ui/Dropdown';
+import { Dropdown, DropdownGroup, DropdownItem, DropdownMenu, DropdownToggle } from '../ui/Dropdown';
 import Button from '../ui/Button';
 import { Settings2, Check } from 'lucide-react';
 
@@ -11,14 +11,14 @@ const ColumnToggler = ({ table }) => {
   return (
     <>
       <Dropdown placement="bottom">
-        <Dropdown.Toggle>
+        <DropdownToggle>
           <Button type="icon" color="transparent" icon={Settings2} />
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Group title="Columns" className="gap-1">
+        </DropdownToggle>
+        <DropdownMenu>
+          <DropdownGroup title="Columns" className="gap-1">
             {table.getAllColumns().filter((column) => typeof column.accessorFn !== 'undefined' && column.getCanHide()).map((column) => (
               column.getCanHide() && (
-                <Dropdown.Item
+                <DropdownItem
                   key={column.id}
                   item={{
                     name: column.columnDef.header,
@@ -31,8 +31,8 @@ const ColumnToggler = ({ table }) => {
                 />
               )
             ))}
-          </Dropdown.Group>
-        </Dropdown.Menu>
+          </DropdownGroup>
+        </DropdownMenu>
       </Dropdown>
     </>
   )
