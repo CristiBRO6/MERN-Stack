@@ -16,7 +16,7 @@ const Checkbox = ({ checked = false, disabled = false }) => {
       <button
         onClick={toggleChecked}
         className={`
-          w-4 h-4 flex items-center justify-center border rounded-md
+          w-4 h-4 flex items-center justify-center border rounded-[4px]
           ${isChecked ? 'bg-primary border-primary' : 'border-gray-400 bg-white'}
           ${disabled ? 'cursor-not-allowed opacity-50' : ''}
         `}
