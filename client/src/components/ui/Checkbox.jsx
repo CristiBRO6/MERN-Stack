@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
-import { Check } from 'lucide-react';
 import { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
+
+import { Check } from 'lucide-react';
 
 const Checkbox = ({ checked = false, disabled = false }) => {
   const [isChecked, setIsChecked] = useState(checked);
@@ -15,11 +17,11 @@ const Checkbox = ({ checked = false, disabled = false }) => {
     <>
       <button
         onClick={toggleChecked}
-        className={`
-          w-4 h-4 flex items-center justify-center border rounded-[4px]
-          ${isChecked ? 'bg-primary border-primary' : 'border-gray-400 bg-white'}
-          ${disabled ? 'cursor-not-allowed opacity-50' : ''}
-        `}
+        className={twMerge(
+          "w-4 h-4 flex items-center justify-center border rounded-[4px]",
+          isChecked ? "bg-primary border-primary" : "bg-white",
+          disabled && "cursor-not-allowed opacity-50"
+        )}
         disabled={disabled}
         aria-checked={isChecked}
         role="checkbox"

@@ -86,6 +86,8 @@ const Settigns = () => {
             <Spinner color="success" size="small" />
             <Spinner color="danger" size="medium" />
             <Spinner color="warning" size="large" />
+            <Spinner color="warning" size="xl" />
+            <Spinner color="warning" size="xxl" />
           </div>
         </div>
         <div className="flex flex-col gap-2">
