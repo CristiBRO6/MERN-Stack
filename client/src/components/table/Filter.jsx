@@ -1,11 +1,7 @@
 import PropTypes from 'prop-types';
-import { Check, CirclePlus } from 'lucide-react';
+import { Square, SquareCheck, CirclePlus } from 'lucide-react';
 import Button from '../ui/Button';
 import { Dropdown, DropdownGroup, DropdownItem, DropdownMenu, DropdownToggle } from '../ui/Dropdown';
-
-const PlaceholderIcon = () => (
-  <div className="w-4 h-4 opacity-0"></div>
-);
 
 const Filter = ({ title, column, statuses, columnFilters, setColumnFilters }) => {
   const filterStatuses = columnFilters.find(f => f.id == column)?.value || [];
@@ -15,22 +11,18 @@ const Filter = ({ title, column, statuses, columnFilters, setColumnFilters }) =>
 
   const handleToggle = (id) => {
     setColumnFilters(prev => {
-      const filters = prev.find(filter => filter.id === column)?.value;
-      if(!filters){
-        return prev.concat({
-          id: column,
-          value: [id]
-        })
+      const filter = prev.find(filter => filter.id === column);
+      if(!filter){
+        return [...prev, { id: column, value: [id] }];
       }
 
-      return prev.map(
-        f => f.id === column ? {
-          ...f,
-          value: isActive(id) 
-            ? filters.filter(s => s !== id)
-            : filters.concat(id)
-        } : f
-      )
+      const updatedValue = isActive(id) 
+        ? filter.value.filter(s => s !== id)
+        : [...filter.value, id];
+
+      return prev.map(filter =>
+        filter.id === column ? { ...filter, value: updatedValue } : filter
+      );
     })
   }
 
@@ -49,7 +41,7 @@ const Filter = ({ title, column, statuses, columnFilters, setColumnFilters }) =>
                 key={status.id}
                 item={{ 
                   name: status.name,
-                  icon: isActive(status.id) ? Check : PlaceholderIcon,
+                  icon: isActive(status.id) ? SquareCheck : Square,
                 }}
                 onClick={() => handleToggle(status.id)}
                 className={isActive(status.id) ? "active" : ""}
