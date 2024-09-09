@@ -35,7 +35,7 @@ export const TableHead = ({ children, className = "", style = {} }) => {
 export const TableBody = ({ children, className = "", style = {} }) => {
   return (
     <>
-      <tbody className={`[&_tr:last-child]:border-0 ${className}`} style={style}>
+      <tbody className={`relative [&_tr:last-child]:border-0 ${className}`} style={style}>
         {children}
       </tbody>
     </>

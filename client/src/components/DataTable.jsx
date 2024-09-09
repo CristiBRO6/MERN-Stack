@@ -11,7 +11,7 @@ import Search from './table/Search';
 import Filter from './table/Filter';
 import Pagination from './table/Pagination';
 
-const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationOptions = {}, searchOptions = {}, filterOptions = {} }) => {
+const DataTable = ({ columns, data, loading = false, columnVisibility: colVisibility, paginationOptions = {}, searchOptions = {}, filterOptions = {} }) => {
   const {
     pagination = false,
     currentPage = 0,
@@ -94,7 +94,7 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationO
           <DataTableHeader table={table} columnsCount={columnsCount} />
         </TableHeader>
         <TableBody>
-          <DataTableBody table={table} />
+          <DataTableBody table={table} loading={loading} />
         </TableBody>
       </Table>
 
@@ -108,6 +108,7 @@ const DataTable = ({ columns, data, columnVisibility: colVisibility, paginationO
 DataTable.propTypes = {
   columns: PropTypes.array.isRequired,
   data: PropTypes.array.isRequired,
+  loading: PropTypes.bool,
   columnVisibility: PropTypes.object,
   paginationOptions: PropTypes.shape({
     pagination: PropTypes.bool,

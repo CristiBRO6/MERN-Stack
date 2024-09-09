@@ -1,9 +1,12 @@
+import { useEffect, useState } from 'react';
+
 import DataTable from '../../components/DataTable';
 import ColumnToggler from '../../components/table/ColumnToggler';
-
 import Badge from '../../components/ui/Badge';
 
 import { Ellipsis } from 'lucide-react';
+
+import { ROLES } from '../../constants';
 
 const columns = [
   {
@@ -121,51 +124,62 @@ const data = [
   { "id": "55", "name": "Lauren Jast", "email": "Kiley.Kessler@yahoo.com", "role": 2 }
 ];
 
-import { ROLES } from '../../constants';
-
 const Users = () => {
-    return (
-      <>
-        <div className="container mx-auto">
-          <h1 className="text-xl font-bold mb-4">Users</h1>
-          <DataTable 
-            columns={columns}
-            data={data} 
-            columnVisibility={
-              {
-                name: true,
-                email: true,
-                role: true,
-              }
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <>
+      <div className="container mx-auto">
+        <h1 className="text-xl font-bold mb-4">Users</h1>
+        <DataTable 
+          columns={columns}
+          data={data} 
+          loading={isLoading}
+          columnVisibility={
+            {
+              name: true,
+              email: true,
+              role: true,
             }
-            paginationOptions={
-              {
-                pagination: true,
-                currentPage: 0,
-                pageSize: 10,
-                pageSizeOptions: [10, 20, 30, 40, 50],
-              }
+          }
+          paginationOptions={
+            {
+              pagination: true,
+              currentPage: 0,
+              pageSize: 10,
+              pageSizeOptions: [10, 20, 30, 40, 50],
             }
-            searchOptions={
-              {
-                search: true,
-                placeholder: "Search by name...",
-                columns: ['name'],
-              }
+          }
+          searchOptions={
+            {
+              search: true,
+              placeholder: "Search by name...",
+              columns: ['name'],
             }
-            filterOptions={
-              {
-                filter: true,
-                filters: [
-                  { title: "Roles", column: 'role', statuses: ROLES }
-                ]
-              }
+          }
+          filterOptions={
+            {
+              filter: true,
+              filters: [
+                { title: "Roles", column: 'role', statuses: ROLES }
+              ]
             }
-          />
-        </div>
-      </>
-    )
-  }
-      
-  export default Users;
+          }
+        />
+      </div>
+    </>
+  )
+}
+    
+export default Users;
       

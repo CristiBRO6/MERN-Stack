@@ -21,6 +21,8 @@ const Spinner = ({ color = "default", size = "medium" }) => {
     small: "size-4",
     medium: "size-5",
     large: "size-6",
+    xl: "size-8",
+    xxl: "size-10",
   }
 
   return (
@@ -40,7 +42,7 @@ Spinner.propTypes = {
     "black",
     "default"
   ]),
-  size: PropTypes.oneOf(["tiny", "small", "medium", "large"]),
+  size: PropTypes.oneOf(["tiny", "small", "medium", "large", "xl", "xxl"]),
 };
 
 export default Spinner;
