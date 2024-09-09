@@ -4,6 +4,7 @@ import Badge from '../../components/ui/Badge';
 import { Check } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Spinner from '../../components/ui/Spinner';
+import Checkbox from '../../components/ui/Checkbox';
 
 const Settigns = () => {
   return (
@@ -67,6 +68,15 @@ const Settigns = () => {
                 {color.charAt(0).toUpperCase() + color.slice(1)}
               </Badge>
             ))}
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="font-semibold text-lg">Checkbox</span>
+          <div className="flex flex-row items-center flex-wrap gap-1">
+            <Checkbox />
+            <Checkbox checked/>
+            <Checkbox disabled/>
+            <Checkbox checked disabled/>
           </div>
         </div>
         <div className="flex flex-col gap-2">

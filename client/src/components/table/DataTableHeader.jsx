@@ -4,7 +4,14 @@ import { flexRender } from '@tanstack/react-table';
 import { TableHead, TableRow } from './Table';
 import Sort from './Sort';
 
-const DataTableHeader = ({ table, columnsCount }) => {
+const DataTableHeader = ({ table }) => {
+  const columnsCount = table
+    .getAllColumns()
+    .filter((column) => column.getIsVisible())
+    .filter(
+      (column) => column.id !== 'select' && column.id !== 'actions'
+    ).length;
+
   return (
     <>
       {table.getHeaderGroups().map(headerGroup => (
@@ -42,7 +49,6 @@ const DataTableHeader = ({ table, columnsCount }) => {
 
 DataTableHeader.propTypes = {
   table: PropTypes.object.isRequired,
-  columnsCount: PropTypes.number.isRequired,
 };
 
 export default DataTableHeader;

@@ -2,35 +2,42 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from '@tanstack/react-table';
 
-import { Table, TableHeader, TableBody} from './table/Table'
+import { Table, TableHeader, TableBody } from './table/Table';
 import DataTableHeader from './table/DataTableHeader';
 import DataTableBody from './table/DataTableBody';
-
 
 import Search from './table/Search';
 import Filter from './table/Filter';
 import Pagination from './table/Pagination';
 
-const DataTable = ({ columns, data, loading = false, columnVisibility: colVisibility, paginationOptions = {}, searchOptions = {}, filterOptions = {} }) => {
+const DataTable = ({
+  columns,
+  data,
+  loading = false,
+  columnVisibility: initialColumnVisibility,
+  paginationOptions = {},
+  searchOptions = {},
+  filterOptions = {},
+}) => {
   const {
     pagination = false,
     currentPage = 0,
     pageSize = 10,
-    pageSizeOptions = [],
+    pageSizeOptions = [10, 25, 50, 100],
   } = paginationOptions;
 
-  if (pageSizeOptions.length && !pageSizeOptions.some(item => item === pageSize)) {
-    pageSizeOptions.push(pageSize);
-    pageSizeOptions.sort((a, b) => a - b);
-  }
+  const mergedPageSizeOptions = pageSizeOptions.includes(pageSize)
+    ? pageSizeOptions
+    : [...pageSizeOptions, pageSize].sort((a, b) => a - b);
 
   const [paginationState, setPaginationState] = useState({
     pageIndex: currentPage,
     pageSize: pageSize,
   });
-  const [columnVisibility, setColumnVisibility] = useState(colVisibility);
+  const [columnVisibility, setColumnVisibility] = useState(initialColumnVisibility);
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
+  const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
     data,
@@ -39,7 +46,8 @@ const DataTable = ({ columns, data, loading = false, columnVisibility: colVisibi
       pagination: paginationState,
       columnVisibility,
       sorting,
-      columnFilters: columnFilters,
+      columnFilters,
+      rowSelection,
     },
     defaultColumn: {
       minSize: 0,
@@ -53,54 +61,50 @@ const DataTable = ({ columns, data, loading = false, columnVisibility: colVisibi
     onColumnVisibilityChange: setColumnVisibility,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onRowSelectionChange: setRowSelection,
+    enableRowSelection: true,
   });
-
-  const columnsCount =
-    table.getAllColumns().filter((column) => column.getIsVisible()).length -
-    table
-      .getAllColumns()
-      .filter(
-        (column) =>
-          ("actions" === column.id) &&
-          column.getIsVisible()
-      ).length;
 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        {searchOptions.search ? (
-          <Search 
-            placeholder={searchOptions.placeholder} 
-            setColumnFilters={setColumnFilters} 
-            columns={searchOptions.columns} 
+        {searchOptions.search && (
+          <Search
+            placeholder={searchOptions.placeholder}
+            setColumnFilters={setColumnFilters}
+            columns={searchOptions.columns}
           />
-        ) : null}
-        {filterOptions.filter ? (
+        )}
+
+        {filterOptions.filter &&
           filterOptions.filters.map((filter, index) => (
-            <Filter 
+            <Filter
               key={index}
-              title={filter.title} 
-              column={filter.column} 
-              statuses={filter.statuses} 
-              columnFilters={columnFilters} 
+              title={filter.title}
+              column={filter.column}
+              statuses={filter.statuses}
+              columnFilters={columnFilters}
               setColumnFilters={setColumnFilters}
             />
-          ))
-        ) : null}
+          ))}
       </div>
 
       <Table>
         <TableHeader>
-          <DataTableHeader table={table} columnsCount={columnsCount} />
+          <DataTableHeader table={table} />
         </TableHeader>
         <TableBody>
           <DataTableBody table={table} loading={loading} />
         </TableBody>
       </Table>
 
-      {pagination ? (
-        <Pagination table={table} pagination={paginationState} pageSizeOptions={pageSizeOptions} />
-      ) : null}
+      {pagination && (
+        <Pagination
+          table={table}
+          pagination={paginationState}
+          pageSizeOptions={mergedPageSizeOptions}
+        />
+      )}
     </div>
   );
 };

@@ -157,7 +157,7 @@ const Users = () => {
               pagination: true,
               currentPage: 0,
               pageSize: 10,
-              pageSizeOptions: [10, 20, 30, 40, 50],
+              pageSizeOptions: [10, 25, 50, 100],
             }
           }
           searchOptions={
