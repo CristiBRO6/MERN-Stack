@@ -55,7 +55,7 @@ export const TableCell = ({ children, colSpan = 0, className = "", style = {} })
 export const TableRow = ({ children, className = "", style = {} }) => {
   return (
     <>
-      <tr className={`bg-white hover:bg-gray-50 transition-colors duration-300 border-b border-gray-200 ${className}`} style={style}>
+      <tr className={`bg-white hover:bg-gray-50 transition-colors duration-300 border-b ${className}`} style={style}>
         {children}
       </tr>
     </>
