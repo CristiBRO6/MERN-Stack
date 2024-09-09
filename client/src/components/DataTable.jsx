@@ -105,6 +105,12 @@ const DataTable = ({
           pageSizeOptions={mergedPageSizeOptions}
         />
       )}
+
+      {Object.keys(rowSelection).length ? (
+        <div className="w-[400px] absolute bottom-10 left-1/2 -translate-x-1/2 p-4 bg-white shadow-lg">
+          {Object.keys(rowSelection).length} selected
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -7,8 +7,30 @@ import Badge from '../../components/ui/Badge';
 import { Ellipsis } from 'lucide-react';
 
 import { ROLES } from '../../constants';
+import IndeterminateCheckbox from '../../components/table/MagicCheckbox';
 
 const columns = [
+  {
+    id: 'select',
+    header: ({ table }) => (
+      <IndeterminateCheckbox
+        indeterminate={table.getIsSomeRowsSelected()}
+        checked={table.getIsAllRowsSelected()}
+        onChange={table.getToggleAllRowsSelectedHandler()}
+      />
+    ),
+    cell: ({ row }) => (
+      <IndeterminateCheckbox
+        checked={row.getIsSelected()}
+        disabled={row.original.disabled}
+        indeterminate={row.getIsSomeSelected()}
+        onChange={row.getToggleSelectedHandler()}
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+    size: 48,
+  },
   {
     accessorKey: 'name',
     header: 'Name',
@@ -139,8 +161,8 @@ const Users = () => {
 
   return (
     <>
-      <div className="container mx-auto">
-        <h1 className="text-xl font-bold mb-4">Users</h1>
+      <div className="flex flex-col gap-2">
+        <span className="text-xl font-bold">Users</span>
         <DataTable 
           columns={columns}
           data={data} 
@@ -171,7 +193,7 @@ const Users = () => {
             {
               filter: true,
               filters: [
-                { title: "Roles", column: 'role', statuses: ROLES }
+                { title: "Role", column: 'role', statuses: ROLES }
               ]
             }
           }

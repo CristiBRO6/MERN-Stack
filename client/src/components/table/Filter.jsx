@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { Square, SquareCheck, CirclePlus } from 'lucide-react';
 import Button from '../ui/Button';
+import Badge from '../ui/Badge';
 import { Dropdown, DropdownGroup, DropdownItem, DropdownMenu, DropdownToggle } from '../ui/Dropdown';
 
 const Filter = ({ title, column, statuses, columnFilters, setColumnFilters }) => {
@@ -30,6 +31,18 @@ const Filter = ({ title, column, statuses, columnFilters, setColumnFilters }) =>
         <DropdownToggle>
           <Button icon={CirclePlus} color="transparent" className="w-fit" bordered>
             {title}
+            {filterStatuses.length > 0 ? (
+              <>
+                <div className="h-full border-l"></div>
+                {filterStatuses.length > 2 ? (
+                  <Badge>{filterStatuses.length} selected</Badge>
+                ) : (
+                  filterStatuses.map((status, index) => (
+                    <Badge key={index}>{statuses[status].name}</Badge>
+                  ))
+                )}
+              </>
+            ) : null}
           </Button>
         </DropdownToggle>
         <DropdownMenu>
