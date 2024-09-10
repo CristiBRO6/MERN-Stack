@@ -1,6 +1,7 @@
 import PageMeta from '../../components/PageMeta';
 
-import { Table, TableHeader, TableBody, TableCell, TableHead, TableRow, } from '../../components/table/Table'
+import { Table, TableHeader, TableBody, TableCell, TableHead, TableRow, } from '../../components/table/Table';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/Tabs';
 import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
 import Spinner from '../../components/ui/Spinner';
@@ -109,6 +110,19 @@ const Settigns = () => {
             <Button type="icon" color="danger" size="medium" icon={Check}></Button>
             <Button type="icon" color="warning" size="large" icon={Check}></Button>
           </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="font-semibold text-lg">Tabs</span>
+          <Tabs defaultValue="tab1">
+            <TabsList>
+              <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+              <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+              <TabsTrigger value="tab3">Tab 3</TabsTrigger>
+            </TabsList>
+            <TabsContent value="tab1">Content 1</TabsContent>
+            <TabsContent value="tab2">Content 2</TabsContent>
+            <TabsContent value="tab3">Content 3</TabsContent>
+          </Tabs>
         </div>
       </div>
     </>
