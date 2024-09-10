@@ -88,11 +88,11 @@ const Settigns = () => {
           <span className="font-semibold text-lg">Spinners</span>
           <div className="flex flex-row items-center flex-wrap gap-1">
             <Spinner color="primary" size="tiny" />
-            <Spinner color="success" size="small" />
-            <Spinner color="danger" size="medium" />
-            <Spinner color="warning" size="large" />
+            <Spinner color="secondary" size="small" />
+            <Spinner color="success" size="medium" />
+            <Spinner color="danger" size="large" />
             <Spinner color="warning" size="xl" />
-            <Spinner color="warning" size="xxl" />
+            <Spinner color="info" size="xxl" />
           </div>
         </div>
         <div className="flex flex-col gap-2">
