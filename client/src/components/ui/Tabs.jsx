@@ -32,7 +32,7 @@ export const TabsTrigger = ({ children, value, className = '' }) => {
       onClick={() => setValue(value)}
       className={twMerge(
         "px-4 py-2 text-sm font-medium",
-        value === activeValue ? "border-b border-blue-500 text-blue-500" : "text-gray-600",
+        value === activeValue ? "border-b border-primary text-primary" : "text-gray-600",
         className
       )}
     >
