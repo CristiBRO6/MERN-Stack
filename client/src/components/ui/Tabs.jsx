@@ -18,7 +18,7 @@ export const Tabs = ({ children, defaultValue, className = '' }) => {
 
 export const TabsList = ({ children, className = '' }) => {
   return (
-    <div className={twMerge("flex border-b border-gray-300", className)}>
+    <div className={twMerge("flex gap-1 border-b border-gray-300", className)}>
       {children}
     </div>
   );
@@ -28,16 +28,18 @@ export const TabsTrigger = ({ children, value, className = '' }) => {
   const { value: activeValue, setValue } = useContext(TabsContext);
 
   return (
-    <button
-      onClick={() => setValue(value)}
-      className={twMerge(
-        "px-4 py-2 text-sm font-medium",
-        value === activeValue ? "border-b border-primary text-primary" : "text-gray-600",
-        className
-      )}
-    >
-      {children}
-    </button>
+    <div className={twMerge("pb-1 -mb-[1px]", value === activeValue ? "border-b border-primary" : "")}>
+      <button
+        onClick={() => setValue(value)}
+        className={twMerge(
+          "px-2 py-1 text-sm font-medium rounded-md transition-color duration-300",
+          value === activeValue ? "text-primary bg-gray-100" : "text-gray-500 hover:bg-gray-100",
+          className
+        )}
+      >
+        {children}
+      </button>
+    </div>
   );
 }
 
@@ -47,7 +49,7 @@ export const TabsContent = ({ children, value, className = '' }) => {
   return (
     <>
       {activeValue === value ? (
-        <div className={twMerge("flex flex-col p-4", className)}>
+        <div className={twMerge("flex flex-col py-2", className)}>
           {children}
         </div>
       ) : null}
