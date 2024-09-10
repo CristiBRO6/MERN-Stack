@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useReactTable, getCoreRowModel, getPaginationRowModel, getSortedRowModel, getFilteredRowModel } from '@tanstack/react-table';
 
 import { Table, TableHeader, TableBody } from './table/Table';
@@ -30,14 +30,20 @@ const DataTable = ({
     ? pageSizeOptions
     : [...pageSizeOptions, pageSize].sort((a, b) => a - b);
 
-  const [paginationState, setPaginationState] = useState({
-    pageIndex: currentPage,
-    pageSize: pageSize,
-  });
+  const [paginationState, setPaginationState] = useState({ pageIndex: currentPage, pageSize: pageSize });
   const [columnVisibility, setColumnVisibility] = useState(initialColumnVisibility);
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [rowSelection, setRowSelection] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(loading);
+  }, [loading]);
+
+  useEffect(() => {
+    if (isLoading) setIsLoading(false);
+  }, [paginationState, columnFilters, sorting]);
 
   const table = useReactTable({
     data,
@@ -57,10 +63,19 @@ const DataTable = ({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onPaginationChange: setPaginationState,
+    onPaginationChange: (updater) => {
+      setIsLoading(true);
+      setPaginationState(updater);
+    },
     onColumnVisibilityChange: setColumnVisibility,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    onSortingChange: (updater) => {
+      setIsLoading(true);
+      setSorting(updater);
+    },
+    onColumnFiltersChange: (updater) => {
+      setIsLoading(true);
+      setColumnFilters(updater);
+    },
     onRowSelectionChange: setRowSelection,
     enableRowSelection: true,
   });
@@ -71,7 +86,10 @@ const DataTable = ({
         {searchOptions.search && (
           <Search
             placeholder={searchOptions.placeholder}
-            setColumnFilters={setColumnFilters}
+            setColumnFilters={(filters) => setColumnFilters(filters.map(f => ({
+              ...f,
+              value: Array.isArray(f.value) ? f.value : [f.value],
+            })))}
             columns={searchOptions.columns}
           />
         )}
@@ -94,7 +112,7 @@ const DataTable = ({
           <DataTableHeader table={table} />
         </TableHeader>
         <TableBody>
-          <DataTableBody table={table} loading={loading} />
+          <DataTableBody table={table} loading={isLoading} />
         </TableBody>
       </Table>
 

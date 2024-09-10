@@ -1,14 +1,18 @@
+import PageMeta from '../../components/PageMeta';
+
 import { Table, TableHeader, TableBody, TableCell, TableHead, TableRow, } from '../../components/table/Table'
 import Badge from '../../components/ui/Badge';
-
-import { Check } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Spinner from '../../components/ui/Spinner';
 import Checkbox from '../../components/ui/Checkbox';
 
+import { Check } from 'lucide-react';
+
 const Settigns = () => {
   return (
     <>
+      <PageMeta title={"Settings"} description={"Settings"} />
+
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
         <span className="font-semibold text-lg">Table</span>

@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import PageMeta from "../../components/PageMeta";
 
 import DataTable from '../../components/DataTable';
 import ColumnToggler from '../../components/table/ColumnToggler';
 import Badge from '../../components/ui/Badge';
+import IndeterminateCheckbox from '../../components/table/MagicCheckbox';
 
 import { Ellipsis } from 'lucide-react';
 
 import { ROLES } from '../../constants';
-import IndeterminateCheckbox from '../../components/table/MagicCheckbox';
 
 const columns = [
   {
@@ -147,26 +147,16 @@ const data = [
 ];
 
 const Users = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <>
+      <PageMeta title={"Users"} description={"Users"} />
+
       <div className="flex flex-col gap-2">
         <span className="text-xl font-bold">Users</span>
         <DataTable 
           columns={columns}
           data={data} 
-          loading={isLoading}
+          loading={false}
           columnVisibility={
             {
               name: true,

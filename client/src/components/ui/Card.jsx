@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 
-const Card = ({ children, width = 500, className = '' }) => {
+export const Card = ({ children, width = 500, className = '' }) => {
   return (
     <>
       <div 
-        className={`flex flex-col bg-white rounded-lg shadow-md border ${className}`}
-        style={{width: width}}
+        className={`flex flex-col w-full bg-white rounded-lg shadow-md border mx-2 ${className}`}
+        style={{maxWidth: width}}
       >
         {children}
       </div>
@@ -13,7 +13,7 @@ const Card = ({ children, width = 500, className = '' }) => {
   )
 };
 
-Card.Header = ({ children, className = '' }) => {
+export const CardHeader = ({ children, className = '' }) => {
   return (
     <>
       <div className={`p-4 pb-2 ${className}`}>
@@ -23,17 +23,17 @@ Card.Header = ({ children, className = '' }) => {
   )
 };
 
-Card.Title = ({ children, className = '' }) => {
+export const CardTitle = ({ children, className = '' }) => {
   return (
     <>
-      <span className={`font-semibold text-lg ${className}`}>
+      <span className={`block text-center font-bold text-lg ${className}`}>
         {children}
       </span>
     </>
   )
 };
 
-Card.Body = ({ children, className = '' }) => {
+export const CardBody = ({ children, className = '' }) => {
   return (
     <>
       <div className={`p-4 pt-2 ${className}`}>
@@ -43,30 +43,23 @@ Card.Body = ({ children, className = '' }) => {
   )
 };
 
-Card.displayName = 'Card';
-Card.Header.displayName = 'Card.Header';
-Card.Title.displayName = 'Card.Title';
-Card.Body.displayName = 'Card.Body';
-
 Card.propTypes = {
   children: PropTypes.node.isRequired,
   width: PropTypes.number,
   className: PropTypes.string,
 };
 
-Card.Header.propTypes = {
+CardHeader.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
 
-Card.Title.propTypes = {
+CardTitle.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
 
-Card.Body.propTypes = {
+CardBody.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
 };
-
-export default Card;
