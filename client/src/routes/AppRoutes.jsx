@@ -10,6 +10,7 @@ import Home from '../pages/Home';
 // ADMIN PAGES
 import DashboardHome from '../pages/dashboard/Home';
 import Users from '../pages/dashboard/Users';
+import User from '../pages/dashboard/User';
 import Settings from '../pages/dashboard/Settings';
 
 // AUTH PAGES
@@ -31,6 +32,7 @@ const AppRoutes = () => {
 			<Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<DashboardHome />} />
         <Route path="users" element={<Users />} />
+        <Route path="users/:userId" element={<User />} />
         <Route path="settings" element={<Settings />} />
       </Route>
 

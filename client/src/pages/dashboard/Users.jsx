@@ -8,6 +8,8 @@ import IndeterminateCheckbox from '../../components/table/MagicCheckbox';
 import { Ellipsis } from 'lucide-react';
 
 import { ROLES } from '../../constants';
+import { Dropdown, DropdownBody, DropdownItem, DropdownMenu, DropdownToggle } from "../../components/ui/Dropdown";
+import Button from "../../components/ui/Button";
 
 const columns = [
   {
@@ -79,8 +81,25 @@ const columns = [
   {
     id: 'actions',
     header: ({ table }) => <ColumnToggler table={table} />,
-    cell: () => (
-      <Ellipsis className="size-4" />
+    cell: ({ row }) => (
+      <>
+        <Dropdown placement="bottom">
+          <DropdownToggle>
+            <Button type="icon" color="transparent" icon={Ellipsis} />
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownBody className="gap-1 p-1">
+              <DropdownItem
+                key={1}
+                item={{
+                  name: "View",
+                  path: row.index.toString(),
+                }}
+              />
+            </DropdownBody>
+          </DropdownMenu>
+        </Dropdown>
+    </>
     ),
     enableHiding: false,
     enableSorting: false,
@@ -175,15 +194,15 @@ const Users = () => {
           searchOptions={
             {
               search: true,
-              placeholder: "Search by name...",
-              columns: ['name'],
+              placeholder: "Search by name or email...",
+              columns: ["name", "email"],
             }
           }
           filterOptions={
             {
               filter: true,
               filters: [
-                { title: "Role", column: 'role', statuses: ROLES }
+                { title: "Role", column: "role", statuses: ROLES }
               ]
             }
           }

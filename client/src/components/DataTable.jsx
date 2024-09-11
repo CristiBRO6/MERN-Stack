@@ -14,26 +14,20 @@ const DataTable = ({
   columns,
   data,
   loading = false,
-  columnVisibility: initialColumnVisibility,
-  paginationOptions = {},
-  searchOptions = {},
-  filterOptions = {},
+  columnVisibility: initialColumnVisibility = {},
+  paginationOptions = { pagination: false, currentPage: 0, pageSize: 10, pageSizeOptions: [10, 25, 50, 100] },
+  searchOptions = { search: false, placeholder: "", columns: [] },
+  filterOptions = { filter: false, filters: [ { title: "", column: "", statuses: [] } ] },
 }) => {
-  const {
-    pagination = false,
-    currentPage = 0,
-    pageSize = 10,
-    pageSizeOptions = [10, 25, 50, 100],
-  } = paginationOptions;
+  const [filteredData, setFilteredData] = useState(data);
 
-  const mergedPageSizeOptions = pageSizeOptions.includes(pageSize)
-    ? pageSizeOptions
-    : [...pageSizeOptions, pageSize].sort((a, b) => a - b);
+  const { pagination, currentPage, pageSize, pageSizeOptions } = paginationOptions;
 
   const [paginationState, setPaginationState] = useState({ pageIndex: currentPage, pageSize: pageSize });
   const [columnVisibility, setColumnVisibility] = useState(initialColumnVisibility);
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
   const [rowSelection, setRowSelection] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -43,10 +37,41 @@ const DataTable = ({
 
   useEffect(() => {
     if (isLoading) setIsLoading(false);
-  }, [paginationState, columnFilters, sorting]);
+  }, [paginationState, columnFilters, sorting, isLoading]);
+
+  useEffect(() => {
+    const newFilteredData = data.filter(item => {
+      const passesColumnFilters = columnFilters.every(filter => {
+        const { id, value } = filter;
+
+        if (Array.isArray(value) && value.length > 0) {
+          return value.includes(item[id]);
+        }
+
+        return true;
+      });
+
+      return passesColumnFilters;
+    });
+
+    setFilteredData(newFilteredData);
+  }, [data, columnFilters]);
+
+  useEffect(() => {
+    const newFilteredData = data.filter(item => {
+      if (!searchOptions.search) return true;
+      if (!searchValue) return true;
+  
+      return searchOptions.columns.some(column =>
+        item[column]?.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    });
+  
+    setFilteredData(newFilteredData);
+  }, [data, searchValue, searchOptions]);
 
   const table = useReactTable({
-    data,
+    data: filteredData,
     columns,
     state: {
       pagination: paginationState,
@@ -78,21 +103,18 @@ const DataTable = ({
     },
     onRowSelectionChange: setRowSelection,
     enableRowSelection: true,
+    manualFiltering: true,
   });
 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        {searchOptions.search && (
+        {searchOptions.search ? (
           <Search
             placeholder={searchOptions.placeholder}
-            setColumnFilters={(filters) => setColumnFilters(filters.map(f => ({
-              ...f,
-              value: Array.isArray(f.value) ? f.value : [f.value],
-            })))}
-            columns={searchOptions.columns}
+            setSearchValue={setSearchValue}
           />
-        )}
+        ) : null}
 
         {filterOptions.filter &&
           filterOptions.filters.map((filter, index) => (
@@ -120,7 +142,11 @@ const DataTable = ({
         <Pagination
           table={table}
           pagination={paginationState}
-          pageSizeOptions={mergedPageSizeOptions}
+          pageSizeOptions={
+            pageSizeOptions.includes(pageSize) 
+              ? pageSizeOptions 
+              : [...pageSizeOptions, pageSize].sort((a, b) => a - b)
+          }
         />
       )}
 
@@ -145,17 +171,17 @@ DataTable.propTypes = {
     pageSizeOptions: PropTypes.arrayOf(PropTypes.number),
   }),
   searchOptions: PropTypes.shape({
-    search: PropTypes.bool.isRequired,
+    search: PropTypes.bool,
     placeholder: PropTypes.string,
     columns: PropTypes.arrayOf(PropTypes.string),
   }),
   filterOptions: PropTypes.shape({
-    filter: PropTypes.bool.isRequired,
+    filter: PropTypes.bool,
     filters: PropTypes.arrayOf(
       PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        column: PropTypes.string.isRequired,
-        statuses: PropTypes.array.isRequired,
+        title: PropTypes.string,
+        column: PropTypes.string,
+        statuses: PropTypes.array,
       })
     ),
   }),

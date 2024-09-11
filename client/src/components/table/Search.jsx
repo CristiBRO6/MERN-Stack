@@ -1,37 +1,14 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import useDebounce from '../../hooks/useDebounce';
 
-const useDebounce = (value, delay) => {
-  const [debouncedValue, setDebouncedValue] = useState();
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebouncedValue(value)
-    }, delay);
-
-    return () => clearTimeout(timeout);
-  }, [value, delay]);
-
-  return debouncedValue;
-}
-
-const Search = ({ placeholder = "", setColumnFilters, columns }) => {
+const Search = ({ placeholder = "", setSearchValue }) => {
   const [value, setValue] = useState('');
-  
-  const onFilterChange = (value) => {
-    setColumnFilters(
-      columns.map((id) => ({
-        id,
-        value,
-      }))
-    );
-  };
-
   const debouncedValue = useDebounce(value, 300);
 
   useEffect(() => {
-    onFilterChange(value);
-  }, [debouncedValue]);
+    setSearchValue(debouncedValue); 
+  }, [debouncedValue, setSearchValue]);
 
   return (
     <input
@@ -46,8 +23,7 @@ const Search = ({ placeholder = "", setColumnFilters, columns }) => {
 
 Search.propTypes = {
   placeholder: PropTypes.string,
-  setColumnFilters: PropTypes.func.isRequired,
-  columns: PropTypes.array.isRequired,
+  setSearchValue: PropTypes.func.isRequired,
 };
 
 export default Search;
