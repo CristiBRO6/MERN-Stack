@@ -42,8 +42,8 @@ const Layout = () => {
         <>
           {/* DRAWER */}
           <Drawer title="Menu" drawerOpen={drawerOpen} closeDrawer={closeDrawer}>
-            <div className="flex flex-col gap-2">
-            {Items.map((item) => <SidebarItem key={item.id} item={item} onClick={closeDrawer} /> )}
+            <div className="h-full flex flex-col gap-2 overflow-y-auto">
+              {Items.map((item) => <SidebarItem key={item.id} item={item} onClick={closeDrawer} /> )}
             </div>
           </Drawer>
         </>
