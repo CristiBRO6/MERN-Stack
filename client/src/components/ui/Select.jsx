@@ -83,7 +83,7 @@ export const SelectLabel = ({ children, className = "" }) => {
   );
 };
 
-export const SelectItem = ({ children, value, className = "" }) => {
+export const SelectItem = ({ children, value, className = "", onClick = () => {},  }) => {
   const { value: selectedValue, setValue, setTitle } = useContext(SelectContext);
 
   return (
@@ -98,6 +98,7 @@ export const SelectItem = ({ children, value, className = "" }) => {
       onClick={() => {
         setValue(value);
         setTitle(children);
+        onClick();
       }}
       closeable
     />
@@ -139,4 +140,5 @@ SelectItem.propTypes = {
   children: PropTypes.node.isRequired,
   value: PropTypes.string.isRequired,
   className: PropTypes.string,
+  onClick: PropTypes.func,
 };

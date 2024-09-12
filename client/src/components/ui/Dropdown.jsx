@@ -1,32 +1,33 @@
 import PropTypes from 'prop-types';
+import { twMerge } from 'tailwind-merge';
 import { useState, useEffect, useRef, createContext, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 export const DropdownContext = createContext(false);
 
-export const Dropdown = ({ children, placement = 'bottom', className = '' }) => {
+export const Dropdown = ({ children, placement = "bottom", className = "" }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [animatedClasses, setAnimatedClasses] = useState('invisible opacity-0 scale-95');
+  const [animatedClasses, setAnimatedClasses] = useState("invisible opacity-0 scale-95");
   const dropdownRef = useRef(null);
   const menuRef = useRef(null);
 
-  let menuClasses = '';
+  let menuClasses = "";
 
   switch (placement) {
-    case 'top':
-      menuClasses = 'bottom-full left-0 mb-2';
+    case "top":
+      menuClasses = "bottom-full left-0 mb-2";
       break;
-    case 'bottom':
-      menuClasses = 'top-full left-0 mt-2';
+    case "bottom":
+      menuClasses = "top-full left-0 mt-2";
       break;
-    case 'left':
-      menuClasses = 'right-full top-0 mr-2';
+    case "left":
+      menuClasses = "right-full top-0 mr-2";
       break;
-    case 'right':
-      menuClasses = 'left-full top-0 ml-2';
+    case "right":
+      menuClasses = "left-full top-0 ml-2";
       break;
     default:
-      menuClasses = 'top-full left-0 mt-2';
+      menuClasses = "top-full left-0 mt-2";
   }
 
   const toggleDropdown = () => {
@@ -41,10 +42,10 @@ export const Dropdown = ({ children, placement = 'bottom', className = '' }) => 
 
   const resetDropdownPosition = () => {
     if (menuRef.current) {
-      menuRef.current.style.left = '';
-      menuRef.current.style.right = '';
-      menuRef.current.style.top = '';
-      menuRef.current.style.bottom = '';
+      menuRef.current.style.left = "";
+      menuRef.current.style.right = "";
+      menuRef.current.style.top = "";
+      menuRef.current.style.bottom = "";
     }
   };
 
@@ -55,19 +56,19 @@ export const Dropdown = ({ children, placement = 'bottom', className = '' }) => 
       const viewportHeight = window.innerHeight;
   
       if (rect.left < 0) {
-        menuRef.current.style.left = '0';
-        menuRef.current.style.right = 'auto';
+        menuRef.current.style.left = "0";
+        menuRef.current.style.right = "auto";
       } else if (rect.right > viewportWidth) {
-        menuRef.current.style.right = '0';
-        menuRef.current.style.left = 'auto';
+        menuRef.current.style.right = "0";
+        menuRef.current.style.left = "auto";
       }
   
       if (rect.top < 0) {
-        menuRef.current.style.top = '0';
-        menuRef.current.style.bottom = 'auto';
+        menuRef.current.style.top = "0";
+        menuRef.current.style.bottom = "auto";
       } else if (rect.bottom > viewportHeight) {
-        menuRef.current.style.bottom = '0';
-        menuRef.current.style.top = 'auto';
+        menuRef.current.style.bottom = "0";
+        menuRef.current.style.top = "auto";
       }
     }
   };
@@ -79,26 +80,33 @@ export const Dropdown = ({ children, placement = 'bottom', className = '' }) => 
 
       setAnimatedClasses("visible opacity-100 scale-100");
     } else {
-      setAnimatedClasses('invisible opacity-0 scale-95');
+      setAnimatedClasses("invisible opacity-0 scale-95");
     }
   }, [isOpen]);
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   return (
     <DropdownContext.Provider value={{ isOpen, setIsOpen }}>
-      <div ref={dropdownRef} className={`relative w-fit ${className}`}>
+      <div ref={dropdownRef} className={twMerge("relative w-fit", className)}>
         <div onClick={toggleDropdown}>
           {children[0]}
         </div>
 
-        <div ref={menuRef} className={`absolute z-[50] bg-white border border-gray-200 rounded-md shadow-lg transition-all ${isOpen ? 'block ' : 'hidden'} ${animatedClasses} ${menuClasses}`}>
+        <div 
+          ref={menuRef} 
+          className={twMerge(
+            "absolute z-[50] bg-white border border-gray-200 rounded-md shadow-lg transition-all",
+            isOpen ? "block " : "hidden", 
+            animatedClasses, menuClasses
+          )}
+        >
           {children[1]}
         </div>
       </div>
@@ -106,50 +114,50 @@ export const Dropdown = ({ children, placement = 'bottom', className = '' }) => 
   );
 };
 
-export const DropdownToggle = ({ children, className = '' }) => {
+export const DropdownToggle = ({ children, className = "" }) => {
   return (
-    <div className={`flex flex-row ${className}`}>
+    <div className={twMerge("flex flex-row", className)}>
       {children}
     </div>
   );
 };
 
-export const DropdownMenu = ({ children, className = '' }) => {
+export const DropdownMenu = ({ children, className = "" }) => {
   return (
-    <div className={`flex flex-col min-w-[160px] w-auto ${className}`}>
+    <div className={twMerge("flex flex-col min-w-[160px] w-auto", className)}>
       {children}
     </div>
   );
 };
 
-export const DropdownHead = ({ children, className = '' }) => {
+export const DropdownHead = ({ children, className = "" }) => {
   return (
-    <div className={`flex flex-col ${className}`}>
+    <div className={twMerge("flex flex-col", className)}>
       {children}
     </div>
   );
 };
 
-export const DropdownBody = ({ children, className = '' }) => {
+export const DropdownBody = ({ children, className = "" }) => {
   return (
-    <div className={`flex flex-col ${className}`}>
+    <div className={twMerge("flex flex-col", className)}>
       {children}
     </div>
   );
 };
 
-export const DropdownGroup = ({ children, title, className = '' }) => {
+export const DropdownGroup = ({ children, title, className = "" }) => {
   return (
     <div className="flex flex-col gap-1 p-1">
       {title && <span className="font-semibold text-sm text-gray-700">{title}</span>}
-      <div className={`flex flex-col ${className}`}>
+      <div className={twMerge("flex flex-col", className)}>
         {children}
       </div>
     </div>
   );
 };
 
-export const DropdownItem = ({ item, closeable = false, onClick = () => {}, className = '' }) => {
+export const DropdownItem = ({ item, closeable = false, onClick = () => {}, className = "" }) => {
   const { setIsOpen } = useContext(DropdownContext);
 
   const handleClick = () => {
@@ -159,7 +167,7 @@ export const DropdownItem = ({ item, closeable = false, onClick = () => {}, clas
 
   const ItemContent = () => (
     <div 
-      className={`flex items-center gap-2 px-2 py-1 text-sm font-medium rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-100 [&.active]:bg-gray-100 ${className}`}
+      className={twMerge("flex items-center gap-2 px-2 py-1 text-sm font-medium rounded-md cursor-pointer transition-colors duration-300 hover:bg-gray-100 [&.active]:bg-gray-100", className)}
       onClick={handleClick}
     >
       {item.icon && <item.icon className="size-4" />}

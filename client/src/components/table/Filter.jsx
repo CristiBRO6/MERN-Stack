@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
-import { Square, SquareCheck, CirclePlus } from 'lucide-react';
+import { twMerge } from 'tailwind-merge';
+
 import Button from '../ui/Button';
 import Badge from '../ui/Badge';
 import { Dropdown, DropdownGroup, DropdownItem, DropdownMenu, DropdownToggle } from '../ui/Dropdown';
+
+import { Square, SquareCheck, CirclePlus } from 'lucide-react';
 
 const Filter = ({ title, column, statuses, columnFilters, setColumnFilters }) => {
   const filterStatuses = columnFilters.find(f => f.id == column)?.value || [];
@@ -55,7 +58,7 @@ const Filter = ({ title, column, statuses, columnFilters, setColumnFilters }) =>
                   icon: isActive(status.id) ? SquareCheck : Square,
                 }}
                 onClick={() => handleToggle(status.id)}
-                className={isActive(status.id) ? "active" : ""}
+                className={twMerge(isActive(status.id) ? "active" : "")}
               />
             ))}
           </DropdownGroup>

@@ -26,7 +26,7 @@ const Spinner = ({ color = "default", size = "medium" }) => {
   }
 
   return (
-    <LoaderCircle className={twMerge('inline animate-spin', spinnerColors[color], spinnerSize[size])} />
+    <LoaderCircle className={twMerge("inline animate-spin", spinnerColors[color], spinnerSize[size])} />
   )
 }
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 
 const Search = ({ placeholder = "", setSearchValue }) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
   const debouncedValue = useDebounce(value, 300);
 
   useEffect(() => {

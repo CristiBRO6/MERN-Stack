@@ -9,7 +9,7 @@ const DataTableHeader = ({ table }) => {
     .getAllColumns()
     .filter((column) => column.getIsVisible())
     .filter(
-      (column) => column.id !== 'select' && column.id !== 'actions'
+      (column) => column.id !== "select" && column.id !== "actions"
     ).length;
 
   return (

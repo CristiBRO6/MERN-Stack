@@ -51,7 +51,7 @@ export const AvatarFallback = ({ children, className = "" }) => {
 };
 
 Avatar.propTypes = {
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  size: PropTypes.oneOf(["small", "medium", "large"]),
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
 };

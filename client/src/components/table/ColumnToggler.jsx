@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
+import { twMerge } from 'tailwind-merge';
+
 import { Dropdown, DropdownGroup, DropdownItem, DropdownMenu, DropdownToggle } from '../ui/Dropdown';
 import Button from '../ui/Button';
+
 import { Settings2, Square, SquareCheck } from 'lucide-react';
 
 const ColumnToggler = ({ table }) => {
@@ -12,7 +15,7 @@ const ColumnToggler = ({ table }) => {
         </DropdownToggle>
         <DropdownMenu>
           <DropdownGroup title="Columns" className="gap-1">
-            {table.getAllColumns().filter((column) => typeof column.accessorFn !== 'undefined' && column.getCanHide()).map((column) => (
+            {table.getAllColumns().filter((column) => typeof column.accessorFn !== "undefined" && column.getCanHide()).map((column) => (
               column.getCanHide() && (
                 <DropdownItem
                   key={column.id}
@@ -20,7 +23,7 @@ const ColumnToggler = ({ table }) => {
                     name: column.columnDef.header,
                     icon: column.getIsVisible() ? SquareCheck : Square,
                   }}
-                  className={`${column.getIsVisible() ? 'active' : ''}`}
+                  className={twMerge(column.getIsVisible() ? "active" : "")}
                   onClick={() => {
                     column.toggleVisibility(!column.getIsVisible()); 
                   }}

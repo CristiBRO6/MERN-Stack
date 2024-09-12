@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types';
+import { twMerge } from 'tailwind-merge';
 
 import { Dropdown, DropdownBody, DropdownGroup, DropdownItem, DropdownMenu, DropdownToggle } from '../ui/Dropdown';
 import Button from '../ui/Button';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 
-const Sort = ({ children, header, className = '' }) => {
+const Sort = ({ children, header, className = "" }) => {
   return (
     <>
-      <Dropdown placement="bottom" className={`${className}`}>
+      <Dropdown placement="bottom" className={twMerge(className)}>
         <DropdownToggle>
           <Button
             color="transparent"
@@ -36,7 +37,7 @@ const Sort = ({ children, header, className = '' }) => {
                   icon: ArrowUp
                 }}
                 closeable
-                className={`${header.column.getIsSorted() == "asc" ? "active" : ""}`}
+                className={twMerge(header.column.getIsSorted() == "asc" ? "active" : "")}
                 onClick={() =>{
                   header.column.getIsSorted() === "asc" ? header.column.clearSorting() : header.column.toggleSorting(false);
                 }}
@@ -47,7 +48,7 @@ const Sort = ({ children, header, className = '' }) => {
                   icon: ArrowDown
                 }}
                 closeable
-                className={`${header.column.getIsSorted() == "desc" ? "active" : ""}`}
+                className={twMerge(header.column.getIsSorted() == "desc" ? "active" : "")}
                 onClick={() => {
                   header.column.getIsSorted() === "desc" ? header.column.clearSorting() : header.column.toggleSorting(true);
                 }}

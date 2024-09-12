@@ -13,10 +13,10 @@ const Button = ({
   icon: Icon, 
   iconPosition = "start", 
   loading = false, 
-  loadingColor = 'primary',
-  loadingSize = 'medium',
+  loadingColor = "primary",
+  loadingSize = "medium",
   onClick = () => {}, 
-  className = '', 
+  className = "", 
   disabled = false 
 }) => {
   const buttonColors = {
@@ -39,9 +39,9 @@ const Button = ({
   };
 
   const buttonSizes = {
-    small: type === 'icon' ? "size-8 p-2" : "min-h-8 h-8 max-h-8 px-2 py-1",
-    medium: type === 'icon' ? "size-9 p-2" : "min-h-9 h-9 max-h-9 px-3 py-2",
-    large: type === 'icon' ? "size-10 p-2" : "min-h-10 h-10 max-h-10 px-4 py-3",
+    small: type === "icon" ? "size-8 p-2" : "min-h-8 h-8 max-h-8 px-2 py-1",
+    medium: type === "icon" ? "size-9 p-2" : "min-h-9 h-9 max-h-9 px-3 py-2",
+    large: type === "icon" ? "size-10 p-2" : "min-h-10 h-10 max-h-10 px-4 py-3",
   };  
 
   const buttonShapes = {
@@ -68,13 +68,13 @@ const Button = ({
       onClick={!disabled && !loading ? onClick : undefined}
       disabled={disabled || loading}
     >
-      {iconPosition === 'start' && (
+      {iconPosition === "start" && (
         <>
           {loading ? <Spinner color={loadingColor} size={loadingSize} /> : iconElement}
         </>
       )}
       {children}
-      {iconPosition === 'end' && (
+      {iconPosition === "end" && (
         <>
           {loading ? <Spinner color={loadingColor} size={loadingSize} /> : iconElement}
         </>
@@ -85,13 +85,13 @@ const Button = ({
 
 Button.propTypes = {
   children: PropTypes.node,
-  color: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'transparent']),
-  type: PropTypes.oneOf(['primary', 'dashed', 'text', 'link', 'default', 'icon']),
-  size: PropTypes.oneOf(['small', 'medium', 'large']),
-  shape: PropTypes.oneOf(['round', 'circle', 'default']),
+  color: PropTypes.oneOf(["primary", "secondary", "success", "danger", "warning", "info", "transparent"]),
+  type: PropTypes.oneOf(["primary", "dashed", "text", "link", "default", "icon"]),
+  size: PropTypes.oneOf(["small", "medium", "large"]),
+  shape: PropTypes.oneOf(["round", "circle", "default"]),
   bordered: PropTypes.bool,
   icon: PropTypes.elementType,
-  iconPosition: PropTypes.oneOf(['start', 'end']),
+  iconPosition: PropTypes.oneOf(["start", "end"]),
   loading: PropTypes.bool,
   loadingColor: PropTypes.string,
   loadingSize: PropTypes.string,

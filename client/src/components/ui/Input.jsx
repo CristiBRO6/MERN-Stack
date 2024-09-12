@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Input = ({ type = "text", autoComplete = '', placeholder = ""}) => {
+const Input = ({ type = "text", autoComplete = "", placeholder = ""}) => {
   return (
     <>
       <div className="w-72">

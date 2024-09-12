@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge';
 
 export const TabsContext = createContext(null);
 
-export const Tabs = ({ children, defaultValue, className = '' }) => {
+export const Tabs = ({ children, defaultValue, className = "" }) => {
   const [value, setValue] = useState(defaultValue);
 
   return (
@@ -16,7 +16,7 @@ export const Tabs = ({ children, defaultValue, className = '' }) => {
   );
 }
 
-export const TabsList = ({ children, className = '' }) => {
+export const TabsList = ({ children, className = "" }) => {
   return (
     <div className={twMerge("flex gap-1 border-b border-gray-300", className)}>
       {children}
@@ -24,7 +24,7 @@ export const TabsList = ({ children, className = '' }) => {
   );
 }
 
-export const TabsTrigger = ({ children, value, className = '' }) => {
+export const TabsTrigger = ({ children, value, className = "" }) => {
   const { value: activeValue, setValue } = useContext(TabsContext);
 
   return (
@@ -43,7 +43,7 @@ export const TabsTrigger = ({ children, value, className = '' }) => {
   );
 }
 
-export const TabsContent = ({ children, value, className = '' }) => {
+export const TabsContent = ({ children, value, className = "" }) => {
   const { value: activeValue } = useContext(TabsContext);
 
   return (

@@ -35,9 +35,9 @@ const Navbar = ({ openDrawer }) => {
           </DropdownHead>
           <DropdownBody className="gap-1 pt-1">
           {DASHBOARD_PROFILE_ITEMS.map((item) => 
-            item.type === 'item' ? (
+            item.type === "item" ? (
               <DropdownItem key={item.id} item={item} closeable />
-            ) : item.type === 'separator' ? (
+            ) : item.type === "separator" ? (
               <DropdownSeparator key={item.id} />
             ) : null
           )}

@@ -1,17 +1,17 @@
 import { Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import Sidebar from '../components/DashboardSidebar';
-import Navbar from '../components/DashboardNavbar';
 import useResponsive from '../hooks/useResponsive';
 
+import { Dropdown, DropdownBody, DropdownItem, DropdownMenu, DropdownSeparator, DropdownToggle } from '../components/ui/Dropdown';
+import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/Avatar';
+import Sidebar from '../components/DashboardSidebar';
+import Navbar from '../components/DashboardNavbar';
 import Drawer from '../components/ui/Drawer';
 import SidebarItem from '../components/ui/SidebarItem';
 
-import { SIDEBAR_ITEMS, DASHBOARD_PROFILE_ITEMS } from '../constants';
-import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/Avatar';
-import { Dropdown, DropdownBody, DropdownItem, DropdownMenu, DropdownSeparator, DropdownToggle } from '../components/ui/Dropdown';
 import { EllipsisVertical } from 'lucide-react';
+import { SIDEBAR_ITEMS, DASHBOARD_PROFILE_ITEMS } from '../constants';
 
 const DashboardLayout = () => {
   const screenSizeIndex = useResponsive([768, 1024, 1280]);

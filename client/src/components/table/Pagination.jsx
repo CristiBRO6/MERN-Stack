@@ -1,40 +1,30 @@
 import PropTypes from 'prop-types';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
-import { Dropdown, DropdownBody, DropdownItem, DropdownMenu, DropdownToggle } from '../ui/Dropdown';
-import { useState } from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/Select';
 import Button from '../ui/Button';
 
 const Pagination = ({ table, pagination, pageSizeOptions }) => {
-  const [pageSize, setPageSize] = useState(pagination.pageSize);
-
   return (
     <>
       <div className="flex items-center justify-between">
         {pageSizeOptions.length ? (
-          <Dropdown placement="bottom">
-            <DropdownToggle>
-              <Button type="icon" color="transparent" bordered>{pageSize}</Button>
-            </DropdownToggle>
-            <DropdownMenu className="min-w-[120px]">
-              <DropdownBody className="gap-1 p-1">
-                {pageSizeOptions.map((option, index) => (
-                  <DropdownItem 
-                    key={index}
-                    item={{
-                      name: option.toString()
-                    }} 
-                    closeable
-                    className={`${pageSize === option ? 'active' : ''}`}
-                    onClick={() => {
-                      setPageSize(option);
-                      table.setPageSize(Number(option));
-                    }}
-                  />
+          <Select defaultValue="">
+            <SelectTrigger className="min-w-20 w-auto max-w-20">
+              <SelectValue placeholder={pageSizeOptions[0].toString()} />
+            </SelectTrigger>
+            <SelectContent className="min-w-20 w-auto max-w-20">
+              {pageSizeOptions.map((option, index) => (
+                  <SelectItem 
+                    key={index} 
+                    value={option.toString()}
+                    onClick={() => table.setPageSize(Number(option))}
+                  >
+                    {option.toString()}
+                  </SelectItem>
                 ))}
-              </DropdownBody>
-            </DropdownMenu>
-          </Dropdown>
+            </SelectContent>
+          </Select>
         ) : (<div></div>)}
         <div className="flex items-center gap-2">
           <div className="font-medium text-sm">Page {pagination.pageIndex + 1} of {table.getPageCount()} pages</div>
