@@ -24,7 +24,6 @@ const columns = [
     cell: ({ row }) => (
       <IndeterminateCheckbox
         checked={row.getIsSelected()}
-        disabled={row.original.disabled}
         indeterminate={row.getIsSomeSelected()}
         onChange={row.getToggleSelectedHandler()}
       />
@@ -53,29 +52,18 @@ const columns = [
     enableColumnFilter: true,
     filterFn: (row, columnId, filterRoles) => {
       if (filterRoles.length === 0) return true;
+
       const role = row.getValue(columnId);
       return filterRoles.includes(role);
     },
-    cell: ({ getValue }) => {
-      const role = getValue();
-      let color = 'default';
+    cell: ({ row }) => {
+      const role = row.original.role;
       
-      switch (role) {
-        case 0:
-          color = 'default';
-          break;
-        case 1:
-          color = 'error';
-          break;
-        case 2:
-          color = 'gold';
-          break;
-        default:
-          color = 'default';
-          break;
-      }
-      
-      return <Badge color={color}>{["User", "Admin", "Owner"][role]}</Badge>;
+      return (
+        <Badge color={["default", "error", "gold"][role]}>
+          {["User", "Admin", "Owner"][role]}
+        </Badge>
+      )
     },
   },
   {

@@ -8,6 +8,7 @@ import Spinner from '../../components/ui/Spinner';
 import Checkbox from '../../components/ui/Checkbox';
 
 import { Check } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/Select';
 
 const Settigns = () => {
   return (
@@ -123,6 +124,19 @@ const Settigns = () => {
             <TabsContent value="tab2">Content 2</TabsContent>
             <TabsContent value="tab3">Content 3</TabsContent>
           </Tabs>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="font-semibold text-lg">Select</span>
+          <Select defaultValue="light">
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Theme" />
+            </SelectTrigger>
+            <SelectContent className="w-[180px]">
+              <SelectItem value="light">Light</SelectItem>
+              <SelectItem value="dark">Dark</SelectItem>
+              <SelectItem value="system">System</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </>
