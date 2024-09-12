@@ -7,12 +7,12 @@ const Drawer = ({ children, title = "Menu", drawerOpen, closeDrawer }) => {
   return (
     <div className="absolute">
       <div className={`fixed top-0 ${drawerOpen ? "-translate-x-0" : "-translate-x-[var(--sidebar-width)]"} min-w-[var(--sidebar-width)] w-[var(--sidebar-width)] max-w-[var(--sidebar-width)] h-screen bg-white z-[1000] transition-transform duration-300`}>
-        <div className="flex flex-col h-full p-2">
-          <div className="flex items-center justify-between gap-2 pb-2 border-b">
+        <div className="flex flex-col h-full p-3">
+          <div className="flex items-center justify-between gap-2 pb-3 border-b">
             <span className="text-xl font-bold">{title}</span>
             <Button type="icon" color="transparent" icon={X} onClick={closeDrawer} />
           </div>
-          <div className="h-full overflow-y-auto pt-2">
+          <div className="h-full pt-3">
             {children}
           </div>
         </div>

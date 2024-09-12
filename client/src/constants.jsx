@@ -1,4 +1,4 @@
-import { SlidersVertical, ShoppingCart, Users, Bookmark, Package, Tag, Percent, Star, Settings } from 'lucide-react';
+import { SlidersVertical, ShoppingCart, Users, Bookmark, Package, Tag, Percent, Star, Settings, House, User, LogOut } from 'lucide-react';
 
 export const ROLES = [
   { id: 0, name: "User" },
@@ -16,4 +16,12 @@ export const SIDEBAR_ITEMS = [
   { id: 7, path: "/dashboard/discounts", name: "Discounts", icon: Percent },
   { id: 8, path: "/dashboard/reviews", name: "Reviews", icon: Star },
   { id: 9, path: "/dashboard/settings", name: "Settings", icon: Settings }
+];
+
+export const DASHBOARD_PROFILE_ITEMS = [
+  { id: 1, type: 'item', path: "/", name: "Home", icon: House },
+  { id: 2, type: 'item', path: "/profile", name: "Profile", icon: User },
+  { id: 3, type: 'item', path: "/dashboard/settings", name: "Settigns", icon: Settings },
+  { id: 4, type: 'separator' },
+  { id: 5, type: 'item', path: "/logout", name: "Logout", icon: LogOut },
 ];

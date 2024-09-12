@@ -8,7 +8,10 @@ import useResponsive from '../hooks/useResponsive';
 import Drawer from '../components/ui/Drawer';
 import SidebarItem from '../components/ui/SidebarItem';
 
-import { SIDEBAR_ITEMS } from '../constants';
+import { SIDEBAR_ITEMS, DASHBOARD_PROFILE_ITEMS } from '../constants';
+import { Avatar, AvatarFallback, AvatarImage } from '../components/ui/Avatar';
+import { Dropdown, DropdownBody, DropdownItem, DropdownMenu, DropdownSeparator, DropdownToggle } from '../components/ui/Dropdown';
+import { EllipsisVertical } from 'lucide-react';
 
 const DashboardLayout = () => {
   const screenSizeIndex = useResponsive([768, 1024, 1280]);
@@ -43,10 +46,47 @@ const DashboardLayout = () => {
         <>
           {/* DRAWER */}
           <Drawer title="Menu" drawerOpen={drawerOpen} closeDrawer={closeDrawer}>
-            <div className="flex flex-col gap-2">
-              {SIDEBAR_ITEMS.map((item) => (
-                <SidebarItem key={item.id} item={item} onClick={closeDrawer} />
-              ))}
+            <div className="h-full flex flex-col justify-between">
+              <div className="h-full flex flex-col gap-2">
+                {SIDEBAR_ITEMS.map((item) => (
+                  <SidebarItem key={item.id} item={item} onClick={closeDrawer} />
+                ))}
+              </div>
+              <div className="w-full flex items-center justify-between pt-3 border-t">
+                <div className="w-full flex items-center gap-2">
+                  <Avatar className="rounded-md size-9">
+                    <AvatarImage src="http://cristibro.epizy.com/phone_store/avatar/614dcb8130063b69cbe83aa018dfb0c6.png?v=1726162528" alt="CristiBRO" />
+                    <AvatarFallback>CB</AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col gap-1">
+                    <span className="font-semibold text-base leading-none">CristiBRO</span>
+                    <span className="text-sm text-gray-800 leading-none">cristibro@gmail.com</span>
+                  </div>
+                </div>
+                <Dropdown placement="top">
+                  <DropdownToggle>
+                    <div className="p-1 cursor-pointer">
+                      <EllipsisVertical className="size-4" />
+                    </div>
+                  </DropdownToggle>
+                  <DropdownMenu className="p-1">
+                    <DropdownBody className="gap-1 pt-1">
+                      {DASHBOARD_PROFILE_ITEMS.map((item) => 
+                        item.type === 'item' ? (
+                          <DropdownItem 
+                            key={item.id} 
+                            item={item}
+                            onClick={closeDrawer}
+                            closeable 
+                          />
+                        ) : item.type === 'separator' ? (
+                          <DropdownSeparator key={item.id} />
+                        ) : null
+                      )}
+                    </DropdownBody>
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
             </div>
           </Drawer>
         </>

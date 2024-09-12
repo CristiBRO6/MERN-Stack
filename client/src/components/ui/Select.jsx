@@ -15,11 +15,10 @@ export const Select = ({ children, defaultValue = null, className = "" }) => {
   useEffect(() => {
     if (defaultValue) {
       React.Children.forEach(children, (child) => {
-        // Iterate over SelectContent children to find SelectItem
         if (React.isValidElement(child) && child.type === SelectContent) {
           React.Children.forEach(child.props.children, (item) => {
             if (React.isValidElement(item) && item.props.value === defaultValue) {
-              setTitle(item.props.children); // Set the title to the content of the matching SelectItem
+              setTitle(item.props.children);
             }
           });
         }

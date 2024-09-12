@@ -1,16 +1,11 @@
 import PropTypes from 'prop-types';
-import { Menu, House, User, Settings, LogOut } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 import useResponsive from '../hooks/useResponsive';
 import { Dropdown, DropdownBody, DropdownHead, DropdownItem, DropdownMenu, DropdownSeparator, DropdownToggle } from './ui/Dropdown';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/Avatar';
 
-const dropdownItems = [
-  { id: 1, type: 'item', path: "/", name: "Home", icon: House },
-  { id: 2, type: 'item', path: "/profile", name: "Profile", icon: User },
-  { id: 3, type: 'item', path: "/dashboard/settings", name: "Settigns", icon: Settings },
-  { id: 4, type: 'separator' },
-  { id: 5, type: 'item', path: "/logout", name: "Logout", icon: LogOut },
-];
+import { DASHBOARD_PROFILE_ITEMS } from '../constants';
 
 const Navbar = ({ openDrawer }) => {
   const screenSizeIndex = useResponsive([768, 1024, 1280]);
@@ -28,11 +23,10 @@ const Navbar = ({ openDrawer }) => {
       </div>
       <Dropdown placement="bottom">
         <DropdownToggle>
-          <div className="flex items-center gap-2 cursor-pointer">
-            <div className="bg-gray-100 p-2 rounded-full overflow-hidden">
-              <User className="size-4" />
-            </div>
-          </div>
+          <Avatar className="cursor-pointer">
+            <AvatarImage src="http://cristibro.epizy.com/phone_store/avatar/614dcb8130063b69cbe83aa018dfb0c6.png?v=1726162528" alt="CristiBRO" />
+            <AvatarFallback>CB</AvatarFallback>
+          </Avatar>
         </DropdownToggle>
         <DropdownMenu className="p-1">
           <DropdownHead className="gap-1 px-2 pb-1 border-b">
@@ -40,7 +34,7 @@ const Navbar = ({ openDrawer }) => {
             <span className="text-gray-800 text-xs leading-none text">cristibro@gmail.com</span>
           </DropdownHead>
           <DropdownBody className="gap-1 pt-1">
-          {dropdownItems.map((item) => 
+          {DASHBOARD_PROFILE_ITEMS.map((item) => 
             item.type === 'item' ? (
               <DropdownItem key={item.id} item={item} closeable />
             ) : item.type === 'separator' ? (

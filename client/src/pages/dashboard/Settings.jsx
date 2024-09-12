@@ -9,6 +9,7 @@ import Checkbox from '../../components/ui/Checkbox';
 
 import { Check } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/Select';
+import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/Avatar';
 
 const Settigns = () => {
   return (
@@ -137,6 +138,23 @@ const Settigns = () => {
               <SelectItem value="system">System</SelectItem>
             </SelectContent>
           </Select>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="font-semibold text-lg">Avatar</span>
+          <div className="flex items-center gap-2">
+            <Avatar size="small">
+              <AvatarImage src="http://cristibro.epizy.com/phone_store/avatar/614dcb8130063b69cbe83aa018dfb0c6.png?v=1726162528" alt="CristiBRO" />
+              <AvatarFallback>CB</AvatarFallback>
+            </Avatar>
+            <Avatar size="medium">
+              <AvatarImage src="http://cristibro.epizy.com/phone_store/avatar/614dcb8130063b69cbe83aa018dfb0c6.png?v=1726162528" alt="CristiBRO" />
+              <AvatarFallback>CB</AvatarFallback>
+            </Avatar>
+            <Avatar size="large">
+              <AvatarImage src="http://cristibro.epizy.com/phone_store/avatar/614dcb8130063b69cbe83aa018dfb0c6.png?v=1726162528" alt="CristiBRO" />
+              <AvatarFallback>CB</AvatarFallback>
+            </Avatar>
+          </div>
         </div>
       </div>
     </>
