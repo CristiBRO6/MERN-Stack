@@ -31,7 +31,7 @@ const Sidebar = ({ className }) => {
           </div>
           <Button type="icon" color="transparent" icon={isCollapsed ? PanelLeftOpen : PanelLeftClose} onClick={handleToggleCollapse} className="hidden lg:flex" />
         </div>
-        <div className="h-full flex flex-col gap-2 p-3">
+        <div className="h-full flex flex-col gap-2 p-3 overflow-hidden overflow-y-auto">
           {SIDEBAR_ITEMS.map((item) => (
             <SidebarItem key={item.id} isCollapsed={isCollapsed} item={item} />
           ))}
