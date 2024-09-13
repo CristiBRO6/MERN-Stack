@@ -18,7 +18,7 @@ const Register = () => {
           <CardBody className="flex flex-col gap-2">
             <RegisterForm />
             <div className="w-full flex justify-start">
-              <Link to="/login">Login</Link>
+              <Link className="text-sm font-medium" to="/login">Login</Link>
             </div>
           </CardBody>
         </Card>
