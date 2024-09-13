@@ -1,4 +1,4 @@
-import { SlidersVertical, ShoppingCart, Users, Bookmark, Package, Tag, Percent, Star, Settings, House, User, LogOut } from 'lucide-react';
+import { SlidersVertical, ShoppingCart, Users, Bookmark, Package, Tag, Percent, Star, Settings, House, User, LogOut, Heart } from 'lucide-react';
 
 export const ROLES = [
   { id: 0, name: "User" },
@@ -23,11 +23,21 @@ export const DASHBOARD_PROFILE_ITEMS = [
   { id: 2, type: "item", path: "/profile", name: "Profile", icon: User },
   { id: 3, type: "item", path: "/dashboard/settings", name: "Settigns", icon: Settings },
   { id: 4, type: "group", path: "/dashboard/settings", name: "Settigns", icon: Settings, children: [
-    { id: 1, type: "item",name: "Light" },
-    { id: 2, type: "item",name: "Dark" },
+    { id: 1, type: "item", name: "Light" },
+    { id: 2, type: "item", name: "Dark" },
     { id: 3, type: "separator" },
-    { id: 4, type: "item",name: "System" },
+    { id: 4, type: "item", name: "System" },
   ] },
   { id: 5, type: "separator" },
   { id: 6, type: "item", path: "/logout", name: "Logout", icon: LogOut, danger: true },
+];
+
+export const PROFILE_ITEMS = [
+  { id: 1, type: "item", path: "/profilw", name: "Profile", icon: User },
+  { id: 2, type: "item", path: "/wishlist", name: "Wishlist", icon: Heart },
+  { id: 3, type: "item", path: "/orders", name: "Orders", icon: ShoppingCart },
+  { id: 4, type: "item", path: "/reviews", name: "Reviews", icon: Star },
+  { id: 5, type: "item", path: "/dashboard", name: "Dashboard", icon: SlidersVertical },
+  { id: 6, type: "separator" },
+  { id: 7, type: "item", path: "/logout", name: "Logout", icon: LogOut, danger: true },
 ];

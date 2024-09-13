@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
+import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import Spinner from './Spinner';
 
-const Button = ({ 
+const Button = React.forwardRef(({ 
   children = "", 
   color = "primary", 
   type = "primary", 
@@ -17,8 +18,9 @@ const Button = ({
   loadingSize = "medium",
   onClick = () => {}, 
   className = "", 
-  disabled = false 
-}) => {
+  disabled = false,
+  ...props
+}, ref) => {
   const buttonColors = {
     primary: "bg-primary text-white hover:bg-primary-hover [&.active]:bg-primary-active",
     secondary: "bg-gray-200 text-black hover:bg-gray-300 [&.active]:bg-gray-300",
@@ -32,9 +34,6 @@ const Button = ({
   const buttonTypes = {
     primary: "",
     dashed: "border border-dashed",
-    text: "bg-transparent text-blue-500 hover:bg-gray-100",
-    link: "bg-transparent text-blue-500 underline hover:text-blue-600 hober:bg-none",
-    default: "border border-gray-300",
     icon: "flex justify-center items-center",
   };
 
@@ -67,6 +66,8 @@ const Button = ({
       )}
       onClick={!disabled && !loading ? onClick : undefined}
       disabled={disabled || loading}
+      ref={ref}
+      {...props}
     >
       {iconPosition === "start" && (
         <>
@@ -81,7 +82,9 @@ const Button = ({
       )}
     </button>
   );
-};
+});
+
+Button.displayName = 'Button';
 
 Button.propTypes = {
   children: PropTypes.node,

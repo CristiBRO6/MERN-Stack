@@ -1,6 +1,9 @@
+import { Link } from 'react-router-dom';
+
 import PageMeta from '../../components/PageMeta';
+
 import { Card, CardBody, CardHeader, CardTitle } from '../../components/ui/Card';
-import Input from '../../components/ui/Input';
+import LoginForm from '../../components/LoginForm';
 
 const Login = () => {
   return (
@@ -12,8 +15,12 @@ const Login = () => {
           <CardHeader>
             <CardTitle>Login</CardTitle>
           </CardHeader>
-          <CardBody>
-             <Input type="Email" autoComplete="email" placeholder="Email" />
+          <CardBody className="flex flex-col gap-2">
+            <LoginForm />
+            <div className="w-full flex justify-between">
+              <Link to="/register">Register</Link>
+              <Link to="/forgot-password">Forgot password?</Link>
+            </div>
           </CardBody>
         </Card>
       </div>

@@ -11,7 +11,7 @@ const Navbar = ({ openDrawer }) => {
     <div className="flex items-center justify-between z-[100] w-full min-h-[--navbar-height] h-[var(--navbar-height)] max-h-[--navbar-height] bg-white px-3 shadow-sm">
       <div className="flex items-center gap-2">
         {screenSizeIndex < 1 ? (
-          <div className="cursor-pointer p-2" onClick={openDrawer}>
+          <div className="md:hidden cursor-pointer p-2" onClick={openDrawer}>
             <Menu />
           </div>
         ) : null}

@@ -27,7 +27,7 @@ export const CardHeader = ({ children, className = "" }) => {
 export const CardTitle = ({ children, className = "" }) => {
   return (
     <>
-      <span className={twMerge("text-lg font-semibold leading-none tracking-tight", className)}>
+      <span className={twMerge("text-lg font-bold leading-none", className)}>
         {children}
       </span>
     </>
