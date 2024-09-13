@@ -8,10 +8,6 @@
     --navbar-height: 60px;
   }
 
-  body {
-    overflow: hidden;
-  }
-
   .root {
     overflow: hidden;
     min-height: 100vh; 
