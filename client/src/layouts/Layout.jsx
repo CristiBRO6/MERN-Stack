@@ -7,13 +7,13 @@ import useResponsive from '../hooks/useResponsive';
 import Drawer from '../components/ui/Drawer';
 import SidebarItem from '../components/ui/SidebarItem';
 
-import { House, User, LogIn, SlidersVertical } from 'lucide-react';
+import { House, User, LogIn, ClipboardPen } from 'lucide-react';
 
 const Items = [
   { id: 1, path: "/", name: "Home", icon: House },
   { id: 2, path: "/profile", name: "Profile", icon: User },
-  { id: 3, path: "/dashboard", name: "Dashboard", icon: SlidersVertical },
-  { id: 4, path: "/login", name: "Login", icon: LogIn },
+  { id: 3, path: "/login", name: "Login", icon: LogIn },
+  { id: 4, path: "/register", name: "Register", icon: ClipboardPen },
 ];
 
 const Layout = () => {

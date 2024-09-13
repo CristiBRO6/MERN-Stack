@@ -5,7 +5,7 @@ const Home = () => {
     <>
       <PageMeta title={"Home"} description={"Home"} />
 
-      <span className="text-base font-medium">Hello guest!</span>
+      <span className="text-base font-medium">Hello CristiBRO!</span>
     </>
   )
 }

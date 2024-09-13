@@ -18,8 +18,8 @@ const Login = () => {
           <CardBody className="flex flex-col gap-2">
             <LoginForm />
             <div className="w-full flex justify-between">
-              <Link to="/register">Register</Link>
-              <Link to="/forgot-password">Forgot password?</Link>
+              <Link className="text-sm font-medium" to="/register">Register</Link>
+              <Link className="text-sm font-medium" to="/forgot-password">Forgot password?</Link>
             </div>
           </CardBody>
         </Card>
