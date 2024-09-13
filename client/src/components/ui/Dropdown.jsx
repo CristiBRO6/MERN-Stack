@@ -9,6 +9,7 @@ export const Dropdown = ({ children, placement = "bottom", className = "" }) => 
   const [isOpen, setIsOpen] = useState(false);
   const [animatedClasses, setAnimatedClasses] = useState("invisible opacity-0 scale-95");
   const dropdownRef = useRef(null);
+  const toggleRef = useRef(null);
   const menuRef = useRef(null);
 
   let menuClasses = "";
@@ -49,26 +50,55 @@ export const Dropdown = ({ children, placement = "bottom", className = "" }) => 
     }
   };
 
-  const adjustDropdownPosition = () => {
+  const adjustDropdownPosition = (placement) => {
     if (menuRef.current) {
       const rect = menuRef.current.getBoundingClientRect();
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-  
-      if (rect.left < 0) {
-        menuRef.current.style.left = "0";
-        menuRef.current.style.right = "auto";
-      } else if (rect.right > viewportWidth) {
-        menuRef.current.style.right = "0";
-        menuRef.current.style.left = "auto";
-      }
-  
-      if (rect.top < 0) {
-        menuRef.current.style.top = "0";
-        menuRef.current.style.bottom = "auto";
-      } else if (rect.bottom > viewportHeight) {
-        menuRef.current.style.bottom = "0";
-        menuRef.current.style.top = "auto";
+      const toggleWidth = toggleRef.current.getBoundingClientRect().width;
+      const toggleHeight = toggleRef.current.getBoundingClientRect().height;
+
+      switch (placement) {
+        case "top":
+        case "bottom":
+          if (rect.left < 0) {
+            menuRef.current.style.left = "0";
+            menuRef.current.style.right = "auto";
+          } else if (rect.right > viewportWidth) {
+            menuRef.current.style.right = "0";
+            menuRef.current.style.left = "auto";
+          }
+
+          if (rect.top < 0) {
+            menuRef.current.style.top = `${toggleHeight}px`;
+            menuRef.current.style.bottom = "auto";
+            menuRef.current.style.marginTop = "8px";
+          } else if (rect.bottom > viewportHeight) {
+            menuRef.current.style.bottom = `${toggleHeight}px`;
+            menuRef.current.style.top = "auto";
+            menuRef.current.style.marginBottom = "8px";
+          }
+          break;
+        case "left":
+        case "right":
+          if (rect.left < 0) {
+            menuRef.current.style.left = `${toggleWidth}px`;
+            menuRef.current.style.right = "auto";
+            menuRef.current.style.marginLeft = "8px";
+          } else if (rect.right > viewportWidth) {
+            menuRef.current.style.right = `${toggleWidth}px`;
+            menuRef.current.style.left = "auto";
+            menuRef.current.style.marginRight = "8px";
+          }
+
+          if (rect.top < 0) {
+            menuRef.current.style.top = "0";
+            menuRef.current.style.bottom = "auto";
+          } else if (rect.bottom > viewportHeight) {
+            menuRef.current.style.bottom = "0";
+            menuRef.current.style.top = "auto";
+          }
+          break;
       }
     }
   };
@@ -76,13 +106,13 @@ export const Dropdown = ({ children, placement = "bottom", className = "" }) => 
   useEffect(() => {
     if (isOpen) {
       resetDropdownPosition();
-      adjustDropdownPosition();
+      adjustDropdownPosition(placement);
 
       setAnimatedClasses("visible opacity-100 scale-100");
     } else {
       setAnimatedClasses("invisible opacity-0 scale-95");
     }
-  }, [isOpen]);
+  }, [isOpen, placement]);
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -95,7 +125,7 @@ export const Dropdown = ({ children, placement = "bottom", className = "" }) => 
   return (
     <DropdownContext.Provider value={{ isOpen, setIsOpen }}>
       <div ref={dropdownRef} className={twMerge("relative w-fit", className)}>
-        <div onClick={toggleDropdown}>
+        <div ref={toggleRef} onClick={toggleDropdown}>
           {children[0]}
         </div>
 
