@@ -15,7 +15,7 @@ const DataTable = ({
   data,
   loading = false,
   columnVisibility: initialColumnVisibility = {},
-  paginationOptions = { pagination: false, currentPage: 0, pageSize: 10, pageSizeOptions: [10, 25, 50, 100] },
+  paginationOptions = { pagination: false, currentPage: 0, pageSize: 10, pageSizeOptions: [10, 20, 30, 40, 50] },
   searchOptions = { search: false, placeholder: "", columns: [] },
   filterOptions = { filter: false, filters: [ { title: "", column: "", statuses: [] } ] },
 }) => {

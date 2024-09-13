@@ -8,7 +8,7 @@ import SidebarItem from '../components/ui/SidebarItem';
 import useResponsive from '../hooks/useResponsive';
 import Button from './ui/Button';
 
-import { PanelLeftClose, PanelLeftOpen, ShoppingBag, EllipsisVertical } from 'lucide-react';
+import { PanelLeftClose, PanelLeftOpen, ShoppingBag, EllipsisVertical, SunMoon } from 'lucide-react';
 import { SIDEBAR_ITEMS, DASHBOARD_PROFILE_ITEMS } from '../constants';
 
 const Sidebar = ({ className }) => {
@@ -75,6 +75,20 @@ const Sidebar = ({ className }) => {
                     <DropdownSeparator key={item.id} />
                   ) : null
                 )}
+                <DropdownSeparator />
+                <Dropdown placement="left" className="w-full">
+                  <DropdownToggle>
+                    <DropdownItem item={{ name: "Theme", icon: SunMoon }} className="w-full" />
+                  </DropdownToggle>
+                  <DropdownMenu className="p-1">
+                    <DropdownBody className="gap-1 pt-1">
+                      <DropdownItem item={{ name: "Light" }} closeable />
+                      <DropdownItem item={{ name: "Dark" }} closeable />
+                      <DropdownSeparator />
+                      <DropdownItem item={{ name: "System" }} closeable />
+                    </DropdownBody>
+                  </DropdownMenu>
+                </Dropdown>
               </DropdownBody>
             </DropdownMenu>
           </Dropdown>

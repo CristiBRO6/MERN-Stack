@@ -10,7 +10,7 @@ import Navbar from '../components/DashboardNavbar';
 import Drawer from '../components/ui/Drawer';
 import SidebarItem from '../components/ui/SidebarItem';
 
-import { EllipsisVertical } from 'lucide-react';
+import { EllipsisVertical, SunMoon } from 'lucide-react';
 import { SIDEBAR_ITEMS, DASHBOARD_PROFILE_ITEMS } from '../constants';
 
 const DashboardLayout = () => {
@@ -71,17 +71,26 @@ const DashboardLayout = () => {
                 <DropdownMenu className="p-1">
                   <DropdownBody className="gap-1 pt-1">
                     {DASHBOARD_PROFILE_ITEMS.map((item) => 
-                      item.type === 'item' ? (
-                        <DropdownItem 
-                          key={item.id} 
-                          item={item}
-                          onClick={closeDrawer}
-                          closeable 
-                        />
-                      ) : item.type === 'separator' ? (
+                      item.type === "item" ? (
+                        <DropdownItem key={item.id} item={item} closeable />
+                      ) : item.type === "separator" ? (
                         <DropdownSeparator key={item.id} />
                       ) : null
                     )}
+                    <DropdownSeparator />
+                    <Dropdown placement="left" className="w-full">
+                      <DropdownToggle>
+                        <DropdownItem item={{ name: "Theme", icon: SunMoon }} className="w-full" />
+                      </DropdownToggle>
+                      <DropdownMenu className="p-1">
+                        <DropdownBody className="gap-1 pt-1">
+                          <DropdownItem item={{ name: "Light" }} closeable />
+                          <DropdownItem item={{ name: "Dark" }} closeable />
+                          <DropdownSeparator />
+                          <DropdownItem item={{ name: "System" }} closeable />
+                        </DropdownBody>
+                      </DropdownMenu>
+                    </Dropdown>
                   </DropdownBody>
                 </DropdownMenu>
               </Dropdown>
