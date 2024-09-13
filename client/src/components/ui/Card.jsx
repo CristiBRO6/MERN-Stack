@@ -5,7 +5,7 @@ export const Card = ({ children, width = 500, className = "" }) => {
   return (
     <>
       <div 
-        className={twMerge("flex flex-col w-full bg-white rounded-lg shadow-md border mx-2", className)}
+        className={twMerge("flex flex-col w-full bg-white rounded-lg shadow-sm border", className)}
         style={{maxWidth: width}}
       >
         {children}
@@ -27,7 +27,7 @@ export const CardHeader = ({ children, className = "" }) => {
 export const CardTitle = ({ children, className = "" }) => {
   return (
     <>
-      <span className={twMerge("block text-center font-bold text-lg", className)}>
+      <span className={twMerge("text-lg font-semibold leading-none tracking-tight", className)}>
         {children}
       </span>
     </>
@@ -46,7 +46,7 @@ export const CardBody = ({ children, className = "" }) => {
 
 Card.propTypes = {
   children: PropTypes.node.isRequired,
-  width: PropTypes.number,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   className: PropTypes.string,
 };
 

@@ -9,6 +9,9 @@ import DataTableBody from './table/DataTableBody';
 import Search from './table/Search';
 import Filter from './table/Filter';
 import Pagination from './table/Pagination';
+import { EllipsisVertical, Pencil, Trash2 } from 'lucide-react';
+import { Dropdown, DropdownBody, DropdownItem, DropdownMenu, DropdownSeparator, DropdownToggle } from './ui/Dropdown';
+import Button from './ui/Button';
 
 const DataTable = ({
   columns,
@@ -151,8 +154,22 @@ const DataTable = ({
       )}
 
       {Object.keys(rowSelection).length ? (
-        <div className="w-[400px] absolute bottom-10 left-1/2 -translate-x-1/2 p-4 bg-white shadow-lg">
-          {Object.keys(rowSelection).length} selected
+        <div className="w-[400px] fixed bottom-5 left-1/2 -translate-x-1/2 p-4 bg-white rounded-md shadow-lg">
+          <div className="w-full flex items-center justify-between gap-2">
+            <span className="text-sm font-medium">{Object.keys(rowSelection).length} selected</span>
+            <Dropdown placement="top">
+              <DropdownToggle>
+                <Button type="icon" color="transparent" icon={EllipsisVertical}></Button>
+              </DropdownToggle>
+              <DropdownMenu  className="p-1">
+                <DropdownBody className="gap-1 pt-1">
+                  <DropdownItem item={{ name: "Edit", icon: Pencil }} closeable />
+                  <DropdownSeparator />
+                  <DropdownItem className="text-error" item={{ name: "Delete", icon: Trash2 }} closeable />
+                </DropdownBody>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
         </div>
       ) : null}
     </div>

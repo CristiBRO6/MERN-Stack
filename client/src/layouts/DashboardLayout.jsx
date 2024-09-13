@@ -72,25 +72,28 @@ const DashboardLayout = () => {
                   <DropdownBody className="gap-1 pt-1">
                     {DASHBOARD_PROFILE_ITEMS.map((item) => 
                       item.type === "item" ? (
-                        <DropdownItem key={item.id} item={item} closeable />
+                        <DropdownItem key={item.id} item={item} className={item.danger ? "text-error" : ""} closeable />
+                      ) : item.type === "group" ? (
+                        <Dropdown key={item.id} placement="left" className="w-full">
+                          <DropdownToggle>
+                            <DropdownItem item={{ name: "Theme", icon: SunMoon }} className="w-full" />
+                          </DropdownToggle>
+                          <DropdownMenu className="p-1">
+                            <DropdownBody className="gap-1 pt-1">
+                              {item.children.map((child) => 
+                                child.type === "item" ? (
+                                  <DropdownItem key={child.id} item={child} closeable />
+                                ) : child.type === "separator" ? (
+                                  <DropdownSeparator key={child.id} />
+                                ) : null
+                              )}
+                            </DropdownBody>
+                          </DropdownMenu>
+                        </Dropdown>
                       ) : item.type === "separator" ? (
                         <DropdownSeparator key={item.id} />
                       ) : null
                     )}
-                    <DropdownSeparator />
-                    <Dropdown placement="left" className="w-full">
-                      <DropdownToggle>
-                        <DropdownItem item={{ name: "Theme", icon: SunMoon }} className="w-full" />
-                      </DropdownToggle>
-                      <DropdownMenu className="p-1">
-                        <DropdownBody className="gap-1 pt-1">
-                          <DropdownItem item={{ name: "Light" }} closeable />
-                          <DropdownItem item={{ name: "Dark" }} closeable />
-                          <DropdownSeparator />
-                          <DropdownItem item={{ name: "System" }} closeable />
-                        </DropdownBody>
-                      </DropdownMenu>
-                    </Dropdown>
                   </DropdownBody>
                 </DropdownMenu>
               </Dropdown>

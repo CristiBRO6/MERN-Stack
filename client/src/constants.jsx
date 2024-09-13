@@ -19,9 +19,15 @@ export const SIDEBAR_ITEMS = [
 ];
 
 export const DASHBOARD_PROFILE_ITEMS = [
-  { id: 1, type: 'item', path: "/", name: "Home", icon: House },
-  { id: 2, type: 'item', path: "/profile", name: "Profile", icon: User },
-  { id: 3, type: 'item', path: "/dashboard/settings", name: "Settigns", icon: Settings },
-  { id: 4, type: 'separator' },
-  { id: 5, type: 'item', path: "/logout", name: "Logout", icon: LogOut },
+  { id: 1, type: "item", path: "/", name: "Home", icon: House },
+  { id: 2, type: "item", path: "/profile", name: "Profile", icon: User },
+  { id: 3, type: "item", path: "/dashboard/settings", name: "Settigns", icon: Settings },
+  { id: 4, type: "group", path: "/dashboard/settings", name: "Settigns", icon: Settings, children: [
+    { id: 1, type: "item",name: "Light" },
+    { id: 2, type: "item",name: "Dark" },
+    { id: 3, type: "separator" },
+    { id: 4, type: "item",name: "System" },
+  ] },
+  { id: 5, type: "separator" },
+  { id: 6, type: "item", path: "/logout", name: "Logout", icon: LogOut, danger: true },
 ];
