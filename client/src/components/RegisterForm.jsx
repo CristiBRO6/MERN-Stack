@@ -51,6 +51,7 @@ const RegisterForm = () => {
                 type="text"
                 autoComplete="name"
                 placeholder="Name"
+                disabled={isLoading}
                 {...field}
               />
             )}
@@ -69,6 +70,7 @@ const RegisterForm = () => {
                 type="email"
                 autoComplete="email"
                 placeholder="Email"
+                disabled={isLoading}
                 {...field}
               />
             )}
@@ -87,6 +89,7 @@ const RegisterForm = () => {
                 type="password"
                 autoComplete="password"
                 placeholder="Password"
+                disabled={isLoading}
                 {...field}
               />
             )}
@@ -105,6 +108,7 @@ const RegisterForm = () => {
                 type="password"
                 autoComplete="password"
                 placeholder="Confirm Password"
+                disabled={isLoading}
                 {...field}
               />
             )}
@@ -112,7 +116,7 @@ const RegisterForm = () => {
           {errors.confirmPassword && <span className="text-sm font-medium text-error">{errors.confirmPassword.message}</span>}
         </div>
 
-        <Button type="submit" loadingColor="white" className="justify-center" loading={isLoading}>Register</Button>
+        <Button loadingColor="white" className="justify-center" loading={isLoading}>Register</Button>
 
         {errors.root && <span className="text-sm font-medium text-error">{errors.root.message}</span>}
       </form>

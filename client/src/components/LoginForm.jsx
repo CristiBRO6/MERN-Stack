@@ -73,7 +73,7 @@ const LoginForm = () => {
           {errors.password && <span className="text-sm font-medium text-error">{errors.password.message}</span>}
         </div>
 
-        <Button type="submit" loadingColor="white" className="justify-center" loading={isLoading}>Login</Button>
+        <Button loadingColor="white" className="justify-center" loading={isLoading}>Login</Button>
 
         {errors.root && <span className="text-sm font-medium text-error">{errors.root.message}</span>}
       </form>

@@ -89,7 +89,7 @@ Button.displayName = 'Button';
 Button.propTypes = {
   children: PropTypes.node,
   color: PropTypes.oneOf(["primary", "secondary", "success", "danger", "warning", "info", "transparent"]),
-  type: PropTypes.oneOf(["primary", "dashed", "text", "link", "default", "icon"]),
+  type: PropTypes.oneOf(["primary", "dashed", "icon"]),
   size: PropTypes.oneOf(["small", "medium", "large"]),
   shape: PropTypes.oneOf(["round", "circle", "default"]),
   bordered: PropTypes.bool,
